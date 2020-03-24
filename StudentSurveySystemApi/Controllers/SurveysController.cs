@@ -33,13 +33,6 @@ namespace StudentSurveySystemApi.Controllers
             return await _context.Surveys.ToListAsync();
         }
 
-        // GET: api/Surveys
-        [HttpGet("test")]
-        public async Task<ActionResult<string>> Test()
-        {
-            return "It is works!";
-        }
-
         [HttpGet("usertobefilled")]
         public async Task<ActionResult<IEnumerable<SurveyDto>>> GetUserToBeFilledSurveys()
         {
