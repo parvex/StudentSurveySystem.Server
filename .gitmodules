@@ -1,0 +1,3 @@
+[submodule "StudentSurveySystem.Shared"]
+	path = StudentSurveySystem.Shared
+	url = https://github.com/parvex/StudentSurveySystem.Shared.git
