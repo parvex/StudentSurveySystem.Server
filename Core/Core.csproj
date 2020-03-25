@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>StudentSurveySystem.Core</AssemblyName>
     <Authors>Gabriel Rębacz</Authors>
     <Product>StudentSurveySystem</Product>
@@ -9,7 +9,7 @@
     <Copyright>MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
