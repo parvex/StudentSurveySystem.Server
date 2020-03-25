@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.29230.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "StudentSurveySystemApi\Server.csproj", "{0DA79972-EB51-498F-9EAF-05EACA7436BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Shared\Core.csproj", "{2A3490F4-4E52-43FF-B70F-EBB3CD2D4A55}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67D8462B-3FD1-4F89-BEEE-E6864BBB7C75}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-deploy.yml = .github\workflows\build-and-deploy.yml
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{790447A2-13F4-4E77-8069-504D7CE0D898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{0DA79972-EB51-498F-9EAF-05EACA7436BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA79972-EB51-498F-9EAF-05EACA7436BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA79972-EB51-498F-9EAF-05EACA7436BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A3490F4-4E52-43FF-B70F-EBB3CD2D4A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A3490F4-4E52-43FF-B70F-EBB3CD2D4A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A3490F4-4E52-43FF-B70F-EBB3CD2D4A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A3490F4-4E52-43FF-B70F-EBB3CD2D4A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{790447A2-13F4-4E77-8069-504D7CE0D898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790447A2-13F4-4E77-8069-504D7CE0D898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790447A2-13F4-4E77-8069-504D7CE0D898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790447A2-13F4-4E77-8069-504D7CE0D898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
