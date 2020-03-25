@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace StudentSurveySystem.Core.Models.Auth
+﻿namespace StudentSurveySystem.Core.Models.Auth
 {
     public class CurrentUserDto
     {
