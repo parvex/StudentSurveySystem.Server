@@ -9,7 +9,7 @@
     <Copyright>MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
