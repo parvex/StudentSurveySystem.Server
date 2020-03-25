@@ -2,19 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>StudentSurveySystem.Shared</AssemblyName>
+    <AssemblyName>StudentSurveySystem.Core</AssemblyName>
     <Authors>Gabriel Rębacz</Authors>
     <Product>StudentSurveySystem</Product>
     <Description>Shared models between student survey system server and mobile client</Description>
     <Copyright>MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageId>StudentSurveySystem.Core</PackageId>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
