@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -22,12 +23,12 @@ namespace StudentSurveySystemApi.Services
             Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, "oob");
         }
 
-        public UsosAuthDto GetUsosAuthData()
+        public async Task<UsosAuthDto> GetUsosAuthData()
         {
             var baseUrl = new Uri("https://apps.usos.pw.edu.pl/services/");
             var request = new RestRequest("oauth/request_token");
-            request.AddParameter("scopes", "cards|personal|studies");
-            var response = Client.Execute(request);
+            //request.AddParameter("scopes", "");
+            var response = await Client.ExecuteAsync(request, Method.GET);
             var requestTokenResponseParameters = HttpUtility.ParseQueryString(response.Content);
 
             var requestToken = requestTokenResponseParameters["oauth_token"];
@@ -45,6 +46,8 @@ namespace StudentSurveySystemApi.Services
                 .ForProtectedResource(ConsumerKey, ConsumerSecret, token, tokenSecret);
 
             var userDataRequest = new RestRequest("users/user", Method.GET);
+            userDataRequest.AddParameter("fields", "id|first_name|last_name|student_status|staff_status");
+
             var userDataResponse = Client.Execute<UsosUser>(userDataRequest);
             return userDataResponse.IsSuccessful ? userDataResponse.Data : null;
         }

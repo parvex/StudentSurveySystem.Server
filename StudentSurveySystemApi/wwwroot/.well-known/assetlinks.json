@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.studentsurveysystem.mobileclient",
+      "sha256_cert_fingerprints": [
+        "4B:0D:10:EF:23:B8:35:0A:A1:14:A4:FB:F1:08:C0:CE:7E:FC:F9:24:3C:29:72:96:9D:50:08:FC:3D:34:5C:FBandroid_app"
+      ]
+    }
+  }
+]

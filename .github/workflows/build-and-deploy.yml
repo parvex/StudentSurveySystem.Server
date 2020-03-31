@@ -34,7 +34,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
       
       # Run dotnet build and publish
-      - name: dotnet build and publish
+      - name: Dotnet build and publish
         run: |
           dotnet build --configuration Release
           dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
@@ -58,7 +58,7 @@ jobs:
       #     dotnet-version: 3.1.100
       
       # Publish
-      - name: publish on version change
+      - name: Publish nuget packages with new version tag
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: Core/Core.csproj # Relative to repository root

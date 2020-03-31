@@ -55,7 +55,7 @@ namespace StudentSurveySystemApi.Controllers
         public async Task<UsosAuthDto> GetUsosAuthData()
         {
             var usosApiClient = new UsosApi();
-            return usosApiClient.GetUsosAuthData();
+            return await usosApiClient.GetUsosAuthData();
         }
 
 
@@ -74,10 +74,15 @@ namespace StudentSurveySystemApi.Controllers
             var currentUser = usosUser.Adapt<CurrentUserDto>();
             var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.UsosId == currentUser.UsosId.Value);
             if (dbUser != null)
+            {
                 currentUser.Id = dbUser.Id;
+                currentUser.UserRole = dbUser.UserRole;
+            }
             else
             {
                  var newUser = currentUser.Adapt<User>();
+                 newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
+                     usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
                  await _context.Users.AddAsync(newUser);
                  await _context.SaveChangesAsync();
                  currentUser.Id = newUser.Id;
