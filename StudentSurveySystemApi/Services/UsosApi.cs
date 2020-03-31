@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Extensions.Configuration;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Authenticators.OAuth;
@@ -10,17 +11,25 @@ using StudentSurveySystemApi.Helpers;
 
 namespace StudentSurveySystemApi.Services
 {
-    public class UsosApi
+    public interface IUsosApi
     {
+        Task<UsosAuthDto> GetUsosAuthData();
+        UsosUser GetUsosUserData(UsosAuthDto usosAuth);
+    }
+
+    public class UsosApi : IUsosApi
+    {
+        private readonly IConfiguration _configuration;
         private readonly IRestClient Client;
         private readonly string ConsumerKey = "B9anvbLDgvW8D6p4YByX";
         private readonly string ConsumerSecret = "vdr3Ew8zurEUA7VcJejGXvSbrfRhbnAHzkStUfMF";
-        public UsosApi()
+        public UsosApi(IConfiguration configuration)
         {
+            _configuration = configuration;
             Client = new RestClient("https://apps.usos.pw.edu.pl/services/");
             Client.UseNewtonsoftJson();
             //TODO: callback url, maybe it can lead to mobile client again
-            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, "https://studentsurveysystemapi20200128125529.azurewebsites.net");
+            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["Domain"]);
         }
 
         public async Task<UsosAuthDto> GetUsosAuthData()

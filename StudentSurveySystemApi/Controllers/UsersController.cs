@@ -26,15 +26,18 @@ namespace StudentSurveySystemApi.Controllers
         private readonly SurveyContext _context;
         private readonly AppSettings _appSettings;
         private readonly IUserService _userService;
+        private readonly IUsosApi _usosApi;
 
         public UsersController(
             SurveyContext context,
            IOptions<AppSettings> appSettings,
-            IUserService userService)
+            IUserService userService,
+            IUsosApi usosApi)
         {
             _context = context;
             _appSettings = appSettings.Value;
             _userService = userService;
+            _usosApi = usosApi;
         }
 
 
@@ -54,8 +57,8 @@ namespace StudentSurveySystemApi.Controllers
         [HttpGet("usosauthdata")]
         public async Task<UsosAuthDto> GetUsosAuthData()
         {
-            var usosApiClient = new UsosApi();
-            return await usosApiClient.GetUsosAuthData();
+
+            return await _usosApi.GetUsosAuthData();
         }
 
 
@@ -63,10 +66,9 @@ namespace StudentSurveySystemApi.Controllers
         [HttpPost("usospinauth")]
         public async Task<IActionResult> UsosPinAuth(UsosAuthDto usosAuth)
         {
-            var usosApiClient = new UsosApi();
             if (usosAuth.RequestToken == null || usosAuth.TokenSecret == null || usosAuth.OAuthVerifier == null)
                 return BadRequest("Missing parameters");
-            var usosUser = usosApiClient.GetUsosUserData(usosAuth);
+            var usosUser = _usosApi.GetUsosUserData(usosAuth);
 
             if (usosUser == null)
                 return Unauthorized("Wrong PIN");
