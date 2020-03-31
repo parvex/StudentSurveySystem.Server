@@ -29,7 +29,7 @@ namespace StudentSurveySystemApi.Services
             Client = new RestClient("https://apps.usos.pw.edu.pl/services/");
             Client.UseNewtonsoftJson();
             //TODO: callback url, maybe it can lead to mobile client again
-            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["Domain"]);
+            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["AuthRedirectUrl"]);
         }
 
         public async Task<UsosAuthDto> GetUsosAuthData()
