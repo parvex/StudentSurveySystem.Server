@@ -109,27 +109,6 @@ namespace StudentSurveySystemApi.Controllers
             return Ok(currentUser);
         }
 
-
-        [AllowAnonymous]
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto userDto)
-        {
-            // map dto to entity
-            var user = userDto.Adapt<User>();
-
-            try
-            {
-                // save 
-                await _userService.CreateAsync(user, userDto.Password);
-                return Ok();
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
         // GET: api/Users
         [Authorize(Roles = "Admin")]
         [HttpGet]

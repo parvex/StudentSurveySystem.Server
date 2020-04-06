@@ -87,13 +87,7 @@ namespace StudentSurveySystemApi.Helpers
 
                 context.AddRange(seedQuestions);
 
-                List<SurveyResponse> seedSurveyResponses = new List<SurveyResponse>
-                {
-                    new SurveyResponse {Id = 0, Date = DateTime.Now, RespondentId = seedUsers[1].Id.Value, SurveyId = seedSurveys[0].Id.Value},
-                    new SurveyResponse {Id = 1, Date = DateTime.Now.AddDays(-2), RespondentId = seedUsers[1].Id.Value, SurveyId = seedSurveys[1].Id.Value}
-                };
 
-                context.AddRange(seedSurveyResponses);
 
                 var seedAnswers = new List<Answer>
                 {
@@ -115,6 +109,16 @@ namespace StudentSurveySystemApi.Helpers
                 };
 
                 context.AddRange(seedAnswers);
+
+
+                List<SurveyResponse> seedSurveyResponses = new List<SurveyResponse>
+                {
+                    new SurveyResponse {Id = 0, Date = DateTime.Now, RespondentId = seedUsers[1].Id.Value, SurveyId = seedSurveys[0].Id.Value, Answers = new List<Answer>{seedAnswers[0], seedAnswers[1]}},
+                    new SurveyResponse {Id = 1, Date = DateTime.Now.AddDays(-2), RespondentId = seedUsers[1].Id.Value, SurveyId = seedSurveys[1].Id.Value, Answers = new List<Answer>{seedAnswers[2], seedAnswers[3], seedAnswers[4]}}
+                };
+
+                context.AddRange(seedSurveyResponses);
+
 
                 return context.SaveChanges();
             }

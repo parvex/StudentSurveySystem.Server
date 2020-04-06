@@ -20,6 +20,8 @@ namespace Tests
         public SurveyResponsesTest() : base()
         {
             _controller = new SurveyResponsesController(context);
+            //setting user context - created in TestBase
+            _controller.ControllerContext = controllerContext;
         }
 
         [Fact]
@@ -50,10 +52,22 @@ namespace Tests
         [Fact]
         public async Task GetSurveyResponse()
         {
-            var x = context.SurveyResponses.ToList();
-            var y = context.Answer.ToList();
             var result = await _controller.GetSurveyResponse(0);
-            Assert.IsType<OkResult>(result.Result);
+            Assert.Equal(2, result.Value.Answers.Count);
+        }
+
+        [Fact]
+        public async Task GetSurveyResponses()
+        {
+            var result = await _controller.GetSurveyResponses();
+            Assert.NotEmpty(result.Value);
+        }
+
+        [Fact]
+        public async Task GetUserSurveyResponses()
+        {
+            var result = await _controller.GetUserSurveyResponses();
+            Assert.NotEmpty(result.Value);
         }
     }
 }

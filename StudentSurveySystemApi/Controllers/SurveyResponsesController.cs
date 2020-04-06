@@ -25,6 +25,7 @@ namespace StudentSurveySystemApi.Controllers
             _context = context;
         }
 
+        // GET: api/SurveyResponses
         [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses()
@@ -42,10 +43,11 @@ namespace StudentSurveySystemApi.Controllers
             }
         }
 
+        // GET: api/SurveyResponses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SurveyResponseDetailsDto>> GetSurveyResponse(int id)
+        public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
         {
-            var surveyResponse = await _context.SurveyResponses.ProjectToType<SurveyResponseDetailsDto>().FirstAsync(x => x.Id == id);
+            var surveyResponse = await _context.SurveyResponses.ProjectToType<SurveyResponseDto>().FirstAsync(x => x.Id == id);
 
             if (surveyResponse == null)
             {
@@ -64,38 +66,6 @@ namespace StudentSurveySystemApi.Controllers
                 .ToListAsync();
         }
 
-        // PUT: api/SurveyResponses/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSurveyResponse(int id, SurveyResponse surveyResponse)
-        {
-            if (id != surveyResponse.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(surveyResponse).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SurveyResponseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         [HttpPost]
         public async Task<ActionResult<SurveyResponseDto>> PostSurveyResponse(SurveyResponseDto surveyResponse)
         {
@@ -105,26 +75,6 @@ namespace StudentSurveySystemApi.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<SurveyResponse>> DeleteSurveyResponse(int id)
-        {
-            var surveyResponse = await _context.SurveyResponses.FindAsync(id);
-            if (surveyResponse == null)
-            {
-                return NotFound();
-            }
-
-            _context.SurveyResponses.Remove(surveyResponse);
-            await _context.SaveChangesAsync();
-
-            return surveyResponse;
-        }
-
-        private bool SurveyResponseExists(int id)
-        {
-            return _context.SurveyResponses.Any(e => e.Id == id);
         }
     }
 }
