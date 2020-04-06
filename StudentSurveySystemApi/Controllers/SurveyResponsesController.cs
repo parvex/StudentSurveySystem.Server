@@ -43,9 +43,9 @@ namespace StudentSurveySystemApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
+        public async Task<ActionResult<SurveyResponseDetailsDto>> GetSurveyResponse(int id)
         {
-            var surveyResponse = await _context.SurveyResponses.ProjectToType<SurveyResponseDto>().FirstAsync(x => x.Id == id);
+            var surveyResponse = await _context.SurveyResponses.ProjectToType<SurveyResponseDetailsDto>().FirstAsync(x => x.Id == id);
 
             if (surveyResponse == null)
             {

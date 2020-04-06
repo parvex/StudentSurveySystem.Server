@@ -51,7 +51,8 @@ namespace Tests
         public async Task GetSurveyResponse()
         {
             var x = context.SurveyResponses.ToList();
-            var result = await _controller.GetSurveyResponse(1);
+            var y = context.Answer.ToList();
+            var result = await _controller.GetSurveyResponse(0);
             Assert.IsType<OkResult>(result.Result);
         }
     }

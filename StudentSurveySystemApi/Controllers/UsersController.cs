@@ -120,7 +120,7 @@ namespace StudentSurveySystemApi.Controllers
             try
             {
                 // save 
-                await _userService.Create(user, userDto.Password);
+                await _userService.CreateAsync(user, userDto.Password);
                 return Ok();
             }
             catch (AppException ex)

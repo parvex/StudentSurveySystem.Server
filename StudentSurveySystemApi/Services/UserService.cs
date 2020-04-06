@@ -19,9 +19,10 @@ namespace StudentSurveySystemApi.Services
     public interface IUserService
     {
         Task<CurrentUserDto> Authenticate(string username, string password);
-        Task<User> Create(User user, string password);
+        Task<User> CreateAsync(User user, string password);
         Task Delete(int id);
         Task Update(User userParam, string password = null);
+        User Create(User user, string password);
     }
 
     public class UserService : IUserService
@@ -75,13 +76,34 @@ namespace StudentSurveySystemApi.Services
             return userResult;
         }
 
-        public async Task<User> Create(User user, string password)
+        public async Task<User> CreateAsync(User user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 
             if (await _surveyContext.Users.AnyAsync(x => x.Username == user.Username))
+                throw new Exception("Username \"" + user.Username + "\" is already taken");
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            _surveyContext.Users.Add(user);
+            await _surveyContext.SaveChangesAsync();
+
+            return user;
+        }
+
+        public User Create(User user, string password)
+        {
+            // validation
+            if (string.IsNullOrWhiteSpace(password))
+                throw new Exception("Password is required");
+
+            if (_surveyContext.Users.Any(x => x.Username == user.Username))
                 throw new Exception("Username \"" + user.Username + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;

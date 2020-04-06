@@ -12,7 +12,7 @@ namespace StudentSurveySystemApi.Helpers
 {
     public class DbInitializer
     {
-        public static async Task<int> Seed(SurveyContext context, IUserService userService)
+        public static int Seed(SurveyContext context, IUserService userService)
         {
             if (!context.Answer.Any() && !context.SurveyResponses.Any() && !context.Courses.Any() && !context.Questions.Any()
                 && !context.Surveys.Any() && !context.Users.Any())
@@ -42,11 +42,8 @@ namespace StudentSurveySystemApi.Helpers
 
                 foreach (var user in seedUsers)
                 {
-                    await userService.Create(user, "password");
+                    userService.Create(user, "password");
                 }
-
-                await context.SaveChangesAsync();
-
 
                 List<Course> seedCourses = new List<Course>
                 {
@@ -55,9 +52,6 @@ namespace StudentSurveySystemApi.Helpers
                 };
 
                 context.AddRange(seedCourses);
-                await context.SaveChangesAsync();
-
-
 
                 List<Survey> seedSurveys = new List<Survey>
                 {
@@ -67,8 +61,6 @@ namespace StudentSurveySystemApi.Helpers
                 };
 
                 context.AddRange(seedSurveys);
-                await context.SaveChangesAsync();
-
 
                 List<Question> seedQuestions = new List<Question>
                 {
@@ -94,8 +86,6 @@ namespace StudentSurveySystemApi.Helpers
                 };
 
                 context.AddRange(seedQuestions);
-                await context.SaveChangesAsync();
-
 
                 List<SurveyResponse> seedSurveyResponses = new List<SurveyResponse>
                 {
@@ -104,7 +94,6 @@ namespace StudentSurveySystemApi.Helpers
                 };
 
                 context.AddRange(seedSurveyResponses);
-                await context.SaveChangesAsync();
 
                 var seedAnswers = new List<Answer>
                 {
@@ -127,7 +116,7 @@ namespace StudentSurveySystemApi.Helpers
 
                 context.AddRange(seedAnswers);
 
-                return await context.SaveChangesAsync();
+                return context.SaveChanges();
             }
             else return -1;
         }

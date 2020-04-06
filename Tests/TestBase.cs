@@ -31,7 +31,7 @@ namespace Tests
 
             using (var seedContext = new SurveyContext(options))
             {
-                 Task.Run(() => DbInitializer.Seed(context, new UserService(context, mock.Object)));
+                 DbInitializer.Seed(context, new UserService(context, mock.Object));
             }
 
         }
