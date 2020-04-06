@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace StudentSurveySystem.Core.Models
+namespace Core.Models.Survey
 {
-    public class SurveyDto
+    public class SurveyFormDto
     {
         public int? Id { get; set; }
 
         public string Name { get; set; }
 
-        public string Creator { get; set; }
+        public int? CreatorId { get; set; }
 
-        public string CourseName { get; set; }
+        public int? CourseId { get; set; }
 
         public List<QuestionDto> Questions { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace StudentSurveySystem.Core.Models
+﻿namespace Core.Models.Auth
 {
     public class AuthenticateDto
     {

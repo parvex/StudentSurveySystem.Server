@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StudentSurveySystemApi.Entities
+﻿namespace Server.Entities
 {
     public class Answer
     {

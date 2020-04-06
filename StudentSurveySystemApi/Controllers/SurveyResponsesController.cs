@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Core.Models.SurveyResponse;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystemApi.Entities;
+using Server.Entities;
 
-namespace StudentSurveySystemApi.Controllers
+namespace Server.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -67,7 +66,7 @@ namespace StudentSurveySystemApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SurveyResponseDto>> PostSurveyResponse(SurveyResponseDto surveyResponse)
+        public async Task<ActionResult<SurveyResponseDto>> AddSurveyResponse(SurveyResponseDto surveyResponse)
         {
             var surveyResponseEntity = surveyResponse.Adapt<SurveyResponse>();
             surveyResponseEntity.Date = DateTime.Now;

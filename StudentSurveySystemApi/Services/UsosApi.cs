@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web;
+using Core.Models.Auth;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 using RestSharp.Authenticators;
-using RestSharp.Authenticators.OAuth;
 using RestSharp.Serializers.NewtonsoftJson;
-using StudentSurveySystem.Core.Models.Auth;
-using StudentSurveySystemApi.Helpers;
 
-namespace StudentSurveySystemApi.Services
+namespace Server.Services
 {
     public interface IUsosApi
     {

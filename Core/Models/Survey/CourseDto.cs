@@ -1,4 +1,4 @@
-﻿namespace StudentSurveySystem.Core.Models
+﻿namespace Core.Models.Survey
 {
     public class CourseDto
     {
@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public int SemesterId { get; set; }
+        public SemesterPart SemesterPart { get; set; }
 
         public int LeaderId { get; set; }
     }

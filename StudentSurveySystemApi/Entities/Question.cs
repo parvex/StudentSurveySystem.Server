@@ -1,6 +1,6 @@
-﻿using StudentSurveySystem.Core.Models;
+﻿using Core.Models.Survey;
 
-namespace StudentSurveySystemApi.Entities
+namespace Server.Entities
 {
     public class Question
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StudentSurveySystem.Core.Models.Auth
+﻿namespace Core.Models.Auth
 {
     public class UsosAuthDto
     {

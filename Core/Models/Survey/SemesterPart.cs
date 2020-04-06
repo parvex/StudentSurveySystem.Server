@@ -1,4 +1,4 @@
-﻿namespace StudentSurveySystemApi.Entities
+﻿namespace Core.Models.Survey
 {
     public enum SemesterPart
     {

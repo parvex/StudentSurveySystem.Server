@@ -1,4 +1,4 @@
-﻿namespace StudentSurveySystemApi.Helpers
+﻿namespace Server.Helpers
 {
     public class AppSettings
     {

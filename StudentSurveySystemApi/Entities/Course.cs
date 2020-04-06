@@ -1,4 +1,6 @@
-﻿namespace StudentSurveySystemApi.Entities
+﻿using Core.Models.Survey;
+
+namespace Server.Entities
 {
     public class Course
     {

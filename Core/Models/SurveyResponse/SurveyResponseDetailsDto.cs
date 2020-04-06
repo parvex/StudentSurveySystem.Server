@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Models;
 
-namespace StudentSurveySystem.Core.Models
+namespace Core.Models.SurveyResponse
 {
     public class SurveyResponseDetailsDto
     {

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Core.Models.Survey;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystem.Core.Models.Filters;
-using StudentSurveySystemApi.Entities;
+using Server.Entities;
 
-namespace StudentSurveySystemApi.Controllers
+namespace Server.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -35,21 +32,21 @@ namespace StudentSurveySystemApi.Controllers
 
 
         [HttpGet("usertobefilled")]
-        public async Task<ActionResult<IEnumerable<SurveyDto>>> GetUserToBeFilledSurveys()
+        public async Task<ActionResult<IEnumerable<SurveyDetailsDto>>> GetUserToBeFilledSurveys()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             return await _context.Surveys.Where(x => x.SurveyResponses.All(r => r.RespondentId != userId))
-                .ProjectToType<SurveyDto>()
+                .ProjectToType<SurveyDetailsDto>()
                 .ToListAsync();
         }
 
 
         // GET: api/Surveys/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SurveyDto>> GetSurvey(int id)
+        public async Task<ActionResult<SurveyDetailsDto>> GetSurvey(int id)
         {
             var survey = await _context.Surveys.Where(x => x.Id == id)
-                .ProjectToType<SurveyDto>().FirstOrDefaultAsync();
+                .ProjectToType<SurveyDetailsDto>().FirstOrDefaultAsync();
 
             if (survey == null)
             {
@@ -91,16 +88,14 @@ namespace StudentSurveySystemApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Surveys
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Survey>> PostSurvey(Survey survey)
+        public async Task<ActionResult<SurveyDetailsDto>> AddSurvey(SurveyFormDto survey)
         {
-            _context.Surveys.Add(survey);
+            var dbModel = survey.Adapt<Survey>();
+            _context.Surveys.Add(dbModel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSurvey", new { id = survey.Id }, survey);
+            return await GetSurvey(dbModel.Id.Value);
         }
 
         // DELETE: api/Surveys/5

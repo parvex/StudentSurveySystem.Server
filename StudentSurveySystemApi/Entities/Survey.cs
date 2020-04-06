@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace StudentSurveySystemApi.Entities
+namespace Server.Entities
 {
     public class Survey
     {

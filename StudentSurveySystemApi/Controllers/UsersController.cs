@@ -4,19 +4,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models.Auth;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystem.Core.Models.Auth;
-using StudentSurveySystemApi.Entities;
-using StudentSurveySystemApi.Helpers;
-using StudentSurveySystemApi.Services;
+using Server.Entities;
+using Server.Helpers;
+using Server.Services;
 
-namespace StudentSurveySystemApi.Controllers
+namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
@@ -129,32 +128,6 @@ namespace StudentSurveySystemApi.Controllers
             }
 
             return user;
-        }
-
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UserDto userDto)
-        {
-            var user = userDto.Adapt<User>();
-            user.Id = id;
-
-            try 
-            {
-                await _userService.Update(user, userDto.Password);
-                return Ok();
-            } 
-            catch(AppException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            await _userService.Delete(id);
-            return Ok();
         }
     }
 }

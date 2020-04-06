@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
-using Core.Models;
+using Core.Models.Survey;
+using Core.Models.SurveyResponse;
 using Mapster;
 using Newtonsoft.Json;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystemApi.Entities;
+using Server.Entities;
 
-namespace StudentSurveySystemApi.Helpers
+namespace Server.Helpers
 {
     public class MapsterHelper
     {
         public static void SetCustomMappings()
         {
-            TypeAdapterConfig<Survey, SurveyDto>
+            TypeAdapterConfig<Survey, SurveyDetailsDto>
                 .NewConfig()
                 .Map(dest => dest.Creator,
                     src => $"{src.Creator.FirstName} {src.Creator.LastName}");

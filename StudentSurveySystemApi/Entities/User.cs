@@ -1,6 +1,6 @@
-﻿using StudentSurveySystem.Core.Models;
+﻿using Core.Models.Auth;
 
-namespace StudentSurveySystemApi.Entities
+namespace Server.Entities
 {
     public class User
     {

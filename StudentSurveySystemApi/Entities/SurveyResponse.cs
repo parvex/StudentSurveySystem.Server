@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StudentSurveySystemApi.Entities
+namespace Server.Entities
 {
     public class SurveyResponse
     {

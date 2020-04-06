@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading.Tasks;
+using Core.Models.Auth;
+using Core.Models.Survey;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystemApi.Entities;
-using StudentSurveySystemApi.Services;
+using Server.Entities;
+using Server.Services;
 
-namespace StudentSurveySystemApi.Helpers
+namespace Server.Helpers
 {
     public class DbInitializer
     {

@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Models.SurveyResponse;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystemApi.Controllers;
-using StudentSurveySystemApi.Entities;
+using Server.Controllers;
 using Xunit;
 
-namespace Tests
+namespace Tests.Controllers
 {
     public class SurveyResponsesTest : TestBase
     {
@@ -19,13 +16,13 @@ namespace Tests
 
         public SurveyResponsesTest() : base()
         {
-            _controller = new SurveyResponsesController(context);
+            _controller = new SurveyResponsesController(Context);
             //setting user context - created in TestBase
-            _controller.ControllerContext = controllerContext;
+            _controller.ControllerContext = ControllerContext;
         }
 
         [Fact]
-        public async Task PostSurveyResponse()
+        public async Task AddSurveyResponse()
         {
             var surveyResponse = new SurveyResponseDto
             {
@@ -45,7 +42,7 @@ namespace Tests
                 }
             };
 
-            var result = await _controller.PostSurveyResponse(surveyResponse);
+            var result = await _controller.AddSurveyResponse(surveyResponse);
             Assert.IsType<OkResult>(result.Result);
         }
 

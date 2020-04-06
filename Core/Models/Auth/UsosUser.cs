@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace StudentSurveySystem.Core.Models.Auth
+namespace Core.Models.Auth
 {
     public enum StudentStatus
     {

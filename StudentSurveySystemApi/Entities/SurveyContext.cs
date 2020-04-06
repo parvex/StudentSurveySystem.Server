@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace StudentSurveySystemApi.Entities
+namespace Server.Entities
 {
     public class SurveyContext : DbContext
     {

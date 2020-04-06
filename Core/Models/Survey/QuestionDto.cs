@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace StudentSurveySystem.Core.Models
+namespace Core.Models.Survey
 {
     public class QuestionDto
     {
@@ -12,7 +12,5 @@ namespace StudentSurveySystem.Core.Models
 
         //values to choose in case of single or multi select
         public List<string> Values { get; set; }
-
-        public int SurveyId { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace StudentSurveySystem.Core.Models.Filters
+﻿namespace Core.Models.Filters
 {
     public class SurveyFilter
     {

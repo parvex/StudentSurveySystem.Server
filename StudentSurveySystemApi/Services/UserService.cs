@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models.Auth;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using StudentSurveySystem.Core.Models;
-using StudentSurveySystem.Core.Models.Auth;
-using StudentSurveySystemApi.Entities;
-using StudentSurveySystemApi.Helpers;
+using Server.Entities;
+using Server.Helpers;
 
-namespace StudentSurveySystemApi.Services
+namespace Server.Services
 {
     public interface IUserService
     {
