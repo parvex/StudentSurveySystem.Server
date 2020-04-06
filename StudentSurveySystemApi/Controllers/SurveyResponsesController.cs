@@ -25,7 +25,6 @@ namespace StudentSurveySystemApi.Controllers
             _context = context;
         }
 
-        // GET: api/SurveyResponses
         [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses()
@@ -43,7 +42,6 @@ namespace StudentSurveySystemApi.Controllers
             }
         }
 
-        // GET: api/SurveyResponses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
         {
@@ -98,9 +96,6 @@ namespace StudentSurveySystemApi.Controllers
             return NoContent();
         }
 
-        // POST: api/SurveyResponses
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<SurveyResponseDto>> PostSurveyResponse(SurveyResponseDto surveyResponse)
         {
@@ -112,7 +107,6 @@ namespace StudentSurveySystemApi.Controllers
             return Ok();
         }
 
-        // DELETE: api/SurveyResponses/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<SurveyResponse>> DeleteSurveyResponse(int id)
         {

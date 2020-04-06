@@ -1,6 +1,6 @@
-﻿using System;
+﻿using StudentSurveySystem.Core.Models;
 
-namespace StudentSurveySystem.Core.Models
+namespace Core.Models
 {
     public class AnswerDto
     {
