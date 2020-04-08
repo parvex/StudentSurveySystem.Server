@@ -20,6 +20,8 @@ namespace Server.Entities
 
         public Course Course { get; set; }
 
+        public bool Active { get; set; } = false;
+
         public List<SurveyResponse> SurveyResponses { get; set; }
     }
 }

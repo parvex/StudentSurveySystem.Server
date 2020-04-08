@@ -23,30 +23,26 @@ namespace Server.Controllers
             _context = context;
         }
 
-        // GET: api/Surveys
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Survey>>> GetSurveys()
         {
             return await _context.Surveys.ToListAsync();
         }
 
-
         [HttpGet("usertobefilled")]
-        public async Task<ActionResult<IEnumerable<SurveyDetailsDto>>> GetUserToBeFilledSurveys()
+        public async Task<ActionResult<IEnumerable<SurveyDto>>> GetUserToBeFilledSurveys()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             return await _context.Surveys.Where(x => x.SurveyResponses.All(r => r.RespondentId != userId))
-                .ProjectToType<SurveyDetailsDto>()
+                .ProjectToType<SurveyDto>()
                 .ToListAsync();
         }
 
-
-        // GET: api/Surveys/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SurveyDetailsDto>> GetSurvey(int id)
+        public async Task<ActionResult<SurveyDto>> GetSurvey(int id)
         {
             var survey = await _context.Surveys.Where(x => x.Id == id)
-                .ProjectToType<SurveyDetailsDto>().FirstOrDefaultAsync();
+                .ProjectToType<SurveyDto>().FirstOrDefaultAsync();
 
             if (survey == null)
             {
@@ -56,40 +52,24 @@ namespace Server.Controllers
             return survey;
         }
 
-        // PUT: api/Surveys/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSurvey(int id, Survey survey)
+        public async Task<IActionResult> PutSurvey(int id, SurveyDto survey)
         {
-            if (id != survey.Id)
+            var model = survey.Adapt<Survey>();
+            model.Id = id;
+            _context.Entry(model).State = EntityState.Modified;
+            foreach (var question in model.Questions)
             {
-                return BadRequest();
+                _context.Entry(question).State = EntityState.Modified;
             }
+            await _context.SaveChangesAsync();
 
-            _context.Entry(survey).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SurveyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
+        [HttpPut]
         [HttpPost]
-        public async Task<ActionResult<SurveyDetailsDto>> AddSurvey(SurveyFormDto survey)
+        public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey)
         {
             var dbModel = survey.Adapt<Survey>();
             _context.Surveys.Add(dbModel);
@@ -98,25 +78,46 @@ namespace Server.Controllers
             return await GetSurvey(dbModel.Id.Value);
         }
 
-        // DELETE: api/Surveys/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Survey>> DeleteSurvey(int id)
+        public async Task<ActionResult> DeleteSurvey(int id)
         {
-            var survey = await _context.Surveys.FindAsync(id);
+            var survey = await _context.Surveys.Include(x => x.SurveyResponses).SingleOrDefaultAsync(x => x.Id == id);
             if (survey == null)
             {
                 return NotFound();
             }
 
+            if (survey.SurveyResponses.Any())
+                return BadRequest("Can't delete survey with responses");
+
             _context.Surveys.Remove(survey);
             await _context.SaveChangesAsync();
 
-            return survey;
+            return Ok();
         }
 
-        private bool SurveyExists(int id)
+        [HttpPost("/activate/{id}")]
+        public async Task<ActionResult> ActivateSurvey(int id)
         {
-            return _context.Surveys.Any(e => e.Id == id);
+            var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
+            if (survey == null)
+                return NotFound();
+
+            survey.Active = true;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost("/deactivate/{id}")]
+        public async Task<ActionResult> DeactivateSurvey(int id)
+        {
+            var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
+            if (survey == null)
+                return NotFound();
+
+            survey.Active = false;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

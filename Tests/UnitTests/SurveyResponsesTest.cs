@@ -2,23 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Core.Models;
 using Core.Models.SurveyResponse;
 using Microsoft.AspNetCore.Mvc;
 using Server.Controllers;
+using Server.Entities;
 using Xunit;
 
-namespace Tests.Controllers
+namespace Tests.UnitTests
 {
-    public class SurveyResponsesTest : TestBase
+    [Collection("MainFixtureCollection")]
+    public class SurveyResponsesTest
     {
         private SurveyResponsesController _controller;
 
-        public SurveyResponsesTest() : base()
+        public SurveyResponsesTest(TestFixture fixture)
         {
-            _controller = new SurveyResponsesController(Context);
-            //setting user context - created in TestBase
-            _controller.ControllerContext = ControllerContext;
+            var context = new SurveyContext(fixture.Options);
+            _controller = new SurveyResponsesController(context);
+            //setting user context
+            _controller.ControllerContext = fixture.ControllerContext;
         }
 
         [Fact]

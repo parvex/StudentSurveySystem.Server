@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 using Core.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +11,12 @@ using Server.Services;
 
 namespace Tests
 {
-    public abstract class TestBase
+    public class TestFixture
     {
-        protected readonly DbContextOptions<SurveyContext> Options;
-        protected readonly SurveyContext Context;
-        protected readonly ControllerContext ControllerContext;
+        public readonly DbContextOptions<SurveyContext> Options;
+        public readonly ControllerContext ControllerContext;
 
-        protected TestBase()
+        public TestFixture()
         {
             //setting in memory db
             Options = new DbContextOptionsBuilder<SurveyContext>()
@@ -31,12 +28,11 @@ namespace Tests
             var mock = new Mock<IOptions<AppSettings>>();
             mock.Setup(ap => ap.Value).Returns(app);
 
-            Context = new SurveyContext(Options);
 
             //db seeding
             using (var seedContext = new SurveyContext(Options))
             {
-                 DbInitializer.Seed(Context, new UserService(Context, mock.Object));
+                DbInitializer.Seed(seedContext, new UserService(seedContext, mock.Object));
             }
 
             //creating controller context - logged as seeded admin to add when required in controller
@@ -49,6 +45,9 @@ namespace Tests
             {
                 HttpContext = new DefaultHttpContext() { User = user }
             };
+
+            //use custom mappings - this is used in startup
+            MapsterHelper.SetCustomMappings();
         }
     }
 }

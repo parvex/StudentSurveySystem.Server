@@ -2,7 +2,7 @@
 
 namespace Core.Models.Survey
 {
-    public class SurveyFormDto
+    public class SurveyDto
     {
         public int? Id { get; set; }
 
@@ -13,5 +13,12 @@ namespace Core.Models.Survey
         public int? CourseId { get; set; }
 
         public List<QuestionDto> Questions { get; set; }
+
+        public bool Active { get; set; }
+
+        public string CourseName { get; set; }
+
+        public string CreatorName { get; set; }
+
     }
 }

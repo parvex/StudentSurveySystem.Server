@@ -11,15 +11,20 @@ namespace Server.Helpers
     {
         public static void SetCustomMappings()
         {
-            TypeAdapterConfig<Survey, SurveyDetailsDto>
+            TypeAdapterConfig<Survey, SurveyDto>
                 .NewConfig()
-                .Map(dest => dest.Creator,
+                .Map(dest => dest.CreatorName,
                     src => $"{src.Creator.FirstName} {src.Creator.LastName}");
 
             TypeAdapterConfig<Question, QuestionDto>
                 .NewConfig()
                 .Map(dest => dest.Values,
                     src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null);
+
+            TypeAdapterConfig<QuestionDto, Question>
+                .NewConfig()
+                .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
+
 
             TypeAdapterConfig<SurveyResponse, SurveyResponseDetailsDto>
                 .NewConfig()
@@ -33,6 +38,7 @@ namespace Server.Helpers
                 .Map(dest => dest.QuestionText,
                     src => src.Question.QuestionText)
                 .Map(dest => dest.QuestionType, src => src.Question.QuestionType);
+
         }
     }
 }
