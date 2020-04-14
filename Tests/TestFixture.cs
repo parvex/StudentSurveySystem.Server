@@ -32,7 +32,7 @@ namespace Tests
             //db seeding
             using (var seedContext = new SurveyContext(Options))
             {
-                DbInitializer.Seed(seedContext, new UserService(seedContext, mock.Object));
+                DbInitializer.Seed(seedContext, new UserService(seedContext, mock.Object), false);
             }
 
             //creating controller context - logged as seeded admin to add when required in controller

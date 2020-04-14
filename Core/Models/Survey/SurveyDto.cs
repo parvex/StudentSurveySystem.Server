@@ -14,7 +14,7 @@ namespace Core.Models.Survey
 
         public List<QuestionDto> Questions { get; set; }
 
-        public bool Active { get; set; }
+        public bool Active { get; set; } = false;
 
         public string CourseName { get; set; }
 
