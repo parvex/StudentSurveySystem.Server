@@ -24,25 +24,31 @@ namespace Server.Controllers
             _context = context;
         }
 
-        // GET: api/SurveyResponses
         [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses()
+        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses(string name = "", int page = 0, int count = 20)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
+            var query = _context.SurveyResponses.Where(x => x.Survey.Name.Contains(name));
             switch (role)
             {
                 case "Lecturer":
                     var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-                    return await _context.SurveyResponses.Where(x => x.Survey.CreatorId == userId).ProjectToType<SurveyResponseDetailsDto>().ToListAsync();
+                    query = query.Where(x => x.Survey.CreatorId == userId);
+                    break;
                 case "Admin":
-                    return await _context.SurveyResponses.ProjectToType<SurveyResponseDetailsDto>().ToListAsync();
+                    break;
                 default:
                     return BadRequest("Wrong role");
+
             }
+
+            return await query.OrderByDescending(x => x.Survey.ModificationDate)
+                .Skip(count * page).Take(count)
+                .ProjectToType<SurveyResponseDetailsDto>()
+                .ToListAsync();
         }
 
-        // GET: api/SurveyResponses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
         {
@@ -56,11 +62,13 @@ namespace Server.Controllers
             return surveyResponse;
         }
 
-        [HttpGet("userfilled")]
-        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetUserSurveyResponses()
+        [HttpGet("MyCompleted")]
+        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetMyCompletedSurveyResponses(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.SurveyResponses.Where(x => x.RespondentId == userId)
+            return await _context.SurveyResponses.Where(x => x.RespondentId == userId && x.Survey.Name.Contains(name))
+                .OrderByDescending(x => x.Survey.ModificationDate)
+                .Skip(count * page).Take(count)
                 .ProjectToType<SurveyResponseDetailsDto>()
                 .ToListAsync();
         }

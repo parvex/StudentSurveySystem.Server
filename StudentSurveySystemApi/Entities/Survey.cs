@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Entities
@@ -21,6 +22,8 @@ namespace Server.Entities
         public Course Course { get; set; }
 
         public bool Active { get; set; } = false;
+
+        public DateTime ModificationDate { get; set; }
 
         public List<SurveyResponse> SurveyResponses { get; set; }
     }

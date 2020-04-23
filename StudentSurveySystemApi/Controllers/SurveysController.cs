@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Core.Models.Survey;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Server.Entities;
 
@@ -23,17 +26,35 @@ namespace Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Survey>>> GetSurveys()
-        {
-            return await _context.Surveys.ToListAsync();
-        }
 
-        [HttpGet("usertobefilled")]
-        public async Task<ActionResult<IEnumerable<SurveyDto>>> GetUserToBeFilledSurveys()
+        [HttpGet("MySurveys")]
+        public async Task<ActionResult<List<SurveyDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.SurveyResponses.All(r => r.RespondentId != userId))
+            return await _context.Surveys.Where(x => x.Name.Contains(name) && x.CreatorId == userId)
+                .OrderByDescending(x => x.ModificationDate)
+                .Skip(count * page).Take(count)
+                .ProjectToType<SurveyDto>()
+                .ToListAsync();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<SurveyDto>>> GetSurveys(string name = "", int page = 0, int count = 20)
+        {
+            return await _context.Surveys.Where(x => x.Name.Contains(name))
+                .OrderByDescending(x => x.ModificationDate)
+                .Skip(count * page).Take(count)
+                .ProjectToType<SurveyDto>()
+                .ToListAsync();
+        }
+
+        [HttpGet("MyNotFilledForm")]
+        public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Surveys.Where(x => x.SurveyResponses.All(r => r.Survey.Name.Contains(name) && r.RespondentId != userId))
+                .OrderByDescending(x => x.ModificationDate)
+                .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
                 .ToListAsync();
         }

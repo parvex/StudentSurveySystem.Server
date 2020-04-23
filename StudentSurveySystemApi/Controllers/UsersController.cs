@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,13 +109,16 @@ namespace Server.Controllers
             return Ok(currentUser);
         }
 
-        // GET: api/Users
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
+        //// GET: api/Users
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUsers(string userName = "", int page = 0, int count = 20)
+        //{
+        //    return await _context.Users.Where(x => x.Username.Contains(userName))
+        //        .OrderBy(x => x.Username)
+        //        .Skip(count * page).Take(count)
+        //        .ToListAsync();
+        //}
 
         // GET: api/Users/5
         [HttpGet("{id}")]

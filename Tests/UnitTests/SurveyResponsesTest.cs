@@ -63,9 +63,9 @@ namespace Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetUserSurveyResponses()
+        public async Task GetMyCompletedSurveyResponses()
         {
-            var result = await _controller.GetUserSurveyResponses();
+            var result = await _controller.GetMyCompletedSurveyResponses();
             Assert.NotEmpty(result.Value);
         }
     }
