@@ -42,7 +42,7 @@ namespace Server.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
+        [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateDto userDto)
         {
             var user = await _userService.Authenticate(userDto.Username, userDto.Password);
@@ -54,16 +54,15 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("usosauthdata")]
+        [HttpGet("UsosAuthData")]
         public async Task<UsosAuthDto> GetUsosAuthData()
         {
-
             return await _usosApi.GetUsosAuthData();
         }
 
 
         [AllowAnonymous]
-        [HttpPost("usospinauth")]
+        [HttpPost("UsosPinAuth")]
         public async Task<IActionResult> UsosPinAuth(UsosAuthDto usosAuth)
         {
             if (usosAuth.RequestToken == null || usosAuth.TokenSecret == null || usosAuth.OAuthVerifier == null)
