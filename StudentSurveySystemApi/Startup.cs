@@ -109,6 +109,7 @@ namespace Server
 
             MapsterHelper.SetCustomMappings();
 
+            //comment to switch off db seeding when db is empty
             DbInitializer.SeedAppDb(context, userService);
         }
     }

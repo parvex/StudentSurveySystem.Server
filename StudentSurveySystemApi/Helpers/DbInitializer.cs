@@ -167,7 +167,7 @@ namespace Server.Helpers
                         new Answer {Id = 0, QuestionId = seedQuestions[0].Id.Value, Value = 7.ToString()},
                         new Answer
                         {
-                            Id = 1, QuestionId = seedQuestions[0].Id.Value,
+                            Id = 1, QuestionId = seedQuestions[1].Id.Value,
                             Value = new DateTime(2020, 1, 3).ToString(CultureInfo.InvariantCulture)
                         },
                         new Answer
@@ -222,7 +222,7 @@ namespace Server.Helpers
         {
             using (var transaction = context.Database.BeginTransaction())
             {
-                Seed(context, userService, false);
+                Seed(context, userService, true);
 
                 transaction.Commit();
             }
