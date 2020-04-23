@@ -1,0 +1,1 @@
+java -jar swagger-codegen-cli.jar generate -i swagger.json -l csharp -o GeneratedApiClient
