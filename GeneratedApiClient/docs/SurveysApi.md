@@ -1,6 +1,6 @@
 # StudentSurveySystem.ApiClient.Api.SurveysApi
 
-All URIs are relative to *https://localhost:5001/api*
+All URIs are relative to *https://server20200331200409.azurewebsites.net/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

@@ -52,13 +52,13 @@ namespace StudentSurveySystem.ApiClient.Client
         public ApiClient()
         {
             Configuration = StudentSurveySystem.ApiClient.Client.Configuration.Default;
-            RestClient = new RestClient("https://localhost:5001/api");
+            RestClient = new RestClient("https://server20200331200409.azurewebsites.net/api");
             RestClient.IgnoreResponseStatusCode = true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (https://localhost:5001/api).
+        /// with default base path (https://server20200331200409.azurewebsites.net/api).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
@@ -74,7 +74,7 @@ namespace StudentSurveySystem.ApiClient.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://localhost:5001/api")
+        public ApiClient(String basePath = "https://server20200331200409.azurewebsites.net/api")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
