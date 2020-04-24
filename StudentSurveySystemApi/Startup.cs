@@ -85,12 +85,20 @@ namespace Server
             }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            var basePath = "/api";
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "swagger/{documentName}/swagger.json";
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+                {
+                    swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}{basePath}" } };
+                });
+            });
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api");
             });
 
             app.UseHttpsRedirection();

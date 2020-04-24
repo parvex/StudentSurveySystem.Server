@@ -15,7 +15,7 @@ using Server.Entities;
 namespace Server.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SurveysController : ControllerBase
     {

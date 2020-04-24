@@ -20,7 +20,7 @@ namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly SurveyContext _context;
@@ -43,7 +43,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("Authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateDto userDto)
+        public async Task<ActionResult<CurrentUserDto>> Authenticate([FromBody]AuthenticateDto userDto)
         {
             var user = await _userService.Authenticate(userDto.Username, userDto.Password);
 
@@ -63,7 +63,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("UsosPinAuth")]
-        public async Task<IActionResult> UsosPinAuth(UsosAuthDto usosAuth)
+        public async Task<ActionResult<CurrentUserDto>> UsosPinAuth(UsosAuthDto usosAuth)
         {
             if (usosAuth.RequestToken == null || usosAuth.TokenSecret == null || usosAuth.OAuthVerifier == null)
                 return BadRequest("Missing parameters");

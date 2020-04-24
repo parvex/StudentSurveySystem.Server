@@ -1,0 +1,5 @@
+{
+    "packageName" : "StudentSurveySystem.ApiClient",
+    "targetFramework" : "v5.0",
+    "netCoreProjectFile" : "true"
+}
