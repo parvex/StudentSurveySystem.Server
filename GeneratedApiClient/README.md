@@ -55,12 +55,12 @@ namespace Example
 
             try
             {
-                List<SurveyResponseDetailsDto> result = apiInstance.ApiSurveyResponsesGet(name, page, count);
+                List<SurveyResponseDetailsDto> result = apiInstance.SurveyResponsesGet(name, page, count);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveyResponsesApi.ApiSurveyResponsesGet: " + e.Message );
+                Debug.Print("Exception when calling SurveyResponsesApi.SurveyResponsesGet: " + e.Message );
             }
         }
     }
@@ -74,24 +74,24 @@ All URIs are relative to *https://localhost:5001/api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*SurveyResponsesApi* | [**ApiSurveyResponsesGet**](docs/SurveyResponsesApi.md#apisurveyresponsesget) | **GET** /api/SurveyResponses | 
-*SurveyResponsesApi* | [**ApiSurveyResponsesIdGet**](docs/SurveyResponsesApi.md#apisurveyresponsesidget) | **GET** /api/SurveyResponses/{id} | 
-*SurveyResponsesApi* | [**ApiSurveyResponsesMyCompletedGet**](docs/SurveyResponsesApi.md#apisurveyresponsesmycompletedget) | **GET** /api/SurveyResponses/MyCompleted | 
-*SurveyResponsesApi* | [**ApiSurveyResponsesPost**](docs/SurveyResponsesApi.md#apisurveyresponsespost) | **POST** /api/SurveyResponses | 
+*SurveyResponsesApi* | [**SurveyResponsesGet**](docs/SurveyResponsesApi.md#surveyresponsesget) | **GET** /SurveyResponses | 
+*SurveyResponsesApi* | [**SurveyResponsesIdGet**](docs/SurveyResponsesApi.md#surveyresponsesidget) | **GET** /SurveyResponses/{id} | 
+*SurveyResponsesApi* | [**SurveyResponsesMyCompletedGet**](docs/SurveyResponsesApi.md#surveyresponsesmycompletedget) | **GET** /SurveyResponses/MyCompleted | 
+*SurveyResponsesApi* | [**SurveyResponsesPost**](docs/SurveyResponsesApi.md#surveyresponsespost) | **POST** /SurveyResponses | 
 *SurveysApi* | [**ActivateIdPost**](docs/SurveysApi.md#activateidpost) | **POST** /activate/{id} | 
-*SurveysApi* | [**ApiSurveysGet**](docs/SurveysApi.md#apisurveysget) | **GET** /api/Surveys | 
-*SurveysApi* | [**ApiSurveysIdDelete**](docs/SurveysApi.md#apisurveysiddelete) | **DELETE** /api/Surveys/{id} | 
-*SurveysApi* | [**ApiSurveysIdGet**](docs/SurveysApi.md#apisurveysidget) | **GET** /api/Surveys/{id} | 
-*SurveysApi* | [**ApiSurveysIdPut**](docs/SurveysApi.md#apisurveysidput) | **PUT** /api/Surveys/{id} | 
-*SurveysApi* | [**ApiSurveysMyNotFilledFormGet**](docs/SurveysApi.md#apisurveysmynotfilledformget) | **GET** /api/Surveys/MyNotFilledForm | 
-*SurveysApi* | [**ApiSurveysMySurveysGet**](docs/SurveysApi.md#apisurveysmysurveysget) | **GET** /api/Surveys/MySurveys | 
-*SurveysApi* | [**ApiSurveysPost**](docs/SurveysApi.md#apisurveyspost) | **POST** /api/Surveys | 
-*SurveysApi* | [**ApiSurveysPut**](docs/SurveysApi.md#apisurveysput) | **PUT** /api/Surveys | 
 *SurveysApi* | [**DeactivateIdPost**](docs/SurveysApi.md#deactivateidpost) | **POST** /deactivate/{id} | 
-*UsersApi* | [**ApiUsersAuthenticatePost**](docs/UsersApi.md#apiusersauthenticatepost) | **POST** /api/Users/Authenticate | 
-*UsersApi* | [**ApiUsersIdGet**](docs/UsersApi.md#apiusersidget) | **GET** /api/Users/{id} | 
-*UsersApi* | [**ApiUsersUsosAuthDataGet**](docs/UsersApi.md#apiusersusosauthdataget) | **GET** /api/Users/UsosAuthData | 
-*UsersApi* | [**ApiUsersUsosPinAuthPost**](docs/UsersApi.md#apiusersusospinauthpost) | **POST** /api/Users/UsosPinAuth | 
+*SurveysApi* | [**SurveysGet**](docs/SurveysApi.md#surveysget) | **GET** /Surveys | 
+*SurveysApi* | [**SurveysIdDelete**](docs/SurveysApi.md#surveysiddelete) | **DELETE** /Surveys/{id} | 
+*SurveysApi* | [**SurveysIdGet**](docs/SurveysApi.md#surveysidget) | **GET** /Surveys/{id} | 
+*SurveysApi* | [**SurveysIdPut**](docs/SurveysApi.md#surveysidput) | **PUT** /Surveys/{id} | 
+*SurveysApi* | [**SurveysMyNotFilledFormGet**](docs/SurveysApi.md#surveysmynotfilledformget) | **GET** /Surveys/MyNotFilledForm | 
+*SurveysApi* | [**SurveysMySurveysGet**](docs/SurveysApi.md#surveysmysurveysget) | **GET** /Surveys/MySurveys | 
+*SurveysApi* | [**SurveysPost**](docs/SurveysApi.md#surveyspost) | **POST** /Surveys | 
+*SurveysApi* | [**SurveysPut**](docs/SurveysApi.md#surveysput) | **PUT** /Surveys | 
+*UsersApi* | [**UsersAuthenticatePost**](docs/UsersApi.md#usersauthenticatepost) | **POST** /Users/Authenticate | 
+*UsersApi* | [**UsersIdGet**](docs/UsersApi.md#usersidget) | **GET** /Users/{id} | 
+*UsersApi* | [**UsersUsosAuthDataGet**](docs/UsersApi.md#usersusosauthdataget) | **GET** /Users/UsosAuthData | 
+*UsersApi* | [**UsersUsosPinAuthPost**](docs/UsersApi.md#usersusospinauthpost) | **POST** /Users/UsosPinAuth | 
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models

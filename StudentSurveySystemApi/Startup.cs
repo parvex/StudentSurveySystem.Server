@@ -101,7 +101,8 @@ namespace Server
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api");
             });
 
-            app.UseHttpsRedirection();
+            //uncomment to switch on redirect to ssl
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -4,14 +4,14 @@ All URIs are relative to *https://localhost:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApiSurveyResponsesGet**](SurveyResponsesApi.md#apisurveyresponsesget) | **GET** /api/SurveyResponses | 
-[**ApiSurveyResponsesIdGet**](SurveyResponsesApi.md#apisurveyresponsesidget) | **GET** /api/SurveyResponses/{id} | 
-[**ApiSurveyResponsesMyCompletedGet**](SurveyResponsesApi.md#apisurveyresponsesmycompletedget) | **GET** /api/SurveyResponses/MyCompleted | 
-[**ApiSurveyResponsesPost**](SurveyResponsesApi.md#apisurveyresponsespost) | **POST** /api/SurveyResponses | 
+[**SurveyResponsesGet**](SurveyResponsesApi.md#surveyresponsesget) | **GET** /SurveyResponses | 
+[**SurveyResponsesIdGet**](SurveyResponsesApi.md#surveyresponsesidget) | **GET** /SurveyResponses/{id} | 
+[**SurveyResponsesMyCompletedGet**](SurveyResponsesApi.md#surveyresponsesmycompletedget) | **GET** /SurveyResponses/MyCompleted | 
+[**SurveyResponsesPost**](SurveyResponsesApi.md#surveyresponsespost) | **POST** /SurveyResponses | 
 
-<a name="apisurveyresponsesget"></a>
-# **ApiSurveyResponsesGet**
-> List<SurveyResponseDetailsDto> ApiSurveyResponsesGet (string name = null, int? page = null, int? count = null)
+<a name="surveyresponsesget"></a>
+# **SurveyResponsesGet**
+> List<SurveyResponseDetailsDto> SurveyResponsesGet (string name = null, int? page = null, int? count = null)
 
 
 
@@ -25,7 +25,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiSurveyResponsesGetExample
+    public class SurveyResponsesGetExample
     {
         public void main()
         {
@@ -37,12 +37,12 @@ namespace Example
 
             try
             {
-                List&lt;SurveyResponseDetailsDto&gt; result = apiInstance.ApiSurveyResponsesGet(name, page, count);
+                List&lt;SurveyResponseDetailsDto&gt; result = apiInstance.SurveyResponsesGet(name, page, count);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveyResponsesApi.ApiSurveyResponsesGet: " + e.Message );
+                Debug.Print("Exception when calling SurveyResponsesApi.SurveyResponsesGet: " + e.Message );
             }
         }
     }
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apisurveyresponsesidget"></a>
-# **ApiSurveyResponsesIdGet**
-> SurveyResponseDto ApiSurveyResponsesIdGet (int? id)
+<a name="surveyresponsesidget"></a>
+# **SurveyResponsesIdGet**
+> SurveyResponseDto SurveyResponsesIdGet (int? id)
 
 
 
@@ -87,7 +87,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiSurveyResponsesIdGetExample
+    public class SurveyResponsesIdGetExample
     {
         public void main()
         {
@@ -97,12 +97,12 @@ namespace Example
 
             try
             {
-                SurveyResponseDto result = apiInstance.ApiSurveyResponsesIdGet(id);
+                SurveyResponseDto result = apiInstance.SurveyResponsesIdGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveyResponsesApi.ApiSurveyResponsesIdGet: " + e.Message );
+                Debug.Print("Exception when calling SurveyResponsesApi.SurveyResponsesIdGet: " + e.Message );
             }
         }
     }
@@ -129,9 +129,9 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apisurveyresponsesmycompletedget"></a>
-# **ApiSurveyResponsesMyCompletedGet**
-> List<SurveyResponseDetailsDto> ApiSurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null)
+<a name="surveyresponsesmycompletedget"></a>
+# **SurveyResponsesMyCompletedGet**
+> List<SurveyResponseDetailsDto> SurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null)
 
 
 
@@ -145,7 +145,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiSurveyResponsesMyCompletedGetExample
+    public class SurveyResponsesMyCompletedGetExample
     {
         public void main()
         {
@@ -157,12 +157,12 @@ namespace Example
 
             try
             {
-                List&lt;SurveyResponseDetailsDto&gt; result = apiInstance.ApiSurveyResponsesMyCompletedGet(name, page, count);
+                List&lt;SurveyResponseDetailsDto&gt; result = apiInstance.SurveyResponsesMyCompletedGet(name, page, count);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveyResponsesApi.ApiSurveyResponsesMyCompletedGet: " + e.Message );
+                Debug.Print("Exception when calling SurveyResponsesApi.SurveyResponsesMyCompletedGet: " + e.Message );
             }
         }
     }
@@ -191,9 +191,9 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apisurveyresponsespost"></a>
-# **ApiSurveyResponsesPost**
-> SurveyResponseDto ApiSurveyResponsesPost (SurveyResponseDto body = null)
+<a name="surveyresponsespost"></a>
+# **SurveyResponsesPost**
+> SurveyResponseDto SurveyResponsesPost (SurveyResponseDto body = null)
 
 
 
@@ -207,7 +207,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiSurveyResponsesPostExample
+    public class SurveyResponsesPostExample
     {
         public void main()
         {
@@ -217,12 +217,12 @@ namespace Example
 
             try
             {
-                SurveyResponseDto result = apiInstance.ApiSurveyResponsesPost(body);
+                SurveyResponseDto result = apiInstance.SurveyResponsesPost(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveyResponsesApi.ApiSurveyResponsesPost: " + e.Message );
+                Debug.Print("Exception when calling SurveyResponsesApi.SurveyResponsesPost: " + e.Message );
             }
         }
     }

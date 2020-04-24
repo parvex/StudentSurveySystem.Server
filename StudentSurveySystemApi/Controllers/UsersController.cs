@@ -108,7 +108,6 @@ namespace Server.Controllers
             return Ok(currentUser);
         }
 
-        //// GET: api/Users
         //[Authorize(Roles = "Admin")]
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<User>>> GetUsers(string userName = "", int page = 0, int count = 20)
@@ -119,7 +118,6 @@ namespace Server.Controllers
         //        .ToListAsync();
         //}
 
-        // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {

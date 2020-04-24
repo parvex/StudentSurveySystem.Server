@@ -34,7 +34,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>List&lt;SurveyResponseDetailsDto&gt;</returns>
-        List<SurveyResponseDetailsDto> ApiSurveyResponsesGet (string name = null, int? page = null, int? count = null);
+        List<SurveyResponseDetailsDto> SurveyResponsesGet (string name = null, int? page = null, int? count = null);
 
         /// <summary>
         /// 
@@ -47,7 +47,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>ApiResponse of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        ApiResponse<List<SurveyResponseDetailsDto>> ApiSurveyResponsesGetWithHttpInfo (string name = null, int? page = null, int? count = null);
+        ApiResponse<List<SurveyResponseDetailsDto>> SurveyResponsesGetWithHttpInfo (string name = null, int? page = null, int? count = null);
         /// <summary>
         /// 
         /// </summary>
@@ -57,7 +57,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>SurveyResponseDto</returns>
-        SurveyResponseDto ApiSurveyResponsesIdGet (int? id);
+        SurveyResponseDto SurveyResponsesIdGet (int? id);
 
         /// <summary>
         /// 
@@ -68,7 +68,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of SurveyResponseDto</returns>
-        ApiResponse<SurveyResponseDto> ApiSurveyResponsesIdGetWithHttpInfo (int? id);
+        ApiResponse<SurveyResponseDto> SurveyResponsesIdGetWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -80,7 +80,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>List&lt;SurveyResponseDetailsDto&gt;</returns>
-        List<SurveyResponseDetailsDto> ApiSurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null);
+        List<SurveyResponseDetailsDto> SurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null);
 
         /// <summary>
         /// 
@@ -93,7 +93,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>ApiResponse of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        ApiResponse<List<SurveyResponseDetailsDto>> ApiSurveyResponsesMyCompletedGetWithHttpInfo (string name = null, int? page = null, int? count = null);
+        ApiResponse<List<SurveyResponseDetailsDto>> SurveyResponsesMyCompletedGetWithHttpInfo (string name = null, int? page = null, int? count = null);
         /// <summary>
         /// 
         /// </summary>
@@ -103,7 +103,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>SurveyResponseDto</returns>
-        SurveyResponseDto ApiSurveyResponsesPost (SurveyResponseDto body = null);
+        SurveyResponseDto SurveyResponsesPost (SurveyResponseDto body = null);
 
         /// <summary>
         /// 
@@ -114,7 +114,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of SurveyResponseDto</returns>
-        ApiResponse<SurveyResponseDto> ApiSurveyResponsesPostWithHttpInfo (SurveyResponseDto body = null);
+        ApiResponse<SurveyResponseDto> SurveyResponsesPostWithHttpInfo (SurveyResponseDto body = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -128,7 +128,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> ApiSurveyResponsesGetAsync (string name = null, int? page = null, int? count = null);
+        System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> SurveyResponsesGetAsync (string name = null, int? page = null, int? count = null);
 
         /// <summary>
         /// 
@@ -141,7 +141,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of ApiResponse (List&lt;SurveyResponseDetailsDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> ApiSurveyResponsesGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null);
+        System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> SurveyResponsesGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null);
         /// <summary>
         /// 
         /// </summary>
@@ -151,7 +151,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of SurveyResponseDto</returns>
-        System.Threading.Tasks.Task<SurveyResponseDto> ApiSurveyResponsesIdGetAsync (int? id);
+        System.Threading.Tasks.Task<SurveyResponseDto> SurveyResponsesIdGetAsync (int? id);
 
         /// <summary>
         /// 
@@ -162,7 +162,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (SurveyResponseDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> ApiSurveyResponsesIdGetAsyncWithHttpInfo (int? id);
+        System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> SurveyResponsesIdGetAsyncWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -174,7 +174,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> ApiSurveyResponsesMyCompletedGetAsync (string name = null, int? page = null, int? count = null);
+        System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> SurveyResponsesMyCompletedGetAsync (string name = null, int? page = null, int? count = null);
 
         /// <summary>
         /// 
@@ -187,7 +187,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of ApiResponse (List&lt;SurveyResponseDetailsDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> ApiSurveyResponsesMyCompletedGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null);
+        System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> SurveyResponsesMyCompletedGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null);
         /// <summary>
         /// 
         /// </summary>
@@ -197,7 +197,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of SurveyResponseDto</returns>
-        System.Threading.Tasks.Task<SurveyResponseDto> ApiSurveyResponsesPostAsync (SurveyResponseDto body = null);
+        System.Threading.Tasks.Task<SurveyResponseDto> SurveyResponsesPostAsync (SurveyResponseDto body = null);
 
         /// <summary>
         /// 
@@ -208,7 +208,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (SurveyResponseDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> ApiSurveyResponsesPostAsyncWithHttpInfo (SurveyResponseDto body = null);
+        System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> SurveyResponsesPostAsyncWithHttpInfo (SurveyResponseDto body = null);
         #endregion Asynchronous Operations
     }
 
@@ -328,9 +328,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public List<SurveyResponseDetailsDto> ApiSurveyResponsesGet (string name = null, int? page = null, int? count = null)
+        public List<SurveyResponseDetailsDto> SurveyResponsesGet (string name = null, int? page = null, int? count = null)
         {
-             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = ApiSurveyResponsesGetWithHttpInfo(name, page, count);
+             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = SurveyResponsesGetWithHttpInfo(name, page, count);
              return localVarResponse.Data;
         }
 
@@ -342,10 +342,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>ApiResponse of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public ApiResponse< List<SurveyResponseDetailsDto> > ApiSurveyResponsesGetWithHttpInfo (string name = null, int? page = null, int? count = null)
+        public ApiResponse< List<SurveyResponseDetailsDto> > SurveyResponsesGetWithHttpInfo (string name = null, int? page = null, int? count = null)
         {
 
-            var localVarPath = "./api/SurveyResponses";
+            var localVarPath = "./SurveyResponses";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -387,7 +387,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -404,9 +404,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> ApiSurveyResponsesGetAsync (string name = null, int? page = null, int? count = null)
+        public async System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> SurveyResponsesGetAsync (string name = null, int? page = null, int? count = null)
         {
-             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = await ApiSurveyResponsesGetAsyncWithHttpInfo(name, page, count);
+             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = await SurveyResponsesGetAsyncWithHttpInfo(name, page, count);
              return localVarResponse.Data;
 
         }
@@ -419,10 +419,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of ApiResponse (List&lt;SurveyResponseDetailsDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> ApiSurveyResponsesGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null)
+        public async System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> SurveyResponsesGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null)
         {
 
-            var localVarPath = "./api/SurveyResponses";
+            var localVarPath = "./SurveyResponses";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -464,7 +464,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -479,9 +479,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>SurveyResponseDto</returns>
-        public SurveyResponseDto ApiSurveyResponsesIdGet (int? id)
+        public SurveyResponseDto SurveyResponsesIdGet (int? id)
         {
-             ApiResponse<SurveyResponseDto> localVarResponse = ApiSurveyResponsesIdGetWithHttpInfo(id);
+             ApiResponse<SurveyResponseDto> localVarResponse = SurveyResponsesIdGetWithHttpInfo(id);
              return localVarResponse.Data;
         }
 
@@ -491,13 +491,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of SurveyResponseDto</returns>
-        public ApiResponse< SurveyResponseDto > ApiSurveyResponsesIdGetWithHttpInfo (int? id)
+        public ApiResponse< SurveyResponseDto > SurveyResponsesIdGetWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveyResponsesApi->ApiSurveyResponsesIdGet");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveyResponsesApi->SurveyResponsesIdGet");
 
-            var localVarPath = "./api/SurveyResponses/{id}";
+            var localVarPath = "./SurveyResponses/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -537,7 +537,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesIdGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesIdGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -552,9 +552,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of SurveyResponseDto</returns>
-        public async System.Threading.Tasks.Task<SurveyResponseDto> ApiSurveyResponsesIdGetAsync (int? id)
+        public async System.Threading.Tasks.Task<SurveyResponseDto> SurveyResponsesIdGetAsync (int? id)
         {
-             ApiResponse<SurveyResponseDto> localVarResponse = await ApiSurveyResponsesIdGetAsyncWithHttpInfo(id);
+             ApiResponse<SurveyResponseDto> localVarResponse = await SurveyResponsesIdGetAsyncWithHttpInfo(id);
              return localVarResponse.Data;
 
         }
@@ -565,13 +565,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (SurveyResponseDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> ApiSurveyResponsesIdGetAsyncWithHttpInfo (int? id)
+        public async System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> SurveyResponsesIdGetAsyncWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveyResponsesApi->ApiSurveyResponsesIdGet");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveyResponsesApi->SurveyResponsesIdGet");
 
-            var localVarPath = "./api/SurveyResponses/{id}";
+            var localVarPath = "./SurveyResponses/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -611,7 +611,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesIdGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesIdGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -628,9 +628,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public List<SurveyResponseDetailsDto> ApiSurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null)
+        public List<SurveyResponseDetailsDto> SurveyResponsesMyCompletedGet (string name = null, int? page = null, int? count = null)
         {
-             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = ApiSurveyResponsesMyCompletedGetWithHttpInfo(name, page, count);
+             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = SurveyResponsesMyCompletedGetWithHttpInfo(name, page, count);
              return localVarResponse.Data;
         }
 
@@ -642,10 +642,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>ApiResponse of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public ApiResponse< List<SurveyResponseDetailsDto> > ApiSurveyResponsesMyCompletedGetWithHttpInfo (string name = null, int? page = null, int? count = null)
+        public ApiResponse< List<SurveyResponseDetailsDto> > SurveyResponsesMyCompletedGetWithHttpInfo (string name = null, int? page = null, int? count = null)
         {
 
-            var localVarPath = "./api/SurveyResponses/MyCompleted";
+            var localVarPath = "./SurveyResponses/MyCompleted";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -687,7 +687,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesMyCompletedGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesMyCompletedGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -704,9 +704,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of List&lt;SurveyResponseDetailsDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> ApiSurveyResponsesMyCompletedGetAsync (string name = null, int? page = null, int? count = null)
+        public async System.Threading.Tasks.Task<List<SurveyResponseDetailsDto>> SurveyResponsesMyCompletedGetAsync (string name = null, int? page = null, int? count = null)
         {
-             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = await ApiSurveyResponsesMyCompletedGetAsyncWithHttpInfo(name, page, count);
+             ApiResponse<List<SurveyResponseDetailsDto>> localVarResponse = await SurveyResponsesMyCompletedGetAsyncWithHttpInfo(name, page, count);
              return localVarResponse.Data;
 
         }
@@ -719,10 +719,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <param name="page"> (optional, default to 0)</param>
         /// <param name="count"> (optional, default to 20)</param>
         /// <returns>Task of ApiResponse (List&lt;SurveyResponseDetailsDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> ApiSurveyResponsesMyCompletedGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null)
+        public async System.Threading.Tasks.Task<ApiResponse<List<SurveyResponseDetailsDto>>> SurveyResponsesMyCompletedGetAsyncWithHttpInfo (string name = null, int? page = null, int? count = null)
         {
 
-            var localVarPath = "./api/SurveyResponses/MyCompleted";
+            var localVarPath = "./SurveyResponses/MyCompleted";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -764,7 +764,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesMyCompletedGet", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesMyCompletedGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -779,9 +779,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>SurveyResponseDto</returns>
-        public SurveyResponseDto ApiSurveyResponsesPost (SurveyResponseDto body = null)
+        public SurveyResponseDto SurveyResponsesPost (SurveyResponseDto body = null)
         {
-             ApiResponse<SurveyResponseDto> localVarResponse = ApiSurveyResponsesPostWithHttpInfo(body);
+             ApiResponse<SurveyResponseDto> localVarResponse = SurveyResponsesPostWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -791,10 +791,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of SurveyResponseDto</returns>
-        public ApiResponse< SurveyResponseDto > ApiSurveyResponsesPostWithHttpInfo (SurveyResponseDto body = null)
+        public ApiResponse< SurveyResponseDto > SurveyResponsesPostWithHttpInfo (SurveyResponseDto body = null)
         {
 
-            var localVarPath = "./api/SurveyResponses";
+            var localVarPath = "./SurveyResponses";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -844,7 +844,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -859,9 +859,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of SurveyResponseDto</returns>
-        public async System.Threading.Tasks.Task<SurveyResponseDto> ApiSurveyResponsesPostAsync (SurveyResponseDto body = null)
+        public async System.Threading.Tasks.Task<SurveyResponseDto> SurveyResponsesPostAsync (SurveyResponseDto body = null)
         {
-             ApiResponse<SurveyResponseDto> localVarResponse = await ApiSurveyResponsesPostAsyncWithHttpInfo(body);
+             ApiResponse<SurveyResponseDto> localVarResponse = await SurveyResponsesPostAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -872,10 +872,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (SurveyResponseDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> ApiSurveyResponsesPostAsyncWithHttpInfo (SurveyResponseDto body = null)
+        public async System.Threading.Tasks.Task<ApiResponse<SurveyResponseDto>> SurveyResponsesPostAsyncWithHttpInfo (SurveyResponseDto body = null)
         {
 
-            var localVarPath = "./api/SurveyResponses";
+            var localVarPath = "./SurveyResponses";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -925,7 +925,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiSurveyResponsesPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveyResponsesPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 

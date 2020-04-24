@@ -4,14 +4,14 @@ All URIs are relative to *https://localhost:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApiUsersAuthenticatePost**](UsersApi.md#apiusersauthenticatepost) | **POST** /api/Users/Authenticate | 
-[**ApiUsersIdGet**](UsersApi.md#apiusersidget) | **GET** /api/Users/{id} | 
-[**ApiUsersUsosAuthDataGet**](UsersApi.md#apiusersusosauthdataget) | **GET** /api/Users/UsosAuthData | 
-[**ApiUsersUsosPinAuthPost**](UsersApi.md#apiusersusospinauthpost) | **POST** /api/Users/UsosPinAuth | 
+[**UsersAuthenticatePost**](UsersApi.md#usersauthenticatepost) | **POST** /Users/Authenticate | 
+[**UsersIdGet**](UsersApi.md#usersidget) | **GET** /Users/{id} | 
+[**UsersUsosAuthDataGet**](UsersApi.md#usersusosauthdataget) | **GET** /Users/UsosAuthData | 
+[**UsersUsosPinAuthPost**](UsersApi.md#usersusospinauthpost) | **POST** /Users/UsosPinAuth | 
 
-<a name="apiusersauthenticatepost"></a>
-# **ApiUsersAuthenticatePost**
-> CurrentUserDto ApiUsersAuthenticatePost (AuthenticateDto body = null)
+<a name="usersauthenticatepost"></a>
+# **UsersAuthenticatePost**
+> CurrentUserDto UsersAuthenticatePost (AuthenticateDto body = null)
 
 
 
@@ -25,7 +25,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiUsersAuthenticatePostExample
+    public class UsersAuthenticatePostExample
     {
         public void main()
         {
@@ -35,12 +35,12 @@ namespace Example
 
             try
             {
-                CurrentUserDto result = apiInstance.ApiUsersAuthenticatePost(body);
+                CurrentUserDto result = apiInstance.UsersAuthenticatePost(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UsersApi.ApiUsersAuthenticatePost: " + e.Message );
+                Debug.Print("Exception when calling UsersApi.UsersAuthenticatePost: " + e.Message );
             }
         }
     }
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apiusersidget"></a>
-# **ApiUsersIdGet**
-> User ApiUsersIdGet (int? id)
+<a name="usersidget"></a>
+# **UsersIdGet**
+> User UsersIdGet (int? id)
 
 
 
@@ -83,7 +83,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiUsersIdGetExample
+    public class UsersIdGetExample
     {
         public void main()
         {
@@ -93,12 +93,12 @@ namespace Example
 
             try
             {
-                User result = apiInstance.ApiUsersIdGet(id);
+                User result = apiInstance.UsersIdGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UsersApi.ApiUsersIdGet: " + e.Message );
+                Debug.Print("Exception when calling UsersApi.UsersIdGet: " + e.Message );
             }
         }
     }
@@ -125,9 +125,9 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apiusersusosauthdataget"></a>
-# **ApiUsersUsosAuthDataGet**
-> UsosAuthDto ApiUsersUsosAuthDataGet ()
+<a name="usersusosauthdataget"></a>
+# **UsersUsosAuthDataGet**
+> UsosAuthDto UsersUsosAuthDataGet ()
 
 
 
@@ -141,7 +141,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiUsersUsosAuthDataGetExample
+    public class UsersUsosAuthDataGetExample
     {
         public void main()
         {
@@ -150,12 +150,12 @@ namespace Example
 
             try
             {
-                UsosAuthDto result = apiInstance.ApiUsersUsosAuthDataGet();
+                UsosAuthDto result = apiInstance.UsersUsosAuthDataGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UsersApi.ApiUsersUsosAuthDataGet: " + e.Message );
+                Debug.Print("Exception when calling UsersApi.UsersUsosAuthDataGet: " + e.Message );
             }
         }
     }
@@ -179,9 +179,9 @@ This endpoint does not need any parameter.
  - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="apiusersusospinauthpost"></a>
-# **ApiUsersUsosPinAuthPost**
-> CurrentUserDto ApiUsersUsosPinAuthPost (UsosAuthDto body = null)
+<a name="usersusospinauthpost"></a>
+# **UsersUsosPinAuthPost**
+> CurrentUserDto UsersUsosPinAuthPost (UsosAuthDto body = null)
 
 
 
@@ -195,7 +195,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ApiUsersUsosPinAuthPostExample
+    public class UsersUsosPinAuthPostExample
     {
         public void main()
         {
@@ -205,12 +205,12 @@ namespace Example
 
             try
             {
-                CurrentUserDto result = apiInstance.ApiUsersUsosPinAuthPost(body);
+                CurrentUserDto result = apiInstance.UsersUsosPinAuthPost(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UsersApi.ApiUsersUsosPinAuthPost: " + e.Message );
+                Debug.Print("Exception when calling UsersApi.UsersUsosPinAuthPost: " + e.Message );
             }
         }
     }

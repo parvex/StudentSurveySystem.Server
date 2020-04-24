@@ -10,7 +10,7 @@
     }
   ],
   "paths": {
-    "/api/SurveyResponses": {
+    "/SurveyResponses": {
       "get": {
         "tags": [
           "SurveyResponses"
@@ -123,7 +123,7 @@
         }
       }
     },
-    "/api/SurveyResponses/{id}": {
+    "/SurveyResponses/{id}": {
       "get": {
         "tags": [
           "SurveyResponses"
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/api/SurveyResponses/MyCompleted": {
+    "/SurveyResponses/MyCompleted": {
       "get": {
         "tags": [
           "SurveyResponses"
@@ -230,7 +230,7 @@
         }
       }
     },
-    "/api/Surveys/MySurveys": {
+    "/Surveys/MySurveys": {
       "get": {
         "tags": [
           "Surveys"
@@ -297,7 +297,7 @@
         }
       }
     },
-    "/api/Surveys": {
+    "/Surveys": {
       "get": {
         "tags": [
           "Surveys"
@@ -456,7 +456,7 @@
         }
       }
     },
-    "/api/Surveys/MyNotFilledForm": {
+    "/Surveys/MyNotFilledForm": {
       "get": {
         "tags": [
           "Surveys"
@@ -523,7 +523,7 @@
         }
       }
     },
-    "/api/Surveys/{id}": {
+    "/Surveys/{id}": {
       "get": {
         "tags": [
           "Surveys"
@@ -670,7 +670,7 @@
         }
       }
     },
-    "/api/Users/Authenticate": {
+    "/Users/Authenticate": {
       "post": {
         "tags": [
           "Users"
@@ -718,7 +718,7 @@
         }
       }
     },
-    "/api/Users/UsosAuthData": {
+    "/Users/UsosAuthData": {
       "get": {
         "tags": [
           "Users"
@@ -747,7 +747,7 @@
         }
       }
     },
-    "/api/Users/UsosPinAuth": {
+    "/Users/UsosPinAuth": {
       "post": {
         "tags": [
           "Users"
@@ -795,7 +795,7 @@
         }
       }
     },
-    "/api/Users/{id}": {
+    "/Users/{id}": {
       "get": {
         "tags": [
           "Users"

@@ -32,7 +32,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>CurrentUserDto</returns>
-        CurrentUserDto ApiUsersAuthenticatePost (AuthenticateDto body = null);
+        CurrentUserDto UsersAuthenticatePost (AuthenticateDto body = null);
 
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of CurrentUserDto</returns>
-        ApiResponse<CurrentUserDto> ApiUsersAuthenticatePostWithHttpInfo (AuthenticateDto body = null);
+        ApiResponse<CurrentUserDto> UsersAuthenticatePostWithHttpInfo (AuthenticateDto body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +53,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>User</returns>
-        User ApiUsersIdGet (int? id);
+        User UsersIdGet (int? id);
 
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of User</returns>
-        ApiResponse<User> ApiUsersIdGetWithHttpInfo (int? id);
+        ApiResponse<User> UsersIdGetWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +73,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </remarks>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>UsosAuthDto</returns>
-        UsosAuthDto ApiUsersUsosAuthDataGet ();
+        UsosAuthDto UsersUsosAuthDataGet ();
 
         /// <summary>
         /// 
@@ -83,7 +83,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </remarks>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of UsosAuthDto</returns>
-        ApiResponse<UsosAuthDto> ApiUsersUsosAuthDataGetWithHttpInfo ();
+        ApiResponse<UsosAuthDto> UsersUsosAuthDataGetWithHttpInfo ();
         /// <summary>
         /// 
         /// </summary>
@@ -93,7 +93,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>CurrentUserDto</returns>
-        CurrentUserDto ApiUsersUsosPinAuthPost (UsosAuthDto body = null);
+        CurrentUserDto UsersUsosPinAuthPost (UsosAuthDto body = null);
 
         /// <summary>
         /// 
@@ -104,7 +104,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of CurrentUserDto</returns>
-        ApiResponse<CurrentUserDto> ApiUsersUsosPinAuthPostWithHttpInfo (UsosAuthDto body = null);
+        ApiResponse<CurrentUserDto> UsersUsosPinAuthPostWithHttpInfo (UsosAuthDto body = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -116,7 +116,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of CurrentUserDto</returns>
-        System.Threading.Tasks.Task<CurrentUserDto> ApiUsersAuthenticatePostAsync (AuthenticateDto body = null);
+        System.Threading.Tasks.Task<CurrentUserDto> UsersAuthenticatePostAsync (AuthenticateDto body = null);
 
         /// <summary>
         /// 
@@ -127,7 +127,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (CurrentUserDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> ApiUsersAuthenticatePostAsyncWithHttpInfo (AuthenticateDto body = null);
+        System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> UsersAuthenticatePostAsyncWithHttpInfo (AuthenticateDto body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -137,7 +137,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of User</returns>
-        System.Threading.Tasks.Task<User> ApiUsersIdGetAsync (int? id);
+        System.Threading.Tasks.Task<User> UsersIdGetAsync (int? id);
 
         /// <summary>
         /// 
@@ -148,7 +148,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (User)</returns>
-        System.Threading.Tasks.Task<ApiResponse<User>> ApiUsersIdGetAsyncWithHttpInfo (int? id);
+        System.Threading.Tasks.Task<ApiResponse<User>> UsersIdGetAsyncWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -157,7 +157,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </remarks>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of UsosAuthDto</returns>
-        System.Threading.Tasks.Task<UsosAuthDto> ApiUsersUsosAuthDataGetAsync ();
+        System.Threading.Tasks.Task<UsosAuthDto> UsersUsosAuthDataGetAsync ();
 
         /// <summary>
         /// 
@@ -167,7 +167,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </remarks>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (UsosAuthDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UsosAuthDto>> ApiUsersUsosAuthDataGetAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<UsosAuthDto>> UsersUsosAuthDataGetAsyncWithHttpInfo ();
         /// <summary>
         /// 
         /// </summary>
@@ -177,7 +177,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of CurrentUserDto</returns>
-        System.Threading.Tasks.Task<CurrentUserDto> ApiUsersUsosPinAuthPostAsync (UsosAuthDto body = null);
+        System.Threading.Tasks.Task<CurrentUserDto> UsersUsosPinAuthPostAsync (UsosAuthDto body = null);
 
         /// <summary>
         /// 
@@ -188,7 +188,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (CurrentUserDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> ApiUsersUsosPinAuthPostAsyncWithHttpInfo (UsosAuthDto body = null);
+        System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> UsersUsosPinAuthPostAsyncWithHttpInfo (UsosAuthDto body = null);
         #endregion Asynchronous Operations
     }
 
@@ -306,9 +306,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>CurrentUserDto</returns>
-        public CurrentUserDto ApiUsersAuthenticatePost (AuthenticateDto body = null)
+        public CurrentUserDto UsersAuthenticatePost (AuthenticateDto body = null)
         {
-             ApiResponse<CurrentUserDto> localVarResponse = ApiUsersAuthenticatePostWithHttpInfo(body);
+             ApiResponse<CurrentUserDto> localVarResponse = UsersAuthenticatePostWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -318,10 +318,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of CurrentUserDto</returns>
-        public ApiResponse< CurrentUserDto > ApiUsersAuthenticatePostWithHttpInfo (AuthenticateDto body = null)
+        public ApiResponse< CurrentUserDto > UsersAuthenticatePostWithHttpInfo (AuthenticateDto body = null)
         {
 
-            var localVarPath = "./api/Users/Authenticate";
+            var localVarPath = "./Users/Authenticate";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -371,7 +371,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersAuthenticatePost", localVarResponse);
+                Exception exception = ExceptionFactory("UsersAuthenticatePost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -386,9 +386,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of CurrentUserDto</returns>
-        public async System.Threading.Tasks.Task<CurrentUserDto> ApiUsersAuthenticatePostAsync (AuthenticateDto body = null)
+        public async System.Threading.Tasks.Task<CurrentUserDto> UsersAuthenticatePostAsync (AuthenticateDto body = null)
         {
-             ApiResponse<CurrentUserDto> localVarResponse = await ApiUsersAuthenticatePostAsyncWithHttpInfo(body);
+             ApiResponse<CurrentUserDto> localVarResponse = await UsersAuthenticatePostAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -399,10 +399,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (CurrentUserDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> ApiUsersAuthenticatePostAsyncWithHttpInfo (AuthenticateDto body = null)
+        public async System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> UsersAuthenticatePostAsyncWithHttpInfo (AuthenticateDto body = null)
         {
 
-            var localVarPath = "./api/Users/Authenticate";
+            var localVarPath = "./Users/Authenticate";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -452,7 +452,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersAuthenticatePost", localVarResponse);
+                Exception exception = ExceptionFactory("UsersAuthenticatePost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -467,9 +467,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>User</returns>
-        public User ApiUsersIdGet (int? id)
+        public User UsersIdGet (int? id)
         {
-             ApiResponse<User> localVarResponse = ApiUsersIdGetWithHttpInfo(id);
+             ApiResponse<User> localVarResponse = UsersIdGetWithHttpInfo(id);
              return localVarResponse.Data;
         }
 
@@ -479,13 +479,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of User</returns>
-        public ApiResponse< User > ApiUsersIdGetWithHttpInfo (int? id)
+        public ApiResponse< User > UsersIdGetWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling UsersApi->ApiUsersIdGet");
+                throw new ApiException(400, "Missing required parameter 'id' when calling UsersApi->UsersIdGet");
 
-            var localVarPath = "./api/Users/{id}";
+            var localVarPath = "./Users/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -525,7 +525,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersIdGet", localVarResponse);
+                Exception exception = ExceptionFactory("UsersIdGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -540,9 +540,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of User</returns>
-        public async System.Threading.Tasks.Task<User> ApiUsersIdGetAsync (int? id)
+        public async System.Threading.Tasks.Task<User> UsersIdGetAsync (int? id)
         {
-             ApiResponse<User> localVarResponse = await ApiUsersIdGetAsyncWithHttpInfo(id);
+             ApiResponse<User> localVarResponse = await UsersIdGetAsyncWithHttpInfo(id);
              return localVarResponse.Data;
 
         }
@@ -553,13 +553,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (User)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<User>> ApiUsersIdGetAsyncWithHttpInfo (int? id)
+        public async System.Threading.Tasks.Task<ApiResponse<User>> UsersIdGetAsyncWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling UsersApi->ApiUsersIdGet");
+                throw new ApiException(400, "Missing required parameter 'id' when calling UsersApi->UsersIdGet");
 
-            var localVarPath = "./api/Users/{id}";
+            var localVarPath = "./Users/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -599,7 +599,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersIdGet", localVarResponse);
+                Exception exception = ExceptionFactory("UsersIdGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -613,9 +613,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </summary>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>UsosAuthDto</returns>
-        public UsosAuthDto ApiUsersUsosAuthDataGet ()
+        public UsosAuthDto UsersUsosAuthDataGet ()
         {
-             ApiResponse<UsosAuthDto> localVarResponse = ApiUsersUsosAuthDataGetWithHttpInfo();
+             ApiResponse<UsosAuthDto> localVarResponse = UsersUsosAuthDataGetWithHttpInfo();
              return localVarResponse.Data;
         }
 
@@ -624,10 +624,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </summary>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of UsosAuthDto</returns>
-        public ApiResponse< UsosAuthDto > ApiUsersUsosAuthDataGetWithHttpInfo ()
+        public ApiResponse< UsosAuthDto > UsersUsosAuthDataGetWithHttpInfo ()
         {
 
-            var localVarPath = "./api/Users/UsosAuthData";
+            var localVarPath = "./Users/UsosAuthData";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -666,7 +666,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersUsosAuthDataGet", localVarResponse);
+                Exception exception = ExceptionFactory("UsersUsosAuthDataGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -680,9 +680,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </summary>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of UsosAuthDto</returns>
-        public async System.Threading.Tasks.Task<UsosAuthDto> ApiUsersUsosAuthDataGetAsync ()
+        public async System.Threading.Tasks.Task<UsosAuthDto> UsersUsosAuthDataGetAsync ()
         {
-             ApiResponse<UsosAuthDto> localVarResponse = await ApiUsersUsosAuthDataGetAsyncWithHttpInfo();
+             ApiResponse<UsosAuthDto> localVarResponse = await UsersUsosAuthDataGetAsyncWithHttpInfo();
              return localVarResponse.Data;
 
         }
@@ -692,10 +692,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// </summary>
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (UsosAuthDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UsosAuthDto>> ApiUsersUsosAuthDataGetAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<ApiResponse<UsosAuthDto>> UsersUsosAuthDataGetAsyncWithHttpInfo ()
         {
 
-            var localVarPath = "./api/Users/UsosAuthData";
+            var localVarPath = "./Users/UsosAuthData";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -734,7 +734,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersUsosAuthDataGet", localVarResponse);
+                Exception exception = ExceptionFactory("UsersUsosAuthDataGet", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -749,9 +749,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>CurrentUserDto</returns>
-        public CurrentUserDto ApiUsersUsosPinAuthPost (UsosAuthDto body = null)
+        public CurrentUserDto UsersUsosPinAuthPost (UsosAuthDto body = null)
         {
-             ApiResponse<CurrentUserDto> localVarResponse = ApiUsersUsosPinAuthPostWithHttpInfo(body);
+             ApiResponse<CurrentUserDto> localVarResponse = UsersUsosPinAuthPostWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -761,10 +761,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of CurrentUserDto</returns>
-        public ApiResponse< CurrentUserDto > ApiUsersUsosPinAuthPostWithHttpInfo (UsosAuthDto body = null)
+        public ApiResponse< CurrentUserDto > UsersUsosPinAuthPostWithHttpInfo (UsosAuthDto body = null)
         {
 
-            var localVarPath = "./api/Users/UsosPinAuth";
+            var localVarPath = "./Users/UsosPinAuth";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -814,7 +814,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersUsosPinAuthPost", localVarResponse);
+                Exception exception = ExceptionFactory("UsersUsosPinAuthPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -829,9 +829,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of CurrentUserDto</returns>
-        public async System.Threading.Tasks.Task<CurrentUserDto> ApiUsersUsosPinAuthPostAsync (UsosAuthDto body = null)
+        public async System.Threading.Tasks.Task<CurrentUserDto> UsersUsosPinAuthPostAsync (UsosAuthDto body = null)
         {
-             ApiResponse<CurrentUserDto> localVarResponse = await ApiUsersUsosPinAuthPostAsyncWithHttpInfo(body);
+             ApiResponse<CurrentUserDto> localVarResponse = await UsersUsosPinAuthPostAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -842,10 +842,10 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (CurrentUserDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> ApiUsersUsosPinAuthPostAsyncWithHttpInfo (UsosAuthDto body = null)
+        public async System.Threading.Tasks.Task<ApiResponse<CurrentUserDto>> UsersUsosPinAuthPostAsyncWithHttpInfo (UsosAuthDto body = null)
         {
 
-            var localVarPath = "./api/Users/UsosPinAuth";
+            var localVarPath = "./Users/UsosPinAuth";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -895,7 +895,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ApiUsersUsosPinAuthPost", localVarResponse);
+                Exception exception = ExceptionFactory("UsersUsosPinAuthPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
