@@ -14,8 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <RootNamespace>StudentSurveySystem.ApiClient</RootNamespace>
-    <Version>1.0.4</Version>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

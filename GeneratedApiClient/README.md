@@ -70,7 +70,7 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://server20200331200409.azurewebsites.net/api*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -78,8 +78,8 @@ Class | Method | HTTP request | Description
 *SurveyResponsesApi* | [**SurveyResponsesIdGet**](docs/SurveyResponsesApi.md#surveyresponsesidget) | **GET** /SurveyResponses/{id} | 
 *SurveyResponsesApi* | [**SurveyResponsesMyCompletedGet**](docs/SurveyResponsesApi.md#surveyresponsesmycompletedget) | **GET** /SurveyResponses/MyCompleted | 
 *SurveyResponsesApi* | [**SurveyResponsesPost**](docs/SurveyResponsesApi.md#surveyresponsespost) | **POST** /SurveyResponses | 
-*SurveysApi* | [**ActivateIdPost**](docs/SurveysApi.md#activateidpost) | **POST** /activate/{id} | 
-*SurveysApi* | [**DeactivateIdPost**](docs/SurveysApi.md#deactivateidpost) | **POST** /deactivate/{id} | 
+*SurveysApi* | [**SurveysActivateIdPost**](docs/SurveysApi.md#surveysactivateidpost) | **POST** /Surveys/Activate/{id} | 
+*SurveysApi* | [**SurveysDeactivateIdPost**](docs/SurveysApi.md#surveysdeactivateidpost) | **POST** /Surveys/Deactivate/{id} | 
 *SurveysApi* | [**SurveysGet**](docs/SurveysApi.md#surveysget) | **GET** /Surveys | 
 *SurveysApi* | [**SurveysIdDelete**](docs/SurveysApi.md#surveysiddelete) | **DELETE** /Surveys/{id} | 
 *SurveysApi* | [**SurveysIdGet**](docs/SurveysApi.md#surveysidget) | **GET** /Surveys/{id} | 

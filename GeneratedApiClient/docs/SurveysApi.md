@@ -1,11 +1,11 @@
 # StudentSurveySystem.ApiClient.Api.SurveysApi
 
-All URIs are relative to *https://server20200331200409.azurewebsites.net/api*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ActivateIdPost**](SurveysApi.md#activateidpost) | **POST** /activate/{id} | 
-[**DeactivateIdPost**](SurveysApi.md#deactivateidpost) | **POST** /deactivate/{id} | 
+[**SurveysActivateIdPost**](SurveysApi.md#surveysactivateidpost) | **POST** /Surveys/Activate/{id} | 
+[**SurveysDeactivateIdPost**](SurveysApi.md#surveysdeactivateidpost) | **POST** /Surveys/Deactivate/{id} | 
 [**SurveysGet**](SurveysApi.md#surveysget) | **GET** /Surveys | 
 [**SurveysIdDelete**](SurveysApi.md#surveysiddelete) | **DELETE** /Surveys/{id} | 
 [**SurveysIdGet**](SurveysApi.md#surveysidget) | **GET** /Surveys/{id} | 
@@ -15,9 +15,9 @@ Method | HTTP request | Description
 [**SurveysPost**](SurveysApi.md#surveyspost) | **POST** /Surveys | 
 [**SurveysPut**](SurveysApi.md#surveysput) | **PUT** /Surveys | 
 
-<a name="activateidpost"></a>
-# **ActivateIdPost**
-> void ActivateIdPost (int? id)
+<a name="surveysactivateidpost"></a>
+# **SurveysActivateIdPost**
+> void SurveysActivateIdPost (int? id)
 
 
 
@@ -31,7 +31,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class ActivateIdPostExample
+    public class SurveysActivateIdPostExample
     {
         public void main()
         {
@@ -41,11 +41,11 @@ namespace Example
 
             try
             {
-                apiInstance.ActivateIdPost(id);
+                apiInstance.SurveysActivateIdPost(id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveysApi.ActivateIdPost: " + e.Message );
+                Debug.Print("Exception when calling SurveysApi.SurveysActivateIdPost: " + e.Message );
             }
         }
     }
@@ -72,9 +72,9 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-<a name="deactivateidpost"></a>
-# **DeactivateIdPost**
-> void DeactivateIdPost (int? id)
+<a name="surveysdeactivateidpost"></a>
+# **SurveysDeactivateIdPost**
+> void SurveysDeactivateIdPost (int? id)
 
 
 
@@ -88,7 +88,7 @@ using StudentSurveySystem.ApiClient.Model;
 
 namespace Example
 {
-    public class DeactivateIdPostExample
+    public class SurveysDeactivateIdPostExample
     {
         public void main()
         {
@@ -98,11 +98,11 @@ namespace Example
 
             try
             {
-                apiInstance.DeactivateIdPost(id);
+                apiInstance.SurveysDeactivateIdPost(id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SurveysApi.DeactivateIdPost: " + e.Message );
+                Debug.Print("Exception when calling SurveysApi.SurveysDeactivateIdPost: " + e.Message );
             }
         }
     }

@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://server20200331200409.azurewebsites.net/api"
+      "url": "https://localhost:5001"
     }
   ],
   "paths": {
@@ -624,7 +624,7 @@
         }
       }
     },
-    "/activate/{id}": {
+    "/Surveys/Activate/{id}": {
       "post": {
         "tags": [
           "Surveys"
@@ -647,7 +647,7 @@
         }
       }
     },
-    "/deactivate/{id}": {
+    "/Surveys/Deactivate/{id}": {
       "post": {
         "tags": [
           "Surveys"

@@ -32,7 +32,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        void ActivateIdPost (int? id);
+        void SurveysActivateIdPost (int? id);
 
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ActivateIdPostWithHttpInfo (int? id);
+        ApiResponse<Object> SurveysActivateIdPostWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +53,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        void DeactivateIdPost (int? id);
+        void SurveysDeactivateIdPost (int? id);
 
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeactivateIdPostWithHttpInfo (int? id);
+        ApiResponse<Object> SurveysDeactivateIdPostWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -258,7 +258,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ActivateIdPostAsync (int? id);
+        System.Threading.Tasks.Task SurveysActivateIdPostAsync (int? id);
 
         /// <summary>
         /// 
@@ -269,7 +269,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ActivateIdPostAsyncWithHttpInfo (int? id);
+        System.Threading.Tasks.Task<ApiResponse<Object>> SurveysActivateIdPostAsyncWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -279,7 +279,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeactivateIdPostAsync (int? id);
+        System.Threading.Tasks.Task SurveysDeactivateIdPostAsync (int? id);
 
         /// <summary>
         /// 
@@ -290,7 +290,7 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeactivateIdPostAsyncWithHttpInfo (int? id);
+        System.Threading.Tasks.Task<ApiResponse<Object>> SurveysDeactivateIdPostAsyncWithHttpInfo (int? id);
         /// <summary>
         /// 
         /// </summary>
@@ -590,9 +590,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        public void ActivateIdPost (int? id)
+        public void SurveysActivateIdPost (int? id)
         {
-             ActivateIdPostWithHttpInfo(id);
+             SurveysActivateIdPostWithHttpInfo(id);
         }
 
         /// <summary>
@@ -601,13 +601,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> ActivateIdPostWithHttpInfo (int? id)
+        public ApiResponse<Object> SurveysActivateIdPostWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->ActivateIdPost");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->SurveysActivateIdPost");
 
-            var localVarPath = "./activate/{id}";
+            var localVarPath = "./Surveys/Activate/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -644,7 +644,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ActivateIdPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveysActivateIdPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -659,9 +659,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ActivateIdPostAsync (int? id)
+        public async System.Threading.Tasks.Task SurveysActivateIdPostAsync (int? id)
         {
-             await ActivateIdPostAsyncWithHttpInfo(id);
+             await SurveysActivateIdPostAsyncWithHttpInfo(id);
 
         }
 
@@ -671,13 +671,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> ActivateIdPostAsyncWithHttpInfo (int? id)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> SurveysActivateIdPostAsyncWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->ActivateIdPost");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->SurveysActivateIdPost");
 
-            var localVarPath = "./activate/{id}";
+            var localVarPath = "./Surveys/Activate/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -714,7 +714,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ActivateIdPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveysActivateIdPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -729,9 +729,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        public void DeactivateIdPost (int? id)
+        public void SurveysDeactivateIdPost (int? id)
         {
-             DeactivateIdPostWithHttpInfo(id);
+             SurveysDeactivateIdPostWithHttpInfo(id);
         }
 
         /// <summary>
@@ -740,13 +740,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> DeactivateIdPostWithHttpInfo (int? id)
+        public ApiResponse<Object> SurveysDeactivateIdPostWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->DeactivateIdPost");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->SurveysDeactivateIdPost");
 
-            var localVarPath = "./deactivate/{id}";
+            var localVarPath = "./Surveys/Deactivate/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -783,7 +783,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("DeactivateIdPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveysDeactivateIdPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -798,9 +798,9 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeactivateIdPostAsync (int? id)
+        public async System.Threading.Tasks.Task SurveysDeactivateIdPostAsync (int? id)
         {
-             await DeactivateIdPostAsyncWithHttpInfo(id);
+             await SurveysDeactivateIdPostAsyncWithHttpInfo(id);
 
         }
 
@@ -810,13 +810,13 @@ namespace StudentSurveySystem.ApiClient.Api
         /// <exception cref="StudentSurveySystem.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeactivateIdPostAsyncWithHttpInfo (int? id)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> SurveysDeactivateIdPostAsyncWithHttpInfo (int? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
-                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->DeactivateIdPost");
+                throw new ApiException(400, "Missing required parameter 'id' when calling SurveysApi->SurveysDeactivateIdPost");
 
-            var localVarPath = "./deactivate/{id}";
+            var localVarPath = "./Surveys/Deactivate/{id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -853,7 +853,7 @@ namespace StudentSurveySystem.ApiClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("DeactivateIdPost", localVarResponse);
+                Exception exception = ExceptionFactory("SurveysDeactivateIdPost", localVarResponse);
                 if (exception != null) throw exception;
             }
 
