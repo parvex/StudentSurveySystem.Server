@@ -117,7 +117,7 @@ namespace Server.Controllers
             return Ok();
         }
 
-        [HttpPost("/activate/{id}")]
+        [HttpPost("Activate/{id}")]
         public async Task<ActionResult> ActivateSurvey(int id)
         {
             var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
@@ -129,7 +129,7 @@ namespace Server.Controllers
             return Ok();
         }
 
-        [HttpPost("/deactivate/{id}")]
+        [HttpPost("Deactivate/{id}")]
         public async Task<ActionResult> DeactivateSurvey(int id)
         {
             var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
