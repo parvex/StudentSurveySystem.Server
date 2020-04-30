@@ -95,6 +95,15 @@ namespace Server.Helpers
 
                     };
 
+                    for (int i = 2; i < 100; ++i)
+                    {
+                        seedSurveys.Add(new Survey()
+                        {
+                            Id = i,
+                            Name = $"Seed(empty) {i}",
+                            CreatorId = i % 2 == 0 ? 1 : 2
+                        });
+                    }
                     context.AddRange(seedSurveys);
                     context.SaveChanges();
                     if (relational)

@@ -52,7 +52,7 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.SurveyResponses.All(r => r.Survey.Name.Contains(name) && r.RespondentId != userId))
+            return await _context.Surveys.Where(x => x.Name.Contains(name) && x.SurveyResponses.All(r => r.RespondentId != userId))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
