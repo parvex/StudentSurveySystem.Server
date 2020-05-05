@@ -116,39 +116,39 @@ namespace Server.Helpers
                         new Question
                         {
                             Id = 0, QuestionType = QuestionType.Numeric, QuestionText = "Overall experience",
-                            SurveyId = seedSurveys[0].Id.Value
+                            SurveyId = seedSurveys[0].Id.Value, Index = 1
                         },
                         new Question
                         {
                             Id = 1, QuestionType = QuestionType.Date, QuestionText = "Project submit date",
-                            SurveyId = seedSurveys[0].Id.Value
+                            SurveyId = seedSurveys[0].Id.Value, Index = 2
                         },
 
                         new Question
                         {
                             Id = 2, QuestionType = QuestionType.Numeric, QuestionText = "Overall experience",
-                            SurveyId = seedSurveys[1].Id.Value
+                            SurveyId = seedSurveys[1].Id.Value, Index = 3
                         },
                         new Question
                         {
                             Id = 3, QuestionType = QuestionType.Date, QuestionText = "Project submit date",
-                            SurveyId = seedSurveys[1].Id.Value
+                            SurveyId = seedSurveys[1].Id.Value, Index = 4
                         },
                         new Question
                         {
                             Id = 4, QuestionType = QuestionType.Boolean, QuestionText = "Erasmus",
-                            SurveyId = seedSurveys[1].Id.Value
+                            SurveyId = seedSurveys[1].Id.Value, Index = 5
                         },
                         new Question
                         {
                             Id = 5, QuestionType = QuestionType.Text, QuestionText = "Project name",
-                            SurveyId = seedSurveys[1].Id.Value
+                            SurveyId = seedSurveys[1].Id.Value, Index = 6
                         },
                         new Question
                         {
                             Id = 6,
                             QuestionType = QuestionType.SingleSelect, QuestionText = "Technology",
-                            SurveyId = seedSurveys[1].Id.Value,
+                            SurveyId = seedSurveys[1].Id.Value, Index = 7,
                             Values = JsonConvert.SerializeObject(new List<string>
                                 {"Xamarin", "Flutter", "React Native", "Ionic", "Adobe PhoneGap"})
                         },
@@ -156,7 +156,7 @@ namespace Server.Helpers
                         {
                             Id = 7,
                             QuestionType = QuestionType.MultipleSelect, QuestionText = "Project includes",
-                            SurveyId = seedSurveys[1].Id.Value,
+                            SurveyId = seedSurveys[1].Id.Value, Index = 8,
                             Values = JsonConvert.SerializeObject(new List<string>
                                 {"Rest API", "Web Service", "Database", "Authentication", "Authentication"})
                         }

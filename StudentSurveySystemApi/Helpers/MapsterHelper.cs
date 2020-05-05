@@ -11,36 +11,29 @@ namespace Server.Helpers
     {
         public static void SetCustomMappings()
         {
-            TypeAdapterConfig<Survey, SurveyDto>
-                .NewConfig()
+            TypeAdapterConfig<Survey, SurveyDto>.NewConfig()
                 .Map(dest => dest.CreatorName,
                     src => $"{src.Creator.FirstName} {src.Creator.LastName}");
 
-            TypeAdapterConfig<Question, QuestionDto>
-                .NewConfig()
+            TypeAdapterConfig<Question, QuestionDto>.NewConfig()
                 .Map(dest => dest.Values,
                     src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null);
-            TypeAdapterConfig<QuestionDto, Question>
-                .NewConfig()
+            TypeAdapterConfig<QuestionDto, Question>.NewConfig()
                 .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
 
-            TypeAdapterConfig<QuestionDto, Question>
-                .NewConfig()
-                .Map(dest => dest.ValidationConfig, src => JsonConvert.SerializeObject(src.ValidationConfig));
-            TypeAdapterConfig<Question, QuestionDto>
-                .NewConfig()
-                .Map(dest => dest.ValidationConfig,
-                    src => src.ValidationConfig != null ? JsonConvert.DeserializeObject<List<string>>(src.ValidationConfig) : null);
+            TypeAdapterConfig<Question, QuestionDto>.NewConfig()
+                .Map(dest => dest.Values,
+                    src => src.Values != null ? JsonConvert.DeserializeObject<ValidationConfig>(src.Values) : null);
+            TypeAdapterConfig<QuestionDto, Question>.NewConfig()
+                .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
 
-            TypeAdapterConfig<SurveyResponse, SurveyResponseDetailsDto>
-                .NewConfig()
+            TypeAdapterConfig<SurveyResponse, SurveyResponseDetailsDto>.NewConfig()
                 .Map(dest => dest.CourseName,
                     src => src.Survey.Course.Name)
                 .Map(dest => dest.Creator, src => src.Survey.Creator.FirstName + " " + src.Survey.Creator.LastName)
                 .Map(dest => dest.Respondent, src => src.Respondent.FirstName + " " + src.Respondent.LastName);
 
-            TypeAdapterConfig<Answer, AnswerDto>
-                .NewConfig()
+            TypeAdapterConfig<Answer, AnswerDto>.NewConfig()
                 .Map(dest => dest.QuestionText,
                     src => src.Question.QuestionText)
                 .Map(dest => dest.QuestionType, src => src.Question.QuestionType);
