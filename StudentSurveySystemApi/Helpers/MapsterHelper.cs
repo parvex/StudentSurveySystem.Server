@@ -17,15 +17,12 @@ namespace Server.Helpers
 
             TypeAdapterConfig<Question, QuestionDto>.NewConfig()
                 .Map(dest => dest.Values,
-                    src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null);
+                    src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null)
+                .Map(dest => dest.ValidationConfig,
+                src => src.ValidationConfig != null ? JsonConvert.DeserializeObject<ValidationConfig>(src.ValidationConfig) : null);
             TypeAdapterConfig<QuestionDto, Question>.NewConfig()
-                .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
-
-            TypeAdapterConfig<Question, QuestionDto>.NewConfig()
-                .Map(dest => dest.Values,
-                    src => src.Values != null ? JsonConvert.DeserializeObject<ValidationConfig>(src.Values) : null);
-            TypeAdapterConfig<QuestionDto, Question>.NewConfig()
-                .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
+                .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values))
+                .Map(dest => dest.ValidationConfig, src => JsonConvert.SerializeObject(src.ValidationConfig));
 
             TypeAdapterConfig<SurveyResponse, SurveyResponseDetailsDto>.NewConfig()
                 .Map(dest => dest.CourseName,

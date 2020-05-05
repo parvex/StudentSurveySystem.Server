@@ -27,7 +27,6 @@ namespace Server.Controllers
             _context = context;
         }
 
-
         [HttpGet("MySurveys")]
         public async Task<ActionResult<List<SurveyDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
         {
@@ -39,6 +38,7 @@ namespace Server.Controllers
                 .ToListAsync();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<SurveyDto>>> GetSurveys(string name = "", int page = 0, int count = 20)
         {

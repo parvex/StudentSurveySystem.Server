@@ -116,7 +116,7 @@ namespace Server.Helpers
                         new Question
                         {
                             Id = 0, QuestionType = QuestionType.Numeric, QuestionText = "Overall experience",
-                            SurveyId = seedSurveys[0].Id.Value, Index = 1
+                            SurveyId = seedSurveys[0].Id.Value, Index = 1, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig(){MaxNumericValue = 10, MinNumericValue = 1})
                         },
                         new Question
                         {
