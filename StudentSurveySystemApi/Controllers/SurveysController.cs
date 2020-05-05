@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Server.Entities;
+using Server.Helpers;
 
 namespace Server.Controllers
 {
@@ -31,7 +32,7 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.Name.Contains(name) && x.CreatorId == userId)
+            return await _context.Surveys.Where(x => x.Name.Contains(name ?? "") && x.CreatorId == userId)
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
@@ -41,7 +42,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<SurveyDto>>> GetSurveys(string name = "", int page = 0, int count = 20)
         {
-            return await _context.Surveys.Where(x => x.Name.Contains(name))
+            return await _context.Surveys.Where(x => x.Name.Contains(name ?? ""))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
@@ -52,7 +53,7 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.Name.Contains(name) && x.SurveyResponses.All(r => r.RespondentId != userId))
+            return await _context.Surveys.Where(x => x.Name.Contains(name ?? "") && x.SurveyResponses.All(r => r.RespondentId != userId))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()

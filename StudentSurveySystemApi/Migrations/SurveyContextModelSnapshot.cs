@@ -15,7 +15,7 @@ namespace Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -80,6 +80,9 @@ namespace Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionText")
                         .HasColumnType("nvarchar(max)");
 
@@ -88,6 +91,9 @@ namespace Server.Migrations
 
                     b.Property<int>("SurveyId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ValidationConfig")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Values")
                         .HasColumnType("nvarchar(max)");
@@ -114,6 +120,9 @@ namespace Server.Migrations
 
                     b.Property<int?>("CreatorId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");

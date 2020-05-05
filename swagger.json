@@ -947,6 +947,36 @@
         },
         "additionalProperties": false
       },
+      "ValidationConfig": {
+        "type": "object",
+        "properties": {
+          "minNumericValue": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxNumericValue": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minDateValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "maxDateValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "regex": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "QuestionDto": {
         "type": "object",
         "properties": {
@@ -955,12 +985,19 @@
             "format": "int32",
             "nullable": true
           },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
           "questionText": {
             "type": "string",
             "nullable": true
           },
           "questionType": {
             "$ref": "#/components/schemas/QuestionType"
+          },
+          "validationConfig": {
+            "$ref": "#/components/schemas/ValidationConfig"
           },
           "values": {
             "type": "array",
@@ -1010,6 +1047,11 @@
           },
           "creatorName": {
             "type": "string",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },

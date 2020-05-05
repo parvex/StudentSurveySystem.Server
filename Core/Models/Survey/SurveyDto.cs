@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Models.Survey
 {
@@ -19,6 +20,8 @@ namespace Core.Models.Survey
         public string CourseName { get; set; }
 
         public string CreatorName { get; set; }
+
+        public DateTime? EndDate { get; set; }
 
     }
 }

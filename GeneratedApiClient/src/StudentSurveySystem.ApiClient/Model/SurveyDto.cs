@@ -38,7 +38,8 @@ namespace StudentSurveySystem.ApiClient.Model
         /// <param name="active">active.</param>
         /// <param name="courseName">courseName.</param>
         /// <param name="creatorName">creatorName.</param>
-        public SurveyDto(int? id = default(int?), string name = default(string), int? creatorId = default(int?), int? courseId = default(int?), List<QuestionDto> questions = default(List<QuestionDto>), bool? active = default(bool?), string courseName = default(string), string creatorName = default(string))
+        /// <param name="endDate">endDate.</param>
+        public SurveyDto(int? id = default(int?), string name = default(string), int? creatorId = default(int?), int? courseId = default(int?), List<QuestionDto> questions = default(List<QuestionDto>), bool? active = default(bool?), string courseName = default(string), string creatorName = default(string), DateTime? endDate = default(DateTime?))
         {
             this.Id = id;
             this.Name = name;
@@ -48,6 +49,7 @@ namespace StudentSurveySystem.ApiClient.Model
             this.Active = active;
             this.CourseName = courseName;
             this.CreatorName = creatorName;
+            this.EndDate = endDate;
         }
         
         /// <summary>
@@ -99,6 +101,12 @@ namespace StudentSurveySystem.ApiClient.Model
         public string CreatorName { get; set; }
 
         /// <summary>
+        /// Gets or Sets EndDate
+        /// </summary>
+        [DataMember(Name="endDate", EmitDefaultValue=false)]
+        public DateTime? EndDate { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -114,6 +122,7 @@ namespace StudentSurveySystem.ApiClient.Model
             sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  CourseName: ").Append(CourseName).Append("\n");
             sb.Append("  CreatorName: ").Append(CreatorName).Append("\n");
+            sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -188,6 +197,11 @@ namespace StudentSurveySystem.ApiClient.Model
                     this.CreatorName == input.CreatorName ||
                     (this.CreatorName != null &&
                     this.CreatorName.Equals(input.CreatorName))
+                ) && 
+                (
+                    this.EndDate == input.EndDate ||
+                    (this.EndDate != null &&
+                    this.EndDate.Equals(input.EndDate))
                 );
         }
 
@@ -216,6 +230,8 @@ namespace StudentSurveySystem.ApiClient.Model
                     hashCode = hashCode * 59 + this.CourseName.GetHashCode();
                 if (this.CreatorName != null)
                     hashCode = hashCode * 59 + this.CreatorName.GetHashCode();
+                if (this.EndDate != null)
+                    hashCode = hashCode * 59 + this.EndDate.GetHashCode();
                 return hashCode;
             }
         }

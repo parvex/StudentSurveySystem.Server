@@ -107,6 +107,7 @@ Class | Method | HTTP request | Description
  - [Model.User](docs/User.md)
  - [Model.UserRole](docs/UserRole.md)
  - [Model.UsosAuthDto](docs/UsosAuthDto.md)
+ - [Model.ValidationConfig](docs/ValidationConfig.md)
 
 <a name="documentation-for-authorization"></a>
 ## Documentation for Authorization

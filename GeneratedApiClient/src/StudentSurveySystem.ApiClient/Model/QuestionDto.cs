@@ -36,14 +36,18 @@ namespace StudentSurveySystem.ApiClient.Model
         /// Initializes a new instance of the <see cref="QuestionDto" /> class.
         /// </summary>
         /// <param name="id">id.</param>
+        /// <param name="index">index.</param>
         /// <param name="questionText">questionText.</param>
         /// <param name="questionType">questionType.</param>
+        /// <param name="validationConfig">validationConfig.</param>
         /// <param name="values">values.</param>
-        public QuestionDto(int? id = default(int?), string questionText = default(string), QuestionType? questionType = default(QuestionType?), List<string> values = default(List<string>))
+        public QuestionDto(int? id = default(int?), int? index = default(int?), string questionText = default(string), QuestionType? questionType = default(QuestionType?), ValidationConfig validationConfig = default(ValidationConfig), List<string> values = default(List<string>))
         {
             this.Id = id;
+            this.Index = index;
             this.QuestionText = questionText;
             this.QuestionType = questionType;
+            this.ValidationConfig = validationConfig;
             this.Values = values;
         }
         
@@ -54,11 +58,23 @@ namespace StudentSurveySystem.ApiClient.Model
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or Sets Index
+        /// </summary>
+        [DataMember(Name="index", EmitDefaultValue=false)]
+        public int? Index { get; set; }
+
+        /// <summary>
         /// Gets or Sets QuestionText
         /// </summary>
         [DataMember(Name="questionText", EmitDefaultValue=false)]
         public string QuestionText { get; set; }
 
+
+        /// <summary>
+        /// Gets or Sets ValidationConfig
+        /// </summary>
+        [DataMember(Name="validationConfig", EmitDefaultValue=false)]
+        public ValidationConfig ValidationConfig { get; set; }
 
         /// <summary>
         /// Gets or Sets Values
@@ -75,8 +91,10 @@ namespace StudentSurveySystem.ApiClient.Model
             var sb = new StringBuilder();
             sb.Append("class QuestionDto {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Index: ").Append(Index).Append("\n");
             sb.Append("  QuestionText: ").Append(QuestionText).Append("\n");
             sb.Append("  QuestionType: ").Append(QuestionType).Append("\n");
+            sb.Append("  ValidationConfig: ").Append(ValidationConfig).Append("\n");
             sb.Append("  Values: ").Append(Values).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -118,6 +136,11 @@ namespace StudentSurveySystem.ApiClient.Model
                     this.Id.Equals(input.Id))
                 ) && 
                 (
+                    this.Index == input.Index ||
+                    (this.Index != null &&
+                    this.Index.Equals(input.Index))
+                ) && 
+                (
                     this.QuestionText == input.QuestionText ||
                     (this.QuestionText != null &&
                     this.QuestionText.Equals(input.QuestionText))
@@ -126,6 +149,11 @@ namespace StudentSurveySystem.ApiClient.Model
                     this.QuestionType == input.QuestionType ||
                     (this.QuestionType != null &&
                     this.QuestionType.Equals(input.QuestionType))
+                ) && 
+                (
+                    this.ValidationConfig == input.ValidationConfig ||
+                    (this.ValidationConfig != null &&
+                    this.ValidationConfig.Equals(input.ValidationConfig))
                 ) && 
                 (
                     this.Values == input.Values ||
@@ -146,10 +174,14 @@ namespace StudentSurveySystem.ApiClient.Model
                 int hashCode = 41;
                 if (this.Id != null)
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
+                if (this.Index != null)
+                    hashCode = hashCode * 59 + this.Index.GetHashCode();
                 if (this.QuestionText != null)
                     hashCode = hashCode * 59 + this.QuestionText.GetHashCode();
                 if (this.QuestionType != null)
                     hashCode = hashCode * 59 + this.QuestionType.GetHashCode();
+                if (this.ValidationConfig != null)
+                    hashCode = hashCode * 59 + this.ValidationConfig.GetHashCode();
                 if (this.Values != null)
                     hashCode = hashCode * 59 + this.Values.GetHashCode();
                 return hashCode;

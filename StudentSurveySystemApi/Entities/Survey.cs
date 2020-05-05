@@ -26,5 +26,7 @@ namespace Server.Entities
         public DateTime ModificationDate { get; set; }
 
         public List<SurveyResponse> SurveyResponses { get; set; }
+
+        public DateTime? EndDate { get; set; }
     }
 }

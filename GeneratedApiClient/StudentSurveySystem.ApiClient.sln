@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentSurveySystem.ApiClient", "src\StudentSurveySystem.ApiClient\StudentSurveySystem.ApiClient.csproj", "{5D13BD6C-6D67-4EDF-BBB9-403DC649BA30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentSurveySystem.ApiClient", "src\StudentSurveySystem.ApiClient\StudentSurveySystem.ApiClient.csproj", "{B6F8ED2D-B9BD-438B-9063-CBDBD8370EBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,10 +10,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D13BD6C-6D67-4EDF-BBB9-403DC649BA30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D13BD6C-6D67-4EDF-BBB9-403DC649BA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D13BD6C-6D67-4EDF-BBB9-403DC649BA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D13BD6C-6D67-4EDF-BBB9-403DC649BA30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F8ED2D-B9BD-438B-9063-CBDBD8370EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F8ED2D-B9BD-438B-9063-CBDBD8370EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F8ED2D-B9BD-438B-9063-CBDBD8370EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F8ED2D-B9BD-438B-9063-CBDBD8370EBC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU

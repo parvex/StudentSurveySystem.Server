@@ -6,16 +6,24 @@ namespace Server.Entities
     {
         public int? Id { get; set; }
 
+        public int Index { get; set; }
+
         public string QuestionText { get; set; }
 
         public QuestionType QuestionType { get; set; }
 
-        //values to choose in case of single or multi select converted to json
+        /// <summary>
+        /// Validation config converted to json
+        /// </summary>
+        public string ValidationConfig { get; set; }
+
+        /// <summary>
+        /// values to choose in case of single or multi select converted to json
+        /// </summary>
         public string Values { get; set; }
 
         public int SurveyId { get; set; }
 
         public Survey Survey { get; set; }
-
     }
 }

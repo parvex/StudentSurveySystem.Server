@@ -20,11 +20,17 @@ namespace Server.Helpers
                 .NewConfig()
                 .Map(dest => dest.Values,
                     src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null);
-
             TypeAdapterConfig<QuestionDto, Question>
                 .NewConfig()
                 .Map(dest => dest.Values, src => JsonConvert.SerializeObject(src.Values));
 
+            TypeAdapterConfig<QuestionDto, Question>
+                .NewConfig()
+                .Map(dest => dest.ValidationConfig, src => JsonConvert.SerializeObject(src.ValidationConfig));
+            TypeAdapterConfig<Question, QuestionDto>
+                .NewConfig()
+                .Map(dest => dest.ValidationConfig,
+                    src => src.ValidationConfig != null ? JsonConvert.DeserializeObject<List<string>>(src.ValidationConfig) : null);
 
             TypeAdapterConfig<SurveyResponse, SurveyResponseDetailsDto>
                 .NewConfig()
