@@ -82,7 +82,10 @@ namespace Server.Controllers
             _context.Entry(model).State = EntityState.Modified;
             foreach (var question in model.Questions)
             {
-                _context.Entry(question).State = EntityState.Modified;
+                if (question.Id != null)
+                    _context.Entry(question).State = EntityState.Modified;
+                else
+                    _context.Entry(question).State = EntityState.Added;
             }
             await _context.SaveChangesAsync();
 
