@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -79,6 +80,7 @@ namespace Server.Controllers
         {
             var model = survey.Adapt<Survey>();
             model.Id = id;
+            model.ModificationDate = DateTime.Now;
             _context.Entry(model).State = EntityState.Modified;
             foreach (var question in model.Questions)
             {
@@ -97,7 +99,9 @@ namespace Server.Controllers
         public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey)
         {
             var dbModel = survey.Adapt<Survey>();
-            _context.Surveys.Add(dbModel);
+            dbModel.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            dbModel.ModificationDate = DateTime.Now;
+            await _context.Surveys.AddAsync(dbModel);
             await _context.SaveChangesAsync();
 
             return await GetSurvey(dbModel.Id.Value);
