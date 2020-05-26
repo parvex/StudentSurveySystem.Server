@@ -19,7 +19,7 @@ namespace Server.Controllers
     [Authorize]
     [Route("[controller]")]
     [ApiController]
-    public class SurveysController : ControllerBase
+    public class SurveysController : SystemControllerBase
     {
         private readonly SurveyContext _context;
 
@@ -98,7 +98,6 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey)
         {
-            
             var dbModel = survey.Adapt<Survey>();
             dbModel.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             dbModel.ModificationDate = DateTime.Now;
