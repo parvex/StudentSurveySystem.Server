@@ -951,14 +951,17 @@
         "type": "object",
         "properties": {
           "minNumericValue": {
-            "type": "integer",
-            "format": "int32",
+            "type": "number",
+            "format": "double",
             "nullable": true
           },
           "maxNumericValue": {
-            "type": "integer",
-            "format": "int32",
+            "type": "number",
+            "format": "double",
             "nullable": true
+          },
+          "integer": {
+            "type": "boolean"
           },
           "minDateValue": {
             "type": "string",

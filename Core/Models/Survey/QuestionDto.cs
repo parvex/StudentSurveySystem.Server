@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace Core.Models.Survey
 {
@@ -6,10 +8,11 @@ namespace Core.Models.Survey
     {
         public int? Id { get; set; }
 
+        [Required]
         public int Index { get; set; }
-
+        [Required]
         public string QuestionText { get; set; }
-
+        [Required]
         public QuestionType QuestionType { get; set; }
 
         public ValidationConfig ValidationConfig { get; set; }

@@ -1,4 +1,4 @@
-﻿using Core.Models.Survey;
+﻿using Server.Models.Survey;
 
 namespace Server.Entities
 {

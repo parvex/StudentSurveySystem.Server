@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Models.Survey;
 using Microsoft.AspNetCore.Mvc;
 using Server.Controllers;
 using Server.Entities;
+using Server.Models.Survey;
 using Xunit;
 
 namespace Tests.UnitTests

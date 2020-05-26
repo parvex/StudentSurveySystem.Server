@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Models.Survey;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Server.Entities;
 using Server.Helpers;
+using Server.Models.Survey;
 
 namespace Server.Controllers
 {
@@ -98,6 +98,7 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey)
         {
+            
             var dbModel = survey.Adapt<Survey>();
             dbModel.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             dbModel.ModificationDate = DateTime.Now;

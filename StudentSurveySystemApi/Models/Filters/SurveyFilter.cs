@@ -1,0 +1,11 @@
+﻿namespace Server.Models.Filters
+{
+    public class SurveyFilter
+    {
+        public string SurveyName;
+
+        public string Course { get; set; }
+
+        public string Lecturer { get; set; }
+    }
+}

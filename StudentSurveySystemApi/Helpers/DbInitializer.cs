@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Core.Models.Auth;
-using Core.Models.Survey;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
 using Server.Entities;
+using Server.Models.Auth;
+using Server.Models.Survey;
 using Server.Services;
 
 namespace Server.Helpers

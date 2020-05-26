@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web;
-using Core.Models.Auth;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serializers.NewtonsoftJson;
+using Server.Models.Auth;
 
 namespace Server.Services
 {

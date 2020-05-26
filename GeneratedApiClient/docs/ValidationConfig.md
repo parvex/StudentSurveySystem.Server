@@ -3,8 +3,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MinNumericValue** | **int?** |  | [optional] 
-**MaxNumericValue** | **int?** |  | [optional] 
+**MinNumericValue** | **double?** |  | [optional] 
+**MaxNumericValue** | **double?** |  | [optional] 
+**Integer** | **bool?** |  | [optional] 
 **MinDateValue** | **DateTime?** |  | [optional] 
 **MaxDateValue** | **DateTime?** |  | [optional] 
 **Regex** | **string** |  | [optional] 

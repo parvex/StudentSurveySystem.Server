@@ -32,13 +32,15 @@ namespace StudentSurveySystem.ApiClient.Model
         /// </summary>
         /// <param name="minNumericValue">minNumericValue.</param>
         /// <param name="maxNumericValue">maxNumericValue.</param>
+        /// <param name="integer">integer.</param>
         /// <param name="minDateValue">minDateValue.</param>
         /// <param name="maxDateValue">maxDateValue.</param>
         /// <param name="regex">regex.</param>
-        public ValidationConfig(int? minNumericValue = default(int?), int? maxNumericValue = default(int?), DateTime? minDateValue = default(DateTime?), DateTime? maxDateValue = default(DateTime?), string regex = default(string))
+        public ValidationConfig(double? minNumericValue = default(double?), double? maxNumericValue = default(double?), bool? integer = default(bool?), DateTime? minDateValue = default(DateTime?), DateTime? maxDateValue = default(DateTime?), string regex = default(string))
         {
             this.MinNumericValue = minNumericValue;
             this.MaxNumericValue = maxNumericValue;
+            this.Integer = integer;
             this.MinDateValue = minDateValue;
             this.MaxDateValue = maxDateValue;
             this.Regex = regex;
@@ -48,13 +50,19 @@ namespace StudentSurveySystem.ApiClient.Model
         /// Gets or Sets MinNumericValue
         /// </summary>
         [DataMember(Name="minNumericValue", EmitDefaultValue=false)]
-        public int? MinNumericValue { get; set; }
+        public double? MinNumericValue { get; set; }
 
         /// <summary>
         /// Gets or Sets MaxNumericValue
         /// </summary>
         [DataMember(Name="maxNumericValue", EmitDefaultValue=false)]
-        public int? MaxNumericValue { get; set; }
+        public double? MaxNumericValue { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Integer
+        /// </summary>
+        [DataMember(Name="integer", EmitDefaultValue=false)]
+        public bool? Integer { get; set; }
 
         /// <summary>
         /// Gets or Sets MinDateValue
@@ -84,6 +92,7 @@ namespace StudentSurveySystem.ApiClient.Model
             sb.Append("class ValidationConfig {\n");
             sb.Append("  MinNumericValue: ").Append(MinNumericValue).Append("\n");
             sb.Append("  MaxNumericValue: ").Append(MaxNumericValue).Append("\n");
+            sb.Append("  Integer: ").Append(Integer).Append("\n");
             sb.Append("  MinDateValue: ").Append(MinDateValue).Append("\n");
             sb.Append("  MaxDateValue: ").Append(MaxDateValue).Append("\n");
             sb.Append("  Regex: ").Append(Regex).Append("\n");
@@ -132,6 +141,11 @@ namespace StudentSurveySystem.ApiClient.Model
                     this.MaxNumericValue.Equals(input.MaxNumericValue))
                 ) && 
                 (
+                    this.Integer == input.Integer ||
+                    (this.Integer != null &&
+                    this.Integer.Equals(input.Integer))
+                ) && 
+                (
                     this.MinDateValue == input.MinDateValue ||
                     (this.MinDateValue != null &&
                     this.MinDateValue.Equals(input.MinDateValue))
@@ -161,6 +175,8 @@ namespace StudentSurveySystem.ApiClient.Model
                     hashCode = hashCode * 59 + this.MinNumericValue.GetHashCode();
                 if (this.MaxNumericValue != null)
                     hashCode = hashCode * 59 + this.MaxNumericValue.GetHashCode();
+                if (this.Integer != null)
+                    hashCode = hashCode * 59 + this.Integer.GetHashCode();
                 if (this.MinDateValue != null)
                     hashCode = hashCode * 59 + this.MinDateValue.GetHashCode();
                 if (this.MaxDateValue != null)

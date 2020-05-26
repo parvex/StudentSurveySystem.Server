@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Core.Models.Survey;
-using Core.Models.SurveyResponse;
 using Mapster;
 using Newtonsoft.Json;
 using Server.Entities;
+using Server.Models.Survey;
+using Server.Models.SurveyResponse;
 
 namespace Server.Helpers
 {

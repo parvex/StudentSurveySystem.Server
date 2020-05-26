@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Core.Models.SurveyResponse;
 using Microsoft.AspNetCore.Mvc;
 using Server.Controllers;
 using Server.Entities;
+using Server.Models.SurveyResponse;
 using Xunit;
 
 namespace Tests.UnitTests

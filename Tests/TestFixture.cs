@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Core.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Server.Entities;
 using Server.Helpers;
+using Server.Models.Auth;
 using Server.Services;
 
 namespace Tests

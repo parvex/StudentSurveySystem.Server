@@ -1,4 +1,4 @@
-﻿using Core.Models.Auth;
+﻿using Server.Models.Auth;
 
 namespace Server.Entities
 {
