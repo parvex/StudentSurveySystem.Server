@@ -1,16 +1,17 @@
 ﻿using System;
 using FoolProof.Core;
+using Server.Helpers;
 
 namespace Server.Models.Survey
 {
     public class ValidationConfig
     {
         public double? MinNumericValue { get; set; }
-        [GreaterThan(nameof(MinNumericValue))]
+        [GreaterThanOrNull(nameof(MinNumericValue), ErrorMessage = "Max validation value must be greater than min")]
         public double? MaxNumericValue { get; set; }
         public bool Integer { get; set; }
         public DateTime? MinDateValue { get; set; }
-        [GreaterThan(nameof(MinDateValue))]
+        [GreaterThanOrNull(nameof(MinDateValue), ErrorMessage = "Max validation value must be greater than min")]
         public DateTime? MaxDateValue { get; set; }
 
         /// <summary>

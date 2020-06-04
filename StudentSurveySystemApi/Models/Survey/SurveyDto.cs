@@ -7,14 +7,14 @@ namespace Server.Models.Survey
     public class SurveyDto
     {
         public int? Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Survey title is required.")]
         public string Name { get; set; }
 
         public int? CreatorId { get; set; }
 
         public int? CourseId { get; set; }
         [Required]
-        [MinLength(1)]
+        [MinLength(1, ErrorMessage = "You must add at least 1 question.")]
         public List<QuestionDto> Questions { get; set; }
 
         public bool Active { get; set; } = false;

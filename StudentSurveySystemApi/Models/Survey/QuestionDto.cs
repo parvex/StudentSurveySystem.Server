@@ -9,7 +9,7 @@ namespace Server.Models.Survey
 
         [Required]
         public int Index { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You must specify question text.")]
         public string QuestionText { get; set; }
         [Required]
         public QuestionType QuestionType { get; set; }
