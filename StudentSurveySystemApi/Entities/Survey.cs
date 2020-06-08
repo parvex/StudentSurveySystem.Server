@@ -23,6 +23,8 @@ namespace Server.Entities
 
         public bool Active { get; set; } = false;
 
+        public bool IsTemplate { get; set; } = true;
+
         public bool Anonymous { get; set; } = false;
 
         public DateTime ModificationDate { get; set; }

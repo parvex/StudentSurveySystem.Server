@@ -32,7 +32,18 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.Name.Contains(name ?? "") && x.CreatorId == userId)
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId)
+                .OrderByDescending(x => x.ModificationDate)
+                .Skip(count * page).Take(count)
+                .ProjectToType<SurveyDto>()
+                .ToListAsync();
+        }
+
+        [HttpGet("MySurveyTemplates")]
+        public async Task<ActionResult<List<SurveyDto>>> GetMySurveyTemplates(string name = "", int page = 0, int count = 20)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Surveys.Where(x => x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId)
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
@@ -43,7 +54,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<SurveyDto>>> GetSurveys(string name = "", int page = 0, int count = 20)
         {
-            return await _context.Surveys.Where(x => x.Name.Contains(name ?? ""))
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? ""))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
@@ -54,7 +65,7 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.Active && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now)
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Active && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now)
                                                               && x.SurveyResponses.All(r => r.RespondentId != userId))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
@@ -126,27 +137,16 @@ namespace Server.Controllers
             return Ok();
         }
 
-        [HttpPost("Activate/{id}")]
-        public async Task<ActionResult> ActivateSurvey(int id)
+        [HttpPost("StartSurveyFromTemplate")]
+        public async Task<ActionResult> StartSurveyFromTemplate(SurveyDto surveyDto)
         {
-            var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
-            if (survey == null)
-                return NotFound();
+            surveyDto.Id = null;
+            surveyDto.Active = true;
+            surveyDto.IsTemplate = false;
+            surveyDto.Questions.ForEach(x => x.Id = null);
 
-            survey.Active = true;
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
+            await AddSurvey(surveyDto);
 
-        [HttpPost("Deactivate/{id}")]
-        public async Task<ActionResult> DeactivateSurvey(int id)
-        {
-            var survey = _context.Surveys.FirstOrDefault(x => x.Id == id);
-            if (survey == null)
-                return NotFound();
-
-            survey.Active = false;
-            await _context.SaveChangesAsync();
             return Ok();
         }
     }

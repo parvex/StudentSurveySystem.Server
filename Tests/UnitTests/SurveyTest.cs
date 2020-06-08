@@ -92,29 +92,6 @@ namespace Tests.UnitTests
         }
 
         [Fact]
-        public async Task<int> ActivateSurvey()
-        {
-            var id = await AddSurvey();
-            var response = await Controller.ActivateSurvey(id);
-
-            Assert.IsType<OkResult>(response);
-            var surveyResponse = await Controller.GetSurvey(id);
-            Assert.True(surveyResponse.Value.Active);
-            return surveyResponse.Value.Id.Value;
-        }
-
-        [Fact]
-        public async Task DeactivateSurvey()
-        {
-            var id = await ActivateSurvey();
-            var response = await Controller.DeactivateSurvey(id);
-
-            Assert.IsType<OkResult>(response);
-            var surveyResponse = await Controller.GetSurvey(id);
-            Assert.False(surveyResponse.Value.Active);
-        }
-
-        [Fact]
         public async Task DeleteSurvey()
         {
             var id = await AddSurvey();
@@ -123,6 +100,16 @@ namespace Tests.UnitTests
 
             Assert.IsType<OkResult>(response);
             Assert.IsType<NotFoundResult>(detailsResponse.Result);
+        }
+
+        [Fact]
+        public async Task StartActiveSurveyFromTemplate()
+        {
+            var id = await AddSurvey();
+            var surveyResponse = await Controller.GetSurvey(id);
+            var response = await Controller.StartSurveyFromTemplate(surveyResponse.Value);
+
+            Assert.IsType<OkResult>(response);
         }
     }
 }
