@@ -29,7 +29,6 @@ namespace Tests.UnitTests
             var surveyResponse = new SurveyResponseDto
             {
                 SurveyId = 0,
-                RespondentId = 0,
                 Answers = new List<AnswerDto> { 
                     new AnswerDto
                     {
