@@ -121,28 +121,28 @@ namespace Server.Helpers
                         new Question
                         {
                             Id = 1, QuestionType = QuestionType.Date, QuestionText = "Project submit date",
-                            SurveyId = seedSurveys[0].Id.Value, Index = 2
+                            SurveyId = seedSurveys[0].Id.Value, Index = 2, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
 
                         new Question
                         {
                             Id = 2, QuestionType = QuestionType.Numeric, QuestionText = "Overall experience",
-                            SurveyId = seedSurveys[1].Id.Value, Index = 3
+                            SurveyId = seedSurveys[1].Id.Value, Index = 3, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
                         {
                             Id = 3, QuestionType = QuestionType.Date, QuestionText = "Project submit date",
-                            SurveyId = seedSurveys[1].Id.Value, Index = 4
+                            SurveyId = seedSurveys[1].Id.Value, Index = 4, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
                         {
                             Id = 4, QuestionType = QuestionType.Boolean, QuestionText = "Erasmus",
-                            SurveyId = seedSurveys[1].Id.Value, Index = 5
+                            SurveyId = seedSurveys[1].Id.Value, Index = 5, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
                         {
                             Id = 5, QuestionType = QuestionType.Text, QuestionText = "Project name",
-                            SurveyId = seedSurveys[1].Id.Value, Index = 6
+                            SurveyId = seedSurveys[1].Id.Value, Index = 6, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
                         {
@@ -150,7 +150,8 @@ namespace Server.Helpers
                             QuestionType = QuestionType.SingleSelect, QuestionText = "Technology",
                             SurveyId = seedSurveys[1].Id.Value, Index = 7,
                             Values = JsonConvert.SerializeObject(new List<string>
-                                {"Xamarin", "Flutter", "React Native", "Ionic", "Adobe PhoneGap"})
+                                {"Xamarin", "Flutter", "React Native", "Ionic", "Adobe PhoneGap"}),
+                            ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
                         {
@@ -158,7 +159,8 @@ namespace Server.Helpers
                             QuestionType = QuestionType.MultipleSelect, QuestionText = "Project includes",
                             SurveyId = seedSurveys[1].Id.Value, Index = 8,
                             Values = JsonConvert.SerializeObject(new List<string>
-                                {"Rest API", "Web Service", "Database", "Authentication", "Authentication"})
+                                {"Rest API", "Web Service", "Database", "Authentication", "Authentication"}),
+                            ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         }
                     };
 

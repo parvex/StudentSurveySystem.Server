@@ -14,7 +14,7 @@ namespace Server.Models.Survey
         [Required]
         public QuestionType QuestionType { get; set; }
 
-        public ValidationConfig ValidationConfig { get; set; }
+        public ValidationConfig ValidationConfig { get; set; } = new ValidationConfig();
 
         /// <summary>
         /// Values to choose in case of single or multi select
