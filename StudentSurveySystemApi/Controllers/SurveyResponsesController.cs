@@ -89,7 +89,7 @@ namespace Server.Controllers
             var surveyResponseEntity = surveyResponse.Adapt<SurveyResponse>();
             var survey = await _context.Surveys.FirstAsync(x => x.Id == surveyResponse.SurveyId);
 
-            if(survey.Anonymnous)
+            if(!survey.Anonymous)
                 surveyResponseEntity.RespondentId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             surveyResponseEntity.Date = DateTime.Now;
             _context.SurveyResponses.Add(surveyResponseEntity);
@@ -108,8 +108,7 @@ namespace Server.Controllers
                 {
                     case QuestionType.Text:
                         var regexString = question.ValidationConfig.Regex;
-                        if(question.ValidationConfig.Regex != null) 
-                            if (regexString == null) 
+                        if (regexString == null) 
                                 break;
                         regexString = "^" + regexString + "$";
                         if (answer.Value == null)
