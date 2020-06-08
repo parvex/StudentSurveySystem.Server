@@ -87,6 +87,10 @@ namespace Server.Controllers
                 return BadRequest(new {errors = errorDictionary, code = 400});
 
             var surveyResponseEntity = surveyResponse.Adapt<SurveyResponse>();
+            var survey = await _context.Surveys.FirstAsync(x => x.Id == surveyResponse.SurveyId);
+
+            if(survey.Anonymnous)
+                surveyResponseEntity.RespondentId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             surveyResponseEntity.Date = DateTime.Now;
             _context.SurveyResponses.Add(surveyResponseEntity);
             await _context.SaveChangesAsync();
@@ -94,7 +98,7 @@ namespace Server.Controllers
             return Ok();
         }
 
-        public Dictionary<string, List<string>> ValidateSurveyResponse(SurveyResponseDto response)
+        private Dictionary<string, List<string>> ValidateSurveyResponse(SurveyResponseDto response)
         {
             var errors = new Dictionary<string, List<string>>();
             foreach (var answer in response.Answers)

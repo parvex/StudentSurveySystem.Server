@@ -19,6 +19,8 @@ namespace Server.Models.Survey
 
         public bool Active { get; set; } = false;
 
+        public bool Anonymous { get; set; } = false;
+
         public string CourseName { get; set; }
 
         public string CreatorName { get; set; }

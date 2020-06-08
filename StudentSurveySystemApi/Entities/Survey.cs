@@ -23,6 +23,8 @@ namespace Server.Entities
 
         public bool Active { get; set; } = false;
 
+        public bool Anonymnous { get; set; } = false;
+
         public DateTime ModificationDate { get; set; }
 
         public List<SurveyResponse> SurveyResponses { get; set; }

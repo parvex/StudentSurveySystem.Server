@@ -67,7 +67,8 @@ namespace Server.Controllers
         {
             if (usosAuth.RequestToken == null || usosAuth.TokenSecret == null || usosAuth.OAuthVerifier == null)
                 return BadRequest("Missing parameters");
-            var usosUser = _usosApi.GetUsosUserData(usosAuth);
+            var accessToken = _usosApi.GetAccessTokenData(usosAuth);
+            var usosUser = _usosApi.GetUsosUserData(accessToken.Item1, accessToken.Item2);
 
             if (usosUser == null)
                 return Unauthorized("Wrong PIN");

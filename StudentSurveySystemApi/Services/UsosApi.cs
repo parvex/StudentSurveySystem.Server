@@ -12,7 +12,8 @@ namespace Server.Services
     public interface IUsosApi
     {
         Task<UsosAuthDto> GetUsosAuthData();
-        UsosUser GetUsosUserData(UsosAuthDto usosAuth);
+        UsosUser GetUsosUserData(string token, string tokenSecret);
+        (string, string) GetAccessTokenData(UsosAuthDto usosAuth);
     }
 
     public class UsosApi : IUsosApi
@@ -26,7 +27,6 @@ namespace Server.Services
             _configuration = configuration;
             Client = new RestClient("https://apps.usos.pw.edu.pl/services/");
             Client.UseNewtonsoftJson();
-            //TODO: callback url, maybe it can lead to mobile client again
             Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["AuthRedirectUrl"]);
         }
 
@@ -46,11 +46,13 @@ namespace Server.Services
                     TokenSecret = requestSecret, UsosAuthUrl = Client.BuildUri(authRequest).ToString() };
         }
 
-        public UsosUser GetUsosUserData(UsosAuthDto usosAuth)
+        public UsosUser GetUsosUserData(string accessToken, string tokenSecret)
         {
-            var (token, tokenSecret) = GetAccessTokenData(usosAuth);
+            var x = GetUserCourses(accessToken, tokenSecret);
+
+
             Client.Authenticator = OAuth1Authenticator
-                .ForProtectedResource(ConsumerKey, ConsumerSecret, token, tokenSecret);
+                .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
 
             var userDataRequest = new RestRequest("users/user", Method.GET);
             userDataRequest.AddParameter("fields", "id|first_name|last_name|student_status|staff_status");
@@ -59,7 +61,7 @@ namespace Server.Services
             return userDataResponse.IsSuccessful ? userDataResponse.Data : null;
         }
 
-        private (string, string) GetAccessTokenData(UsosAuthDto usosAuth)
+        public (string, string) GetAccessTokenData(UsosAuthDto usosAuth)
         {
             Client.Authenticator = OAuth1Authenticator
                 .ForAccessToken(ConsumerKey, ConsumerSecret, usosAuth.RequestToken, usosAuth.TokenSecret, usosAuth.OAuthVerifier);
@@ -72,17 +74,16 @@ namespace Server.Services
             return (accessToken, accessSecret);
         }
 
-        private T Execute<T>(RestRequest request)
+        public UsosCourses GetUserCourses(string accessToken, string tokenSecret)
         {
-            var response = Client.Execute<T>(request);
+            Client.Authenticator = OAuth1Authenticator
+                .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
 
-            if (response.ErrorException != null)
-            {
-                const string message = "Error retrieving response.  Check inner details for more info.";
-                var exception = new Exception(message, response.ErrorException);
-                throw exception;
-            }
-            return response.Data;
+            var userDataRequest = new RestRequest("courses/user", Method.GET);
+            //userDataRequest.AddParameter("fields", "id|first_name|last_name|student_status|staff_status");
+
+            var userDataResponse = Client.Execute(userDataRequest);
+            return /*userDataResponse.IsSuccessful ? userDataResponse.Data :*/ null;
         }
     }
 }

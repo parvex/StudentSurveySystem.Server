@@ -19,7 +19,7 @@ namespace Server.Controllers
     [Authorize]
     [Route("[controller]")]
     [ApiController]
-    public class SurveysController : SystemControllerBase
+    public class SurveysController : ControllerBase
     {
         private readonly SurveyContext _context;
 
@@ -54,7 +54,8 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => x.Name.Contains(name ?? "") && x.SurveyResponses.All(r => r.RespondentId != userId))
+            return await _context.Surveys.Where(x => x.Active && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now)
+                                                              && x.SurveyResponses.All(r => r.RespondentId != userId))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
