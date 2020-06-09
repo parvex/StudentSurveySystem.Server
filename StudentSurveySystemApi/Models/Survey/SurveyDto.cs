@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FoolProof.Core;
+using Server.Migrations;
 
 namespace Server.Models.Survey
 {
@@ -27,7 +29,9 @@ namespace Server.Models.Survey
 
         public string CreatorName { get; set; }
 
+        [GreaterThan(nameof(Today), ErrorMessage = "End date must be in future")]
         public DateTime EndDate { get; set; }
 
+        public DateTime Today => DateTime.Today;
     }
 }
