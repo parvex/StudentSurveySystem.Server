@@ -56,17 +56,4 @@ jobs:
       #   uses: actions/setup-dotnet@v1
       #   with:
       #     dotnet-version: 3.1.100
-      
-      # Publish
-      - name: Publish nuget packages with new version tag
-        uses: rohith/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: GeneratedApiClient/src/StudentSurveySystem.ApiClient/StudentSurveySystem.ApiClient.csproj # Relative to repository root
-          # VERSION_FILE_PATH: Directory.Build.props # Filepath with version info, relative to repository root. Defaults to project file
-          #VERSION_REGEX: <AssemblyVersion>(.*)<\/AssemblyVersion> # Regex pattern to extract version info in a capturing group
-          # VERSION_STATIC: Bypasses version resolution; useful for external providers like Nerdbank.GitVersioning
-          # TAG_COMMIT: true # Flag to enable / disalge git tagging
-          # TAG_FORMAT: v* # Format of the git tag, [*] gets replaced with version
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}} # nuget.org API key
-          PACKAGE_NAME: StudentSurveySystem.ApiClient
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
