@@ -15,13 +15,25 @@ namespace Server.Entities
                 .HasOne(x => x.Creator)
                 .WithMany()
                 .OnDelete(DeleteBehavior.SetNull)
-                .IsRequired(false);            
-            
-            modelBuilder.Entity<Course>()
-                .HasOne(x => x.Leader)
-                .WithMany()
-                .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
+
+            modelBuilder.Entity<CourseLecturer>()
+                .HasOne(cl => cl.Lecturer)
+                .WithMany(l => l.CourseLecturers)
+                .HasForeignKey(cl => cl.LecturerId);
+            modelBuilder.Entity<CourseLecturer>()
+                .HasOne(cl => cl.Course)
+                .WithMany(l => l.CourseLecturers)
+                .HasForeignKey(cl => cl.CourseId);
+
+            modelBuilder.Entity<CourseParticipant>()
+                .HasOne(cp => cp.Participant)
+                .WithMany(p => p.CourseParticipants)
+                .HasForeignKey(cl => cl.ParticipantId);
+            modelBuilder.Entity<CourseParticipant>()
+                .HasOne(cp => cp.Course)
+                .WithMany(p => p.CourseParticipants)
+                .HasForeignKey(cl => cl.CourseId);
         }
 
         public DbSet<User> Users { get; set; }
@@ -34,6 +46,12 @@ namespace Server.Entities
 
         public DbSet<SurveyResponse> SurveyResponses { get; set; }
 
-        public DbSet<Answer> Answer { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+
+        public DbSet<Semester> Semesters { get; set; }
+
+        public DbSet<CourseLecturer> CourseLecturers { get; set; }
+
+        public DbSet<CourseParticipant> CourseParticipants { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Server.Models.Survey;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Server.Models.Survey;
 
 namespace Server.Entities
 {
@@ -10,12 +12,11 @@ namespace Server.Entities
 
         public int SemesterId { get; set; }
 
-        public int Year { get; set; }
+        [ForeignKey(nameof(SemesterId))]
+        public Semester Semester { get; set; }
 
-        public SemesterPart SemesterPart { get; set; }
+        public List<CourseLecturer> CourseLecturers { get; set; }
 
-        public int? LeaderId { get; set; }
-
-        public  User Leader { get; set; }
+        public List<CourseParticipant> CourseParticipants { get; set; }
     }
 }

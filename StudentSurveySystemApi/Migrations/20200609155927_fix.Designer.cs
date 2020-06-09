@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Entities;
 
 namespace Server.Migrations
 {
     [DbContext(typeof(SurveyContext))]
-    partial class SurveyContextModelSnapshot : ModelSnapshot
+    [Migration("20200609155927_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Server.Migrations
 
                     b.HasIndex("LecturerId");
 
-                    b.ToTable("CourseLecturers");
+                    b.ToTable("CourseLecturer");
                 });
 
             modelBuilder.Entity("Server.Entities.CourseParticipant", b =>
@@ -105,7 +107,7 @@ namespace Server.Migrations
 
                     b.HasIndex("ParticipantId");
 
-                    b.ToTable("CourseParticipants");
+                    b.ToTable("CourseParticipant");
                 });
 
             modelBuilder.Entity("Server.Entities.Question", b =>

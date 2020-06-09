@@ -15,8 +15,8 @@ namespace Server.Helpers
     {
         public static int Seed(SurveyContext context, IUserService userService, bool relational)
         {
-            if (!context.Answer.Any() && !context.SurveyResponses.Any() && !context.Courses.Any() && !context.Questions.Any()
-                && !context.Surveys.Any() && !context.Users.Any())
+            if (!context.Answers.Any() && !context.SurveyResponses.Any() && !context.Courses.Any() && !context.Questions.Any()
+                && !context.Surveys.Any() && !context.Users.Any() && !context.Semesters.Any())
             {
 
                     if(relational)
@@ -54,6 +54,27 @@ namespace Server.Helpers
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Users] OFF");
 
                     if (relational)
+                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Semesters] ON");
+
+                    List<Semester> seedSemesters = new List<Semester>
+                    {
+                        new Semester
+                        {
+                            Id = 0, Name = "2019L"
+                        },
+                        new Semester
+                        {
+                            Id = 1, Name = "2020Z"
+                        }
+                    };
+
+                    context.AddRange(seedSemesters);
+                    context.SaveChanges();
+
+                    if (relational)
+                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Semesters] OFF");
+
+                    if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Courses] ON");
 
 
@@ -61,13 +82,11 @@ namespace Server.Helpers
                     {
                         new Course
                         {
-                            Id = 0, Name = "SDI", Year = 2019, SemesterPart = SemesterPart.Summer,
-                            LeaderId = seedUsers[2].Id.Value
+                            Id = 0, Name = "SDI", SemesterId = 0
                         },
                         new Course
                         {
-                            Id = 1, Name = "WPAM", Year = 2019, SemesterPart = SemesterPart.Winter,
-                            LeaderId = seedUsers[2].Id.Value
+                            Id = 1, Name = "WPAM", SemesterId = 1
                         }
                     };
 
@@ -75,6 +94,52 @@ namespace Server.Helpers
                     context.SaveChanges();
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Courses] OFF");
+
+                    //if (relational)
+                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseLecturers] ON");
+
+
+                    List<CourseLecturer> seedCourseLecturers = new List<CourseLecturer>
+                    {
+                        new CourseLecturer()
+                        {
+                            CourseId = 1,
+                            LecturerId = seedUsers[2].Id.Value
+                        },
+                        new CourseLecturer
+                        {
+                            CourseId = 0,
+                            LecturerId = seedUsers[2].Id.Value
+                        }
+                    };
+
+                    context.AddRange(seedCourseLecturers);
+                    context.SaveChanges();
+                    //if (relational)
+                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseLecturers] OFF");
+
+                    //if (relational)
+                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseParticipants] ON");
+
+
+                    List<CourseParticipant> seedCourseParticipants = new List<CourseParticipant>
+                    {
+                        new CourseParticipant()
+                        {
+                            CourseId = 1,
+                            ParticipantId = seedUsers[0].Id.Value
+                        },
+                        new CourseParticipant
+                        {
+                            CourseId = 0,
+                            ParticipantId = seedUsers[0].Id.Value
+                        }
+                    };
+
+                    context.AddRange(seedCourseParticipants);
+                    context.SaveChanges();
+                    //if (relational)
+                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseParticipants] OFF");
 
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Surveys] ON");
@@ -170,7 +235,7 @@ namespace Server.Helpers
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Questions] OFF");
 
                     if (relational)
-                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Answer] ON");
+                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Answers] ON");
 
 
                     var seedAnswers = new List<Answer>
@@ -199,7 +264,7 @@ namespace Server.Helpers
                     context.AddRange(seedAnswers);
                     context.SaveChanges();
                     if (relational)
-                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Answer] OFF");
+                        context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Answers] OFF");
 
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[SurveyResponses] ON");

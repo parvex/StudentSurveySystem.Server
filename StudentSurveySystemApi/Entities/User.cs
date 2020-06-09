@@ -1,4 +1,5 @@
-﻿using Server.Models.Auth;
+﻿using System.Collections.Generic;
+using Server.Models.Auth;
 
 namespace Server.Entities
 {
@@ -19,5 +20,9 @@ namespace Server.Entities
         public byte[] PasswordSalt { get; set; }
 
         public UserRole UserRole { get; set; }
+
+        public List<CourseParticipant> CourseParticipants { get; set; }
+
+        public List<CourseLecturer> CourseLecturers { get; set; }
     }
 }

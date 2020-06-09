@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serializers.NewtonsoftJson;
+using Server.Entities;
 using Server.Models.Auth;
 
 namespace Server.Services
@@ -82,8 +84,18 @@ namespace Server.Services
             var userDataRequest = new RestRequest("courses/user", Method.GET);
             //userDataRequest.AddParameter("fields", "id|first_name|last_name|student_status|staff_status");
 
+
+
             var userDataResponse = Client.Execute(userDataRequest);
+
+            dynamic json = JObject.Parse(userDataResponse.Content);
+
+            var x = json.course_editions;
+
+
             return /*userDataResponse.IsSuccessful ? userDataResponse.Data :*/ null;
         }
+
+
     }
 }
