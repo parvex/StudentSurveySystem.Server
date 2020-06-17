@@ -20,7 +20,7 @@ namespace Server.Models.Auth
     public class UsosUser
     {
         [JsonProperty("id")]
-        public int UsosId { get; set; }
+        public int Id { get; set; }
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
         [JsonProperty("last_name")]

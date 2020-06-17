@@ -99,15 +99,13 @@ namespace Server.Services
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
 
-                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == usosUser.UsosId.ToString())))
+                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == usosUser.Id.ToString())))
                     {
-                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer()};
+                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = usosUser.Id}};
                     }
                 }
-
                 semesters.Add(semester);
             }
-
             return semesters;
         }
 

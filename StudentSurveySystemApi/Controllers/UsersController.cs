@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,13 +71,13 @@ namespace Server.Controllers
             var accessToken = _usosApi.GetAccessTokenData(usosAuth);
             var usosUser = _usosApi.GetUsosUserData(accessToken.Item1, accessToken.Item2);
 
-            var usosUserCourses = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, usosUser);
+            var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, usosUser);
 
             if (usosUser == null)
                 return Unauthorized("Wrong PIN");
 
             var currentUser = usosUser.Adapt<CurrentUserDto>();
-            var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.UsosId == currentUser.UsosId.Value);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == currentUser.Id.Value);
             if (dbUser != null)
             {
                 currentUser.Id = dbUser.Id;
@@ -87,10 +88,19 @@ namespace Server.Controllers
                  var newUser = currentUser.Adapt<User>();
                  newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
                      usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
-                 await _context.Users.AddAsync(newUser);
-                 await _context.SaveChangesAsync();
+                 await using (var transaction = await _context.Database.BeginTransactionAsync())
+                 {
+                     await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] ON");
+                     await _context.Users.AddAsync(newUser);
+                     await _context.SaveChangesAsync();
+                     await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] OFF");
+                     await transaction.CommitAsync();
+                 }
+
                  currentUser.Id = newUser.Id;
             }
+
+            await UpdateSemAndCourseData(usosSemesters, currentUser);
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -132,6 +142,47 @@ namespace Server.Controllers
             }
 
             return user;
+        }
+
+
+        private async Task UpdateSemAndCourseData(List<Semester> semesters, CurrentUserDto user)
+        {
+            var existingSemesters = _context.Semesters.ToList();
+            var updatedSemesters = semesters.Where(x => existingSemesters.Any(y => y.Name.Equals(x.Name))).ToList();
+            var newSems = semesters.Where(x => existingSemesters.All(y => y.Name != x.Name)).ToList();
+            var userCoursesAsLecturer = semesters.SelectMany(x => x.Courses).Where(x => x.CourseLecturers != null && x.CourseLecturers.Any()).ToList();
+
+            //adding new smesters
+            await _context.Semesters.AddRangeAsync(newSems);
+
+            foreach (var semester in updatedSemesters)
+            {
+                var semesterEntity = await _context.Semesters.FirstAsync(x => x.Name == semester.Name);
+                semesterEntity.Courses ??= new List<Course>();
+                var newCourses = semester.Courses.Where(x => semesterEntity.Courses.All(y => y.Name != x.Name)).ToList();
+                foreach (var newCourse in newCourses)
+                {
+                    //removing indication that user is a lecturer of this course to not break anything
+                    newCourse.CourseLecturers = null;
+                    //adding new courses
+                    _context.Entry(newCourse).State = EntityState.Added;
+                }
+                
+            }
+
+            await _context.SaveChangesAsync();
+
+            var userEntity = await _context.Users.Include(x => x.CourseParticipants)
+                .Include(x => x.CourseLecturers).FirstAsync(x => x.Id == user.Id);
+            var userCourses = semesters.SelectMany(x => x.Courses).ToList();
+            var userCourseParticipation =
+                userCourses.Select(x => new CourseParticipant() {Course = x, Participant = userEntity}).ToList();
+            var userCourseParticipationAsLecturer =
+                userCoursesAsLecturer.Select(x => new CourseLecturer() {Course = x, Lecturer = userEntity}).ToList();
+            userEntity.CourseParticipants = userCourseParticipation;
+            userEntity.CourseLecturers = userCourseParticipationAsLecturer;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

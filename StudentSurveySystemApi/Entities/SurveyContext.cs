@@ -34,6 +34,10 @@ namespace Server.Entities
                 .HasOne(cp => cp.Course)
                 .WithMany(p => p.CourseParticipants)
                 .HasForeignKey(cl => cl.CourseId);
+
+            modelBuilder.Entity<Semester>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
