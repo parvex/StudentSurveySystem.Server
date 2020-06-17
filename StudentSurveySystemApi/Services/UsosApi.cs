@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -19,7 +20,7 @@ namespace Server.Services
         Task<UsosAuthDto> GetUsosAuthData();
         UsosUser GetUsosUserData(string token, string tokenSecret);
         (string, string) GetAccessTokenData(UsosAuthDto usosAuth);
-        List<Semester> GetUserCourses(string accessToken, string tokenSecret, UsosUser usosUser);
+        List<Semester> GetUserCourses(string accessToken, string tokenSecret, User user);
     }
 
     public class UsosApi : IUsosApi
@@ -77,7 +78,7 @@ namespace Server.Services
             return (accessToken, accessSecret);
         }
 
-        public List<Semester> GetUserCourses(string accessToken, string tokenSecret, UsosUser usosUser)
+        public List<Semester> GetUserCourses(string accessToken, string tokenSecret, User user)
         {
             Client.Authenticator = OAuth1Authenticator
                 .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
@@ -99,9 +100,9 @@ namespace Server.Services
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
 
-                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == usosUser.Id.ToString())))
+                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == user.Id.ToString())))
                     {
-                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = usosUser.Id}};
+                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = user.Id.Value}};
                     }
                 }
                 semesters.Add(semester);

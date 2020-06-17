@@ -38,6 +38,9 @@ namespace Server.Entities
             modelBuilder.Entity<Semester>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
+            modelBuilder.Entity<Course>()
+                .HasIndex(x => new { x.Name, x.SemesterId })
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }

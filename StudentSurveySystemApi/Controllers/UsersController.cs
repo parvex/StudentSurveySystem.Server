@@ -41,7 +41,6 @@ namespace Server.Controllers
             _usosApi = usosApi;
         }
 
-
         [AllowAnonymous]
         [HttpPost("Authenticate")]
         public async Task<ActionResult<CurrentUserDto>> Authenticate([FromBody]AuthenticateDto userDto)
@@ -61,7 +60,6 @@ namespace Server.Controllers
             return await _usosApi.GetUsosAuthData();
         }
 
-
         [AllowAnonymous]
         [HttpPost("UsosPinAuth")]
         public async Task<ActionResult<CurrentUserDto>> UsosPinAuth(UsosAuthDto usosAuth)
@@ -70,9 +68,6 @@ namespace Server.Controllers
                 return BadRequest("Missing parameters");
             var accessToken = _usosApi.GetAccessTokenData(usosAuth);
             var usosUser = _usosApi.GetUsosUserData(accessToken.Item1, accessToken.Item2);
-
-            var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, usosUser);
-
             if (usosUser == null)
                 return Unauthorized("Wrong PIN");
 
@@ -96,12 +91,28 @@ namespace Server.Controllers
                      await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] OFF");
                      await transaction.CommitAsync();
                  }
-
                  currentUser.Id = newUser.Id;
+                 var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, newUser);
+                 await UpdateSemAndCourseData(usosSemesters, newUser);
             }
+            SetupToken(currentUser, accessToken.Item1, accessToken.Item2);
+            return Ok(currentUser);
+        }
 
-            await UpdateSemAndCourseData(usosSemesters, currentUser);
+        [HttpPut("UpdateUserUsosData")]
+        public async Task<ActionResult> UpdateUserUsosData()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            var accessToken = User.FindFirstValue("AccessToken");
+            var accessTokenSecret = User.FindFirstValue("AccessTokenSecret");
+            var user = (await GetUser(userId)).Value;
+            var semestersData = _usosApi.GetUserCourses(accessToken, accessTokenSecret, user);
+            await UpdateSemAndCourseData(semestersData, user);
+            return Ok();
+        }
 
+        private void SetupToken(CurrentUserDto currentUser, string accessToken, string accessTokenSecret)
+        {
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -110,26 +121,16 @@ namespace Server.Controllers
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, currentUser.Id.ToString()),
-                    new Claim(ClaimTypes.Role, currentUser.UserRole.ToString())
+                    new Claim(ClaimTypes.Role, currentUser.UserRole.ToString()),
+                    new Claim("AccessToken", accessToken),
+                    new Claim("AccessTokenSecret", accessTokenSecret)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             currentUser.Token = tokenHandler.WriteToken(token);
-
-            return Ok(currentUser);
         }
-
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUsers(string userName = "", int page = 0, int count = 20)
-        //{
-        //    return await _context.Users.Where(x => x.Username.Contains(userName))
-        //        .OrderBy(x => x.Username)
-        //        .Skip(count * page).Take(count)
-        //        .ToListAsync();
-        //}
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
@@ -144,21 +145,18 @@ namespace Server.Controllers
             return user;
         }
 
-
-        private async Task UpdateSemAndCourseData(List<Semester> semesters, CurrentUserDto user)
+        private async Task UpdateSemAndCourseData(List<Semester> usosSemesters, User user)
         {
             var existingSemesters = _context.Semesters.ToList();
-            var updatedSemesters = semesters.Where(x => existingSemesters.Any(y => y.Name.Equals(x.Name))).ToList();
+            var updatedSemesters = usosSemesters.Where(x => existingSemesters.Any(y => y.Name.Equals(x.Name))).ToList();
             updatedSemesters.ForEach(x => x.Id = existingSemesters.First(y => y.Name == x.Name).Id);
-            var newSems = semesters.Where(x => existingSemesters.All(y => y.Name != x.Name)).ToList();
-            var userCoursesAsLecturer = semesters.SelectMany(x => x.Courses).Where(x => x.CourseLecturers != null && x.CourseLecturers.Any()).ToList();
-
+            var newSems = usosSemesters.Where(x => existingSemesters.All(y => y.Name != x.Name)).ToList();
+            var userCoursesAsLecturer = usosSemesters.SelectMany(x => x.Courses).Where(x => x.CourseLecturers != null && x.CourseLecturers.Any()).ToList();
             //adding new smesters
             await _context.Semesters.AddRangeAsync(newSems);
-
             foreach (var semester in updatedSemesters)
             {
-                var semesterEntity = await _context.Semesters.FirstAsync(x => x.Name == semester.Name);
+                var semesterEntity = await _context.Semesters.Include(x => x.Courses).FirstAsync(x => x.Name == semester.Name);
                 semesterEntity.Courses ??= new List<Course>();
                 var newCourses = semester.Courses.Where(x => semesterEntity.Courses.All(y => y.Name != x.Name)).ToList();
                 foreach (var newCourse in newCourses)
@@ -171,16 +169,12 @@ namespace Server.Controllers
                 }
                 
             }
-
             await _context.SaveChangesAsync();
-
             var userEntity = await _context.Users.Include(x => x.CourseParticipants)
                 .Include(x => x.CourseLecturers).FirstAsync(x => x.Id == user.Id);
-            var userCourses = semesters.SelectMany(x => x.Courses).ToList();
-            var userCourseParticipation =
-                userCourses.Select(x => new CourseParticipant() {Course = x, Participant = userEntity}).ToList();
-            var userCourseParticipationAsLecturer =
-                userCoursesAsLecturer.Select(x => new CourseLecturer() {Course = x, Lecturer = userEntity}).ToList();
+            var userCourses = usosSemesters.SelectMany(x => x.Courses).ToList();
+            var userCourseParticipation = userCourses.Select(x => new CourseParticipant() {Course = x, Participant = userEntity}).ToList();
+            var userCourseParticipationAsLecturer = userCoursesAsLecturer.Select(x => new CourseLecturer() {Course = x, Lecturer = userEntity}).ToList();
             userEntity.CourseParticipants = userCourseParticipation;
             userEntity.CourseLecturers = userCourseParticipationAsLecturer;
 
