@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -76,26 +79,35 @@ namespace Server.Services
             return (accessToken, accessSecret);
         }
 
-        public UsosCourses GetUserCourses(string accessToken, string tokenSecret)
+        public List<Semester> GetUserCourses(string accessToken, string tokenSecret)
         {
             Client.Authenticator = OAuth1Authenticator
                 .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
 
             var userDataRequest = new RestRequest("courses/user", Method.GET);
-            //userDataRequest.AddParameter("fields", "id|first_name|last_name|student_status|staff_status");
-
-
 
             var userDataResponse = Client.Execute(userDataRequest);
 
-            dynamic json = JObject.Parse(userDataResponse.Content);
+            JObject json = JObject.Parse(userDataResponse.Content);
+            var semesters = new List<Semester>();
 
-            var x = json.course_editions;
+            foreach (var semJson in json["course_editions"].Children())
+            {
+                var semester = new Semester() { Name = semJson.ToObject<JProperty>().Name };
+                semester.Courses = new List<Course>();
 
+                foreach (var courseJson in semJson.First.Children().ToList())
+                {
+                    var course = new Course() {Name = courseJson.Value<string>("course_id")};
+                    semester.Courses.Add(course);
+                }
 
-            return /*userDataResponse.IsSuccessful ? userDataResponse.Data :*/ null;
+                semesters.Add(semester);
+            }
+
+            return semesters;
         }
 
-
+       
     }
 }
