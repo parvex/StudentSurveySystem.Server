@@ -149,6 +149,7 @@ namespace Server.Controllers
         {
             var existingSemesters = _context.Semesters.ToList();
             var updatedSemesters = semesters.Where(x => existingSemesters.Any(y => y.Name.Equals(x.Name))).ToList();
+            updatedSemesters.ForEach(x => x.Id = existingSemesters.First(y => y.Name == x.Name).Id);
             var newSems = semesters.Where(x => existingSemesters.All(y => y.Name != x.Name)).ToList();
             var userCoursesAsLecturer = semesters.SelectMany(x => x.Courses).Where(x => x.CourseLecturers != null && x.CourseLecturers.Any()).ToList();
 
@@ -162,6 +163,7 @@ namespace Server.Controllers
                 var newCourses = semester.Courses.Where(x => semesterEntity.Courses.All(y => y.Name != x.Name)).ToList();
                 foreach (var newCourse in newCourses)
                 {
+                    newCourse.SemesterId = semester.Id.Value;
                     //removing indication that user is a lecturer of this course to not break anything
                     newCourse.CourseLecturers = null;
                     //adding new courses

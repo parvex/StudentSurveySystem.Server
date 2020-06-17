@@ -13,7 +13,7 @@ namespace Server.Helpers
 {
     public class DbInitializer
     {
-        public static int Seed(SurveyContext context, IUserService userService, bool relational)
+        public static void Seed(SurveyContext context, IUserService userService, bool relational)
         {
             if (!context.Answers.Any() && !context.SurveyResponses.Any() && !context.Courses.Any() && !context.Questions.Any()
                 && !context.Surveys.Any() && !context.Users.Any() && !context.Semesters.Any())
@@ -289,9 +289,10 @@ namespace Server.Helpers
                     context.SaveChanges();
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[SurveyResponses] OFF");
-                    return 0;
+                    return;
             }
-            else return -1;
+            else
+                return;
         }
 
         public static void SeedAppDb(SurveyContext context, IUserService userService)
