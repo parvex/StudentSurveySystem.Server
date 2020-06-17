@@ -70,6 +70,8 @@ namespace Server.Controllers
             var accessToken = _usosApi.GetAccessTokenData(usosAuth);
             var usosUser = _usosApi.GetUsosUserData(accessToken.Item1, accessToken.Item2);
 
+            var usosUserCourses = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, usosUser);
+
             if (usosUser == null)
                 return Unauthorized("Wrong PIN");
 

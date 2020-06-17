@@ -19,6 +19,7 @@ namespace Server.Services
         Task<UsosAuthDto> GetUsosAuthData();
         UsosUser GetUsosUserData(string token, string tokenSecret);
         (string, string) GetAccessTokenData(UsosAuthDto usosAuth);
+        List<Semester> GetUserCourses(string accessToken, string tokenSecret, UsosUser usosUser);
     }
 
     public class UsosApi : IUsosApi
@@ -53,9 +54,6 @@ namespace Server.Services
 
         public UsosUser GetUsosUserData(string accessToken, string tokenSecret)
         {
-            var x = GetUserCourses(accessToken, tokenSecret);
-
-
             Client.Authenticator = OAuth1Authenticator
                 .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
 
@@ -79,7 +77,7 @@ namespace Server.Services
             return (accessToken, accessSecret);
         }
 
-        public List<Semester> GetUserCourses(string accessToken, string tokenSecret)
+        public List<Semester> GetUserCourses(string accessToken, string tokenSecret, UsosUser usosUser)
         {
             Client.Authenticator = OAuth1Authenticator
                 .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
@@ -96,10 +94,15 @@ namespace Server.Services
                 var semester = new Semester() { Name = semJson.ToObject<JProperty>().Name };
                 semester.Courses = new List<Course>();
 
-                foreach (var courseJson in semJson.First.Children().ToList())
+                foreach (var courseJson in semJson.First.Children())
                 {
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
+
+                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == usosUser.UsosId.ToString())))
+                    {
+                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer()};
+                    }
                 }
 
                 semesters.Add(semester);
