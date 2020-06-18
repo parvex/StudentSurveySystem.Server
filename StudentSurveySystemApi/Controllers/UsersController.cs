@@ -167,7 +167,7 @@ namespace Server.Controllers
                     //removing indication that user is a lecturer of this course to not break anything
                     newCourse.CourseLecturers = null;
                     //adding new courses
-                    _context.Entry(newCourse).State = EntityState.Added;
+                    await _context.Courses.AddAsync(newCourse);
                 }
                 
             }
@@ -175,10 +175,16 @@ namespace Server.Controllers
             var userEntity = await _context.Users.Include(x => x.CourseParticipants)
                 .Include(x => x.CourseLecturers).FirstAsync(x => x.Id == user.Id);
             var userCourses = usosSemesters.SelectMany(x => x.Courses).ToList();
-            var userCourseParticipation = userCourses.Select(x => new CourseParticipant() {Course = x, Participant = userEntity}).ToList();
-            var userCourseParticipationAsLecturer = userCoursesAsLecturer.Select(x => new CourseLecturer() {Course = x, Lecturer = userEntity}).ToList();
+            userCourses.ForEach(x => x.Id = _context.Courses.First(y => y.Name == x.Name).Id.Value);
+            var userCourseParticipation = userCourses.Select(x => new CourseParticipant() {CourseId = x.Id.Value, Participant = userEntity}).ToList();
+            var userCourseParticipationAsLecturer = userCoursesAsLecturer.Select(x => new CourseLecturer() {CourseId = x.Id.Value, Lecturer = userEntity}).ToList();
+            //_context.CourseParticipants.RemoveRange(userEntity.CourseParticipants);
+            //_context.CourseLecturers.RemoveRange(userEntity.CourseLecturers);
+            //await _context.CourseParticipants.AddRangeAsync(userCourseParticipation);
+            //await _context.CourseLecturers.AddRangeAsync(userCourseParticipationAsLecturer);
             userEntity.CourseParticipants = userCourseParticipation;
             userEntity.CourseLecturers = userCourseParticipationAsLecturer;
+
 
             await _context.SaveChangesAsync();
         }
