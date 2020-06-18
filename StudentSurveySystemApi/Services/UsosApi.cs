@@ -86,7 +86,8 @@ namespace Server.Services
             var userDataRequest = new RestRequest("courses/user", Method.GET);
 
             var userDataResponse = Client.Execute(userDataRequest);
-
+            if(!userDataResponse.IsSuccessful)
+                throw new Exception("Fetching usos data error");
             JObject json = JObject.Parse(userDataResponse.Content);
             var semesters = new List<Semester>();
 
@@ -99,8 +100,8 @@ namespace Server.Services
                 {
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
-
-                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == user.Id.ToString())))
+                    //todo: only for debug
+                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == 801942.ToString())))
                     {
                         course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = user.Id.Value}};
                     }

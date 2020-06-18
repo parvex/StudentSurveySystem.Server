@@ -81,8 +81,10 @@ namespace Server.Controllers
             else
             {
                  var newUser = currentUser.Adapt<User>();
-                 newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
-                     usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
+
+                 //only for debug
+                 newUser.UserRole = UserRole.Lecturer; /*usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
+                     usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");*/
                  await using (var transaction = await _context.Database.BeginTransactionAsync())
                  {
                      await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] ON");
@@ -118,7 +120,7 @@ namespace Server.Controllers
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, currentUser.Id.ToString()),
                     new Claim(ClaimTypes.Role, currentUser.UserRole.ToString()),

@@ -14,6 +14,7 @@ namespace Server.Models.Survey
 
         public int? CreatorId { get; set; }
 
+        [Required(ErrorMessage = "Course must be specified")]
         public int? CourseId { get; set; }
         [Required]
         [MinLength(1, ErrorMessage = "You must add at least 1 question.")]

@@ -6,7 +6,9 @@
 
         public string Name { get; set; }
 
-        public SemesterPart SemesterPart { get; set; }
+        public int SemesterId { get; set; }
+
+        public string SemesterName { get; set; }
 
         public int LeaderId { get; set; }
     }

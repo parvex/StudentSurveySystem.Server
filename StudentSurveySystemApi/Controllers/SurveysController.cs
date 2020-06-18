@@ -65,8 +65,9 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => !x.IsTemplate && x.Active && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now)
-                                                              && x.SurveyResponses.All(r => r.RespondentId != userId))
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Active && x.Course.CourseParticipants.Any(cp => cp.ParticipantId == userId)
+                                                     && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now) 
+                                                     && x.SurveyResponses.All(r => r.RespondentId != userId))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyDto>()
@@ -148,6 +149,17 @@ namespace Server.Controllers
             await AddSurvey(surveyDto);
 
             return Ok();
+        }
+
+        [HttpGet("GetSemestersAndMyCourses")]
+        public async Task<List<SemesterDto>> GetSemestersAndMyCourses()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Semesters.Select(x => new SemesterDto()
+            {
+                Id = x.Id.Value, Name = x.Name,
+                Courses = x.Courses.Where(c => c.CourseLecturers.Any(cl => cl.LecturerId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
+            }).ToListAsync();
         }
     }
 }
