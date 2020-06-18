@@ -95,13 +95,11 @@ namespace Server.Services
             {
                 var semester = new Semester() { Name = semJson.ToObject<JProperty>().Name };
                 semester.Courses = new List<Course>();
-
                 foreach (var courseJson in semJson.First.Children())
                 {
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
-                    //todo: only for debug
-                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == 801942.ToString())))
+                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == user.Id.ToString())))
                     {
                         course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = user.Id.Value}};
                     }

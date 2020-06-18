@@ -15,7 +15,6 @@ namespace Server.Helpers
     {
         public static void Seed(SurveyContext context, IUserService userService, bool relational)
         {
-            return;
             if (!context.Answers.Any() && !context.SurveyResponses.Any() && !context.Courses.Any() && !context.Questions.Any()
                 && !context.Surveys.Any() && !context.Users.Any() && !context.Semesters.Any())
             {

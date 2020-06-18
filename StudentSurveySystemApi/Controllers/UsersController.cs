@@ -83,9 +83,9 @@ namespace Server.Controllers
                  var newUser = currentUser.Adapt<User>();
 
                  //only for debug
-                 newUser.UserRole = UserRole.Lecturer; /*usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
-                     usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");*/
-                 await using (var transaction = await _context.Database.BeginTransactionAsync())
+                 newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
+                     usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
+                await using (var transaction = await _context.Database.BeginTransactionAsync())
                  {
                      await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] ON");
                      await _context.Users.AddAsync(newUser);
@@ -156,6 +156,25 @@ namespace Server.Controllers
             var userCoursesAsLecturer = usosSemesters.SelectMany(x => x.Courses).Where(x => x.CourseLecturers != null && x.CourseLecturers.Any()).ToList();
             //adding new smesters
             await _context.Semesters.AddRangeAsync(newSems);
+            await AddNewCourses(updatedSemesters);
+            await _context.SaveChangesAsync();
+            foreach (var usosSemester in usosSemesters)
+            {
+                usosSemester.Id = _context.Semesters.First(x => x.Name == usosSemester.Name).Id;
+                usosSemester.Courses.ForEach(x => x.Id = _context.Courses.First(y => y.Name == x.Name && y.SemesterId == usosSemester.Id).Id);
+            }
+            var userEntity = await _context.Users.Include(x => x.CourseParticipants)
+                .Include(x => x.CourseLecturers).FirstAsync(x => x.Id == user.Id);
+            var userCourses = usosSemesters.SelectMany(x => x.Courses).ToList();
+            var userCourseParticipation = userCourses.Select(x => new CourseParticipant() {CourseId = x.Id.Value, Participant = userEntity}).ToList();
+            var userCourseParticipationAsLecturer = userCoursesAsLecturer.Select(x => new CourseLecturer() {CourseId = x.Id.Value, Lecturer = userEntity}).ToList();
+            userEntity.CourseParticipants = userCourseParticipation;
+            userEntity.CourseLecturers = userCourseParticipationAsLecturer;
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task AddNewCourses(List<Semester> updatedSemesters)
+        {
             foreach (var semester in updatedSemesters)
             {
                 var semesterEntity = await _context.Semesters.Include(x => x.Courses).FirstAsync(x => x.Name == semester.Name);
@@ -169,24 +188,7 @@ namespace Server.Controllers
                     //adding new courses
                     await _context.Courses.AddAsync(newCourse);
                 }
-                
             }
-            await _context.SaveChangesAsync();
-            var userEntity = await _context.Users.Include(x => x.CourseParticipants)
-                .Include(x => x.CourseLecturers).FirstAsync(x => x.Id == user.Id);
-            var userCourses = usosSemesters.SelectMany(x => x.Courses).ToList();
-            userCourses.ForEach(x => x.Id = _context.Courses.First(y => y.Name == x.Name).Id.Value);
-            var userCourseParticipation = userCourses.Select(x => new CourseParticipant() {CourseId = x.Id.Value, Participant = userEntity}).ToList();
-            var userCourseParticipationAsLecturer = userCoursesAsLecturer.Select(x => new CourseLecturer() {CourseId = x.Id.Value, Lecturer = userEntity}).ToList();
-            //_context.CourseParticipants.RemoveRange(userEntity.CourseParticipants);
-            //_context.CourseLecturers.RemoveRange(userEntity.CourseLecturers);
-            //await _context.CourseParticipants.AddRangeAsync(userCourseParticipation);
-            //await _context.CourseLecturers.AddRangeAsync(userCourseParticipationAsLecturer);
-            userEntity.CourseParticipants = userCourseParticipation;
-            userEntity.CourseLecturers = userCourseParticipationAsLecturer;
-
-
-            await _context.SaveChangesAsync();
         }
     }
 }
