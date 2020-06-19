@@ -132,6 +132,7 @@ namespace Server.Controllers
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             currentUser.Token = tokenHandler.WriteToken(token);
+            currentUser.TokenExpirationDate = token.ValidTo;
         }
 
         [HttpGet("{id}")]

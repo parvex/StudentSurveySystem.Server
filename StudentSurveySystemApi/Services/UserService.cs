@@ -70,6 +70,7 @@ namespace Server.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             userResult.Token = tokenHandler.WriteToken(token);
+            userResult.TokenExpirationDate = token.ValidTo;
 
             return userResult;
         }

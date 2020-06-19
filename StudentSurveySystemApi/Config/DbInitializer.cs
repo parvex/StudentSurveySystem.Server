@@ -150,12 +150,12 @@ namespace Server.Helpers
                         new Survey
                         {
                             Id = 0, Name = "SDI survey", CourseId = seedCourses[0].Id.Value,
-                            CreatorId = seedUsers[1].Id.Value
+                            CreatorId = seedUsers[1].Id.Value, IsTemplate = false
                         },
                         new Survey
                         {
                             Id = 1, Name = "WPAM survey", CourseId = seedCourses[1].Id.Value,
-                            CreatorId = seedUsers[2].Id.Value
+                            CreatorId = seedUsers[2].Id.Value, IsTemplate = false
                         },
 
                     };
@@ -166,7 +166,8 @@ namespace Server.Helpers
                         {
                             Id = i,
                             Name = $"Seed(empty) {i}",
-                            CreatorId = i % 2 == 0 ? 1 : 2
+                            CreatorId = i % 2 == 0 ? 1 : 2,
+                            IsTemplate = false
                         });
                     }
                     context.AddRange(seedSurveys);

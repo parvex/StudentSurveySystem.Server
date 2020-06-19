@@ -44,8 +44,8 @@ namespace Server
             services.AddCors(options =>
             {
                 //may need to switch on prod to defined cors
-                options.AddPolicy("Example",
-                    builder => builder.WithOrigins("http://www.example.com")
+                options.AddPolicy("AppUrl",
+                    builder => builder.WithOrigins(Configuration["AuthRedirectUrl"])
                         .AllowAnyHeader()
                         .AllowAnyMethod());
                 options.AddPolicy("AllowAll",
@@ -95,8 +95,18 @@ namespace Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
+                app.UseCors(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             }
+            else
+            {
+                app.UseCors("AppUrl");
+            }
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(c =>
@@ -120,7 +130,7 @@ namespace Server
             app.UseRouting();
 
             // global cors policy
-            app.UseCors("AllowAll");
+
 
             app.UseAuthentication();
             app.UseAuthorization();

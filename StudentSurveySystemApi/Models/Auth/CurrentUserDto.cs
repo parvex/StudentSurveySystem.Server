@@ -1,4 +1,6 @@
-﻿namespace Server.Models.Auth
+﻿using System;
+
+namespace Server.Models.Auth
 {
     public class CurrentUserDto
     {
@@ -13,5 +15,7 @@
         public UserRole UserRole { get; set; }
 
         public string Token { get; set; }
+
+        public DateTime TokenExpirationDate { get; set; }
     }
 }
