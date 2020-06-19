@@ -155,7 +155,7 @@ namespace Server.Controllers
         public async Task<List<SemesterDto>> GetSemestersAndMyCourses()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Semesters.Select(x => new SemesterDto()
+            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
             {
                 Id = x.Id.Value, Name = x.Name,
                 Courses = x.Courses.Where(c => c.CourseLecturers.Any(cl => cl.LecturerId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()

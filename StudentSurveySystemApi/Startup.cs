@@ -21,6 +21,7 @@ namespace Server
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,7 +40,20 @@ namespace Server
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-            services.AddCors();
+            //Cross origin...
+            services.AddCors(options =>
+            {
+                //may need to switch on prod to defined cors
+                options.AddPolicy("Example",
+                    builder => builder.WithOrigins("http://www.example.com")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -106,10 +120,7 @@ namespace Server
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();
