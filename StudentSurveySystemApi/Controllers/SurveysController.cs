@@ -29,10 +29,11 @@ namespace Server.Controllers
         }
 
         [HttpGet("MySurveys")]
-        public async Task<ActionResult<List<SurveyListItemDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
+        [Authorize(Roles = "Admin,Lecturer")]
+        public async Task<ActionResult<List<SurveyListItemDto>>> GetMySurveys(string name = "", bool? active = null, int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys/*.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId)*/
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId && (active == null || x.Active == active))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyListItemDto>()
@@ -40,21 +41,11 @@ namespace Server.Controllers
         }
 
         [HttpGet("MySurveyTemplates")]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<List<SurveyListItemDto>>> GetMySurveyTemplates(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             return await _context.Surveys.Where(x => x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId)
-                .OrderByDescending(x => x.ModificationDate)
-                .Skip(count * page).Take(count)
-                .ProjectToType<SurveyListItemDto>()
-                .ToListAsync();
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult<List<SurveyListItemDto>>> GetSurveys(string name = "", int page = 0, int count = 20)
-        {
-            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? ""))
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyListItemDto>()
@@ -77,18 +68,24 @@ namespace Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SurveyDto>> GetSurvey(int id)
         {
-            var survey = await _context.Surveys.Where(x => x.Id == id)
-                .ProjectToType<SurveyDto>().FirstOrDefaultAsync();
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+
+            var survey = await _context.Surveys.Where(x => x.Id == id).Include(x => x.Questions)
+                .Include(x => x.Creator).Include(x => x.Course)
+                .FirstOrDefaultAsync();
 
             if (survey == null)
-            {
                 return NotFound();
-            }
 
-            return survey;
+            if(role == "Student" && survey.Course.CourseParticipants.All(x => x.ParticipantId != id))
+                return Unauthorized("You can get only surveys in which you participate");
+
+            return survey.Adapt<SurveyDto>();
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<IActionResult> PutSurvey(int id, SurveyDto survey)
         {
             var model = survey.Adapt<Survey>();
@@ -109,6 +106,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [HttpPost]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey)
         {
             var dbModel = survey.Adapt<Survey>();
@@ -121,6 +119,7 @@ namespace Server.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult> DeleteSurvey(int id)
         {
             var survey = await _context.Surveys.Include(x => x.SurveyResponses).SingleOrDefaultAsync(x => x.Id == id);
@@ -139,6 +138,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("StartSurveyFromTemplate")]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult> StartSurveyFromTemplate(SurveyDto surveyDto)
         {
             surveyDto.Id = null;

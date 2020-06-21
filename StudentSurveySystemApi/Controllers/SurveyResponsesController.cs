@@ -31,8 +31,8 @@ namespace Server.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet]
+        [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
@@ -58,14 +58,21 @@ namespace Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
         {
-            var surveyResponse = await _context.SurveyResponses.ProjectToType<SurveyResponseDto>().FirstAsync(x => x.Id == id);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            var surveyResponse = await _context.SurveyResponses.Include(x => x.Answers).FirstAsync(x => x.Id == id);
 
             if (surveyResponse == null)
             {
                 return NotFound();
             }
 
-            return surveyResponse;
+            if (role != "Student")
+                return surveyResponse.Adapt<SurveyResponseDto>();
+            if (surveyResponse.Respondent.Id != userId)
+                return Unauthorized("You can fetch only your survey responses");
+
+            return surveyResponse.Adapt<SurveyResponseDto>();
         }
 
         [HttpGet("MyCompleted")]
