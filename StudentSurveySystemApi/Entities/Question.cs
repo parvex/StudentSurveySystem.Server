@@ -1,4 +1,5 @@
-﻿using Server.Models.Survey;
+﻿using System.Collections.Generic;
+using Server.Models.Survey;
 
 namespace Server.Entities
 {
@@ -25,5 +26,7 @@ namespace Server.Entities
         public int SurveyId { get; set; }
 
         public Survey Survey { get; set; }
+
+        public List<Answer> Answers { get; set; }
     }
 }

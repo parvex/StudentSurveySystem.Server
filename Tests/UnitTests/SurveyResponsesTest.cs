@@ -23,6 +23,7 @@ namespace Tests.UnitTests
             _controller.ControllerContext = fixture.ControllerContext;
         }
 
+        //returns survey id
         [Fact]
         public async Task AddSurveyResponse()
         {
@@ -66,6 +67,14 @@ namespace Tests.UnitTests
         {
             var result = await _controller.GetMyCompletedSurveyResponses();
             Assert.NotEmpty(result.Value);
+        }
+
+        [Fact]
+        public async Task CanGetSurveyResults()
+        {
+            await AddSurveyResponse();
+            var result = await _controller.GetSurveyResults(0);
+            Assert.NotNull(result.Value);
         }
     }
 }

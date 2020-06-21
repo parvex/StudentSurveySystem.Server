@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -32,10 +33,10 @@ namespace Server.Controllers
 
         [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses(string name = "", int page = 0, int count = 20)
+        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
-            var query = _context.SurveyResponses.Where(x => x.Survey.Name.Contains(name ?? ""));
+            var query = _context.SurveyResponses.Where(x => (surveyId == null || x.SurveyId == surveyId) && x.Survey.Name.Contains(name ?? ""));
             switch (role)
             {
                 case "Lecturer":
@@ -96,6 +97,88 @@ namespace Server.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [Authorize(Roles = "Admin,Lecturer")]
+        [HttpGet("SurveyResults/{id}")]
+        public async Task<ActionResult<SurveyResultsDto>> GetSurveyResults(int id)
+        {
+            var survey = await _context.Surveys.Include(x => x.Questions)
+                .ThenInclude(x => x.Answers).ThenInclude(x => x.SurveyResponse).ThenInclude(x => x.Respondent)
+                .FirstAsync(x => x.Id == id);
+
+            var result = new SurveyResultsDto
+            {
+                Anonymous = survey.Anonymous,
+                SurveyId = survey.Id.Value,
+                QuestionResults = survey.Questions.Select(q => new QuestionResultsDto
+                {
+                    QuestionId = q.Id.Value,
+                    QuestionType = q.QuestionType,
+                    QuestionText = q.QuestionText,
+                    QuestionAnswers = q.Answers.Select(a => SelectQuestionAnswer(survey, q, a)).ToList()
+                }).ToList()
+            };
+
+            return result;
+        }
+
+        private QuestionAnswerDto SelectQuestionAnswer(Survey survey, Question question, Answer answer)
+        {
+            var questionAnswer = new QuestionAnswerDto();
+            if (survey.Anonymous)
+            {
+                questionAnswer.Respondent = answer.SurveyResponse.Id.Value.ToString();
+                questionAnswer.RespondentId = answer.SurveyResponse.Id.Value;
+            }
+            else
+            {
+                questionAnswer.Respondent = answer.SurveyResponse.Respondent.FirstName + " " +
+                                            answer.SurveyResponse.Respondent.LastName;
+                questionAnswer.RespondentId = answer.SurveyResponse.RespondentId.Value;
+            }
+            if (question.QuestionType == QuestionType.MultipleSelect)
+            {
+                questionAnswer.Value = JsonConvert.DeserializeObject<List<string>>(answer.Value);
+            }
+            else
+            {
+                questionAnswer.Value = answer.Value;
+            }
+            return questionAnswer;
+        }
+
+        private List<AnswerPercentage> CalculateAnswerPercentages(Question question)
+        {
+            var percentages = new List<AnswerPercentage>();
+            var answersCount = question.Answers.Count;
+
+            switch (question.QuestionType)
+            {
+                case QuestionType.Text:
+                case QuestionType.SingleSelect:
+                case QuestionType.Numeric:
+                case QuestionType.Date:
+                case QuestionType.Boolean:
+                    return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
+                    {
+                        Answer = g.Key,
+                        NumberOfAnswers = g.Count(),
+                        PercentOfAnswers = g.Count() / answersCount
+                    }).ToList();
+                case QuestionType.MultipleSelect:
+                    var answersLists = question.Answers.Select(x => JsonConvert.DeserializeObject<List<string>>(x.Value)).ToList();
+                    var answers = answersLists.SelectMany(x => x);
+                    var distinctAnswers = answersLists.SelectMany(x => x).Distinct();
+                    return answers.Select(x => new AnswerPercentage
+                    {
+                        Answer = x,
+                        NumberOfAnswers = answers.Count(a => a == x),
+                        PercentOfAnswers = answers.Count(a => a == x) / answersCount
+                    }).ToList();
+                        default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private Dictionary<string, List<string>> ValidateSurveyResponse(SurveyResponseDto response)
