@@ -60,7 +60,8 @@ namespace Server.Controllers
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            var surveyResponse = await _context.SurveyResponses.Include(x => x.Answers).FirstAsync(x => x.Id == id);
+            var surveyResponse = await _context.SurveyResponses.Include(x => x.Respondent)
+                .Include(x => x.Answers).FirstAsync(x => x.Id == id);
 
             if (surveyResponse == null)
             {
@@ -123,7 +124,8 @@ namespace Server.Controllers
                     QuestionId = q.Id.Value,
                     QuestionType = q.QuestionType,
                     QuestionText = q.QuestionText,
-                    QuestionAnswers = q.Answers.Select(a => SelectQuestionAnswer(survey, q, a)).ToList()
+                    QuestionAnswers = q.Answers.Select(a => SelectQuestionAnswer(survey, q, a)).ToList(),
+                    AnswerPercentages = CalculateAnswerPercentages(q)
                 }).ToList()
             };
 
@@ -171,7 +173,7 @@ namespace Server.Controllers
                     {
                         Answer = g.Key,
                         NumberOfAnswers = g.Count(),
-                        PercentOfAnswers = g.Count() / answersCount
+                        PercentOfAnswers = (double) g.Count() / answersCount
                     }).ToList();
                 case QuestionType.MultipleSelect:
                     var answersLists = question.Answers.Select(x => JsonConvert.DeserializeObject<List<string>>(x.Value)).ToList();
@@ -181,7 +183,7 @@ namespace Server.Controllers
                     {
                         Answer = x,
                         NumberOfAnswers = answers.Count(a => a == x),
-                        PercentOfAnswers = answers.Count(a => a == x) / answersCount
+                        PercentOfAnswers = (double) answers.Count(a => a == x) / answersCount
                     }).ToList();
                         default:
                     throw new ArgumentOutOfRangeException();

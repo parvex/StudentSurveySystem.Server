@@ -72,13 +72,13 @@ namespace Server.Controllers
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
 
             var survey = await _context.Surveys.Where(x => x.Id == id).Include(x => x.Questions)
-                .Include(x => x.Creator).Include(x => x.Course)
+                .Include(x => x.Creator).Include(x => x.Course).ThenInclude(x => x.CourseParticipants)
                 .FirstOrDefaultAsync();
 
             if (survey == null)
                 return NotFound();
 
-            if(role == "Student" && survey.Course.CourseParticipants.All(x => x.ParticipantId != id))
+            if(role == "Student" && survey.Course.CourseParticipants.All(x => x.ParticipantId != userId))
                 return Unauthorized("You can get only surveys in which you participate");
 
             return survey.Adapt<SurveyDto>();

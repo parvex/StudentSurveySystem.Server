@@ -41,6 +41,13 @@ namespace Server.Entities
             modelBuilder.Entity<Course>()
                 .HasIndex(x => new { x.Name, x.SemesterId })
                 .IsUnique();
+
+            modelBuilder.Entity<CourseParticipant>()
+                .HasIndex(x => new {x.CourseId, x.ParticipantId})
+                .IsUnique();
+            modelBuilder.Entity<CourseLecturer>()
+                .HasIndex(x => new { x.CourseId, x.LecturerId })
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
