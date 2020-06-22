@@ -30,6 +30,12 @@ namespace Server.Helpers
                 .Map(dest => dest.Creator, src => src.Survey.Creator.FirstName + " " + src.Survey.Creator.LastName)
                 .Map(dest => dest.Respondent, src => src.Respondent.FirstName + " " + src.Respondent.LastName);
 
+            TypeAdapterConfig<SurveyResponse, SurveyResponseListItemDto>.NewConfig()
+                .Map(dest => dest.CourseName,
+                    src => src.Survey.Course.Name)
+                .Map(dest => dest.Creator, src => src.Survey.Creator.FirstName + " " + src.Survey.Creator.LastName)
+                .Map(dest => dest.Respondent, src => src.Respondent.FirstName + " " + src.Respondent.LastName);
+
             TypeAdapterConfig<Answer, AnswerDto>.NewConfig()
                 .Map(dest => dest.QuestionText,
                     src => src.Question.QuestionText)

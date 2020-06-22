@@ -33,7 +33,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin,Lecturer")]
-        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)
+        public async Task<ActionResult<IEnumerable<SurveyResponseListItemDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
             var query = _context.SurveyResponses.Where(x => (surveyId == null || x.SurveyId == surveyId) && x.Survey.Name.Contains(name ?? ""));
@@ -51,8 +51,28 @@ namespace Server.Controllers
 
             return await query.OrderByDescending(x => x.Survey.ModificationDate)
                 .Skip(count * page).Take(count)
-                .ProjectToType<SurveyResponseDetailsDto>()
+                .ProjectToType<SurveyResponseListItemDto>()
                 .ToListAsync();
+        }        
+        
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<SurveyResponseDetailsDto>> GetSurveyResponseDetails(int id)
+        {
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            var query = _context.SurveyResponses.Where(x => x.Id == id);
+
+            if (role == "Lecturer")
+            {
+                var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+                query = query.Where(x => x.Survey.CreatorId == userId);
+            }
+            else if (role == "Student")
+            {
+                var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+                query = query.Where(x => x.RespondentId == userId);
+            }
+
+            return await query.ProjectToType<SurveyResponseDetailsDto>().FirstOrDefaultAsync();
         }
 
         [HttpGet("{id}")]
@@ -77,13 +97,13 @@ namespace Server.Controllers
         }
 
         [HttpGet("MyCompleted")]
-        public async Task<ActionResult<IEnumerable<SurveyResponseDetailsDto>>> GetMyCompletedSurveyResponses(string name = "", int page = 0, int count = 20)
+        public async Task<ActionResult<IEnumerable<SurveyResponseListItemDto>>> GetMyCompletedSurveyResponses(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             return await _context.SurveyResponses.Where(x => x.RespondentId == userId && x.Survey.Name.Contains(name ?? ""))
                 .OrderByDescending(x => x.Survey.ModificationDate)
                 .Skip(count * page).Take(count)
-                .ProjectToType<SurveyResponseDetailsDto>()
+                .ProjectToType<SurveyResponseListItemDto>()
                 .ToListAsync();
         }
 
@@ -117,15 +137,17 @@ namespace Server.Controllers
 
             var result = new SurveyResultsDto
             {
+                SurveyName = survey.Name,
                 Anonymous = survey.Anonymous,
                 SurveyId = survey.Id.Value,
                 QuestionResults = survey.Questions.Select(q => new QuestionResultsDto
                 {
                     QuestionId = q.Id.Value,
+                    QuestionIndex = q.Index, 
                     QuestionType = q.QuestionType,
                     QuestionText = q.QuestionText,
                     QuestionAnswers = q.Answers.Select(a => SelectQuestionAnswer(survey, q, a)).ToList(),
-                    AnswerPercentages = CalculateAnswerPercentages(q)
+                    AnswerPercentages = CalculateAnswerPercentages(q).OrderByDescending(z => z.Value).ToList()
                 }).ToList()
             };
 
@@ -157,7 +179,7 @@ namespace Server.Controllers
             return questionAnswer;
         }
 
-        private List<AnswerPercentage> CalculateAnswerPercentages(Question question)
+        private IEnumerable<AnswerPercentage> CalculateAnswerPercentages(Question question)
         {
             var percentages = new List<AnswerPercentage>();
             var answersCount = question.Answers.Count;
@@ -171,20 +193,20 @@ namespace Server.Controllers
                 case QuestionType.Boolean:
                     return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
                     {
-                        Answer = g.Key,
+                        Name = g.Key,
                         NumberOfAnswers = g.Count(),
-                        PercentOfAnswers = (double) g.Count() / answersCount
-                    }).ToList();
+                        Value = ((double)g.Count() / answersCount)*100
+                    });
                 case QuestionType.MultipleSelect:
                     var answersLists = question.Answers.Select(x => JsonConvert.DeserializeObject<List<string>>(x.Value)).ToList();
                     var answers = answersLists.SelectMany(x => x);
                     var distinctAnswers = answersLists.SelectMany(x => x).Distinct();
                     return answers.Select(x => new AnswerPercentage
                     {
-                        Answer = x,
+                        Name = x,
                         NumberOfAnswers = answers.Count(a => a == x),
-                        PercentOfAnswers = (double) answers.Count(a => a == x) / answersCount
-                    }).ToList();
+                        Value = ((double) answers.Count(a => a == x) / answersCount) * 100
+                    });
                         default:
                     throw new ArgumentOutOfRangeException();
             }

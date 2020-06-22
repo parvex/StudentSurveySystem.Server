@@ -8,6 +8,8 @@ namespace Server.Models.SurveyResponse
     {
         public int SurveyId { get; set; }
 
+        public string SurveyName { get; set; }
+
         public bool Anonymous { get; set; }
 
         public List<QuestionResultsDto> QuestionResults { get; set; }
@@ -15,6 +17,8 @@ namespace Server.Models.SurveyResponse
 
     public class QuestionResultsDto
     {
+        public int QuestionIndex { get; set; }
+
         public int QuestionId { get; set; }
 
         public string QuestionText { get; set; }
@@ -40,10 +44,13 @@ namespace Server.Models.SurveyResponse
 
     public class AnswerPercentage
     {
-        public string Answer { get; set; }
+        //answer
+        public string Name { get; set; }
 
-        public double PercentOfAnswers { get; set; }
+        //percent (this answer to all answers)
+        public double Value { get; set; }
 
+        //number of same answers
         public int NumberOfAnswers { get; set; }
     }
 }

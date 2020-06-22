@@ -30,10 +30,10 @@ namespace Server.Controllers
 
         [HttpGet("MySurveys")]
         [Authorize(Roles = "Admin,Lecturer")]
-        public async Task<ActionResult<List<SurveyListItemDto>>> GetMySurveys(string name = "", bool? active = null, int page = 0, int count = 20)
+        public async Task<ActionResult<List<SurveyListItemDto>>> GetMySurveys(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId && (active == null || x.Active == active))
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId)
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyListItemDto>()
