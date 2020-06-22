@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -11,6 +12,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Newtonsoft.Json;
 using Server.Entities;
 using Server.Helpers;
@@ -76,24 +78,23 @@ namespace Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SurveyResponseDto>> GetSurveyResponse(int id)
+        public async Task<ActionResult<SurveyResponseDetailsDto>> GetSurveyResponse(int id)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            var surveyResponse = await _context.SurveyResponses.Include(x => x.Respondent)
-                .Include(x => x.Answers).FirstAsync(x => x.Id == id);
+            var query = _context.SurveyResponses.Where(x => x.Id == id);
 
-            if (surveyResponse == null)
+            switch (role)
             {
-                return NotFound();
+                case "Student":
+                    query.Where(x => x.RespondentId == userId);
+                    break;
+                case "Lecturer":
+                    query.Where(x => x.Survey.CreatorId == userId);
+                    break;
             }
 
-            if (role != "Student")
-                return surveyResponse.Adapt<SurveyResponseDto>();
-            if (surveyResponse.Respondent.Id != userId)
-                return Unauthorized("You can fetch only your survey responses");
-
-            return surveyResponse.Adapt<SurveyResponseDto>();
+            return await query.ProjectToType<SurveyResponseDetailsDto>().FirstOrDefaultAsync();
         }
 
         [HttpGet("MyCompleted")]
@@ -186,10 +187,17 @@ namespace Server.Controllers
 
             switch (question.QuestionType)
             {
+                case QuestionType.Date:
+                    string timeFormat = "MM/dd/yyyy hh:mm:ss";
+                    return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
+                    {
+                        Name = DateTime.ParseExact(g.Key, timeFormat, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy"),
+                        NumberOfAnswers = g.Count(),
+                        Value = ((double)g.Count() / answersCount) * 100
+                    });
                 case QuestionType.Text:
                 case QuestionType.SingleSelect:
                 case QuestionType.Numeric:
-                case QuestionType.Date:
                 case QuestionType.Boolean:
                     return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
                     {
