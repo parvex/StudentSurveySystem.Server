@@ -145,13 +145,6 @@ namespace Server
                 endpoints.MapControllers();
             });
 
-            app.UseStaticFiles();
-            app.UseDefaultFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -170,7 +163,7 @@ namespace Server
             MapsterHelper.SetCustomMappings();
 
             //comment to switch off db seeding when db is empty
-            DbInitializer.SeedAppDb(context, userService);
+            //DbInitializer.SeedAppDb(context, userService);
         }
     }
 }
