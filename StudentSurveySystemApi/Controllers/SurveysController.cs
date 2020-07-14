@@ -91,6 +91,7 @@ namespace Server.Controllers
             model.Id = id;
             model.ModificationDate = DateTime.Now;
             _context.Entry(model).State = EntityState.Modified;
+            model.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             foreach (var question in model.Questions)
             {
                 if (question.Id != null)
