@@ -1,0 +1,62 @@
+<div class="question-result">
+
+  <div class="card">
+    <div class="container">
+      <div class="row">
+        <div class="details-label">Question index: </div> <div class="details">{{questionResult?.questionIndex}}</div>
+      </div>
+      <div class="row">
+        <div class="details-label">Question text: </div> <div class="details">{{questionResult?.questionText}}</div>
+      </div>
+      <div class="row">
+        <div class="details-label">Question type: </div> <div class="details">{{questionResult?.questionType}}</div>
+      </div>
+    </div>
+    </div>
+  <hr>
+  <tabset type="pills">
+    <tab heading="Hide">
+    </tab>
+    <tab heading="Percentages">
+      <div class="chart">
+        <ngx-charts-bar-horizontal
+        [results]="questionResult.answerPercentages"
+        [gradient]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Percentage'"
+        [yAxisLabel]="'Answer'"
+        [xScaleMax]="100">
+        </ngx-charts-bar-horizontal>
+      </div>
+    </tab>
+    <tab heading="Answers list">
+      <table class="table table-light table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Respondent</th>
+            <th scope="col">Answer</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="questionResult.questionType!=='Date'">
+          <tr *ngFor="let answer of questionResult?.questionAnswers; index as i">
+            <th scope="row">{{i}}</th>
+            <td>{{answer.respondent}}</td>
+            <td>{{answer.value}}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="questionResult.questionType==='Date'">
+          <tr *ngFor="let answer of questionResult?.questionAnswers; index as i">
+            <th scope="row">{{i}}</th>
+            <td>{{answer.respondent}}</td>
+            <td>{{answer.value | date}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+  </tabset>
+</div>
+

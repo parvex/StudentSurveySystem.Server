@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+body{
+  background-color: #eeeeee;
+}
+
+.details{
+  padding: 5px;
+}
+
+.details-label{
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 5px;
+}
+
+//charts overflows without this
+.ngx-charts{
+  float: none !important;
+}
+
+.list-icon{
+  width: 25px;
+  height:25px;
+}
+
+.alert-danger{
+  padding: 3px;
+}

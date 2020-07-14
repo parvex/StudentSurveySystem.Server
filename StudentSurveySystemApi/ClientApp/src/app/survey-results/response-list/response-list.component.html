@@ -1,0 +1,43 @@
+<div class="mt-1"
+infinite-scroll
+[infiniteScrollDistance]="1"
+[infiniteScrollThrottle]="300"
+(scrolled)="onScrollDown()">
+  <table class="table table-light">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Actions</th>
+      <th scope="col">Respondent</th>
+      <th scope="col">Submit date</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let response of responses; index as i" style="cursor: pointer;">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <button class="btn btn-info" (click)="onShowClick(content, response.id)"><img width="20" height="20" src="assets/icons/response.png"> Show</button>
+      </td>
+      <td>
+        {{response?.respondent}}
+      </td>
+      <td>
+        {{response?.date | date}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #content>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Survey response details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-response-details *ngIf="selectedResponse?.surveyName != null" [response]="selectedResponse"></app-response-details>
+  </div>
+</ng-template>
