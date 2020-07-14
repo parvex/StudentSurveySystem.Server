@@ -32,4 +32,4 @@ jobs:
         app-name: 'studentsurveysystemserver'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_300ad1ba3c844c10aecd3a0cbf9e3c25 }}
-        package: ${{env.DOTNET_ROOT}}/myapp 
+        package: ${{env.DOTNET_ROOT}}/Server
