@@ -6,4 +6,4 @@ Things to configure:
 
 To generate api client you have to download newest swagger.json, run powershell script and manually set version of package and license(MIT)
 
-![Build and Deploy to Azure Web App](https://github.com/parvex/StudentSurveySystem.Server/workflows/Build%20and%20Deploy%20to%20Azure%20Web%20App/badge.svg)
+![Build and deploy ASP.Net Core app to Azure Web App - studentsurveysystemserver](https://github.com/parvex/StudentSurveySystem.Server/workflows/Build%20and%20deploy%20ASP.Net%20Core%20app%20to%20Azure%20Web%20App%20-%20studentsurveysystemserver/badge.svg)
