@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,34 +36,26 @@ namespace Server
                 opt.UseSqlServer(Configuration.GetConnectionString("SurveyContext"))
                 //opt.UseInMemoryDatabase("StudentSurveySystemDb")
                 );
-
-            //Cross origin...
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowAnyOrigin();
-                    });
-            });
-
-            services.AddControllersWithViews().AddJsonOptions(options =>
+            services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            //Cross origin...
+            services.AddCors(options =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                //may need to switch on prod to defined cors
+                options.AddPolicy("AppUrl",
+                    builder => builder.WithOrigins(Configuration["AuthRedirectUrl"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
             });
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
-
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
@@ -89,6 +79,7 @@ namespace Server
                     };
                 });
 
+
             //swagger config
             SwaggerConfig.Setup(services);
 
@@ -101,6 +92,21 @@ namespace Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SurveyContext context, IUserService userService)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseCors(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            }
+            else
+            {
+                app.UseCors("AppUrl");
+            }
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(c =>
@@ -118,55 +124,25 @@ namespace Server
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api");
             });
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-
-            app.UseHttpsRedirection();
-
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
+            //uncomment to switch on redirect to ssl
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
+
+            // global cors policy
+
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseStaticFiles();
-            app.UseDefaultFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-                spa.Options.StartupTimeout = new TimeSpan(0, 5, 0);
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
-
-            app.UseAuthentication();
-            app.UseAuthorization();
             MapsterHelper.SetCustomMappings();
 
             //comment to switch off db seeding when db is empty
