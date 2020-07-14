@@ -80,7 +80,6 @@ namespace Server.Controllers
 
             if(role == "Student" && survey.Course.CourseParticipants.All(x => x.ParticipantId != userId))
                 return Unauthorized("You can get only surveys in which you participate");
-
             return survey.Adapt<SurveyDto>();
         }
 

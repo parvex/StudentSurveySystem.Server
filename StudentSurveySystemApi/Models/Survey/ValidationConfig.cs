@@ -9,7 +9,7 @@ namespace Server.Models.Survey
         public double? MinNumericValue { get; set; }
         [GreaterThanOrNull(nameof(MinNumericValue), ErrorMessage = "Max validation value must be greater than min")]
         public double? MaxNumericValue { get; set; }
-        public bool Integer { get; set; }
+        public bool? Integer { get; set; }
         public DateTime? MinDateValue { get; set; }
         [GreaterThanOrNull(nameof(MinDateValue), ErrorMessage = "Max validation value must be greater than min")]
         public DateTime? MaxDateValue { get; set; }
