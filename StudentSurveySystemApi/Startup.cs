@@ -44,12 +44,8 @@ namespace Server
             services.AddCors(options =>
             {
                 //may need to switch on prod to defined cors
-                options.AddPolicy("AppUrl",
-                    builder => builder.WithOrigins(Configuration["AuthRedirectUrl"])
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
+                options.AddDefaultPolicy(builder => 
+                    builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod());
             });
@@ -92,21 +88,7 @@ namespace Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SurveyContext context, IUserService userService)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseCors(builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            }
-            else
-            {
-                app.UseCors("AppUrl");
-            }
-
+            app.UseCors();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(c =>
