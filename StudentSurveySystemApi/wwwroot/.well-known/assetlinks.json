@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.studentsurveysystem.mobileclient",
-      "sha256_cert_fingerprints": [ "4B:0D:10:EF:23:B8:35:0A:A1:14:A4:FB:F1:08:C0:CE:7E:FC:F9:24:3C:29:72:96:9D:50:08:FC:3D:34:5C:FB" ]
+      "sha256_cert_fingerprints": [ "F6:CB:14:46:56:90:5B:85:49:50:29:6B:27:E9:F2:67:C3:FF:E4:E2:A8:DE:D0:B6:D0:D6:0A:2E:34:9F:9E:21" ]
     }
   }
 ]
