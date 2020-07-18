@@ -17,7 +17,7 @@ namespace Server.Services
 {
     public interface IUsosApi
     {
-        Task<UsosAuthDto> GetUsosAuthData();
+        Task<UsosAuthDto> GetUsosAuthData(bool web = false);
         UsosUser GetUsosUserData(string token, string tokenSecret);
         (string, string) GetAccessTokenData(UsosAuthDto usosAuth);
         List<Semester> GetUserCourses(string accessToken, string tokenSecret, User user);
@@ -34,11 +34,14 @@ namespace Server.Services
             _configuration = configuration;
             Client = new RestClient("https://apps.usos.pw.edu.pl/services/");
             Client.UseNewtonsoftJson();
-            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["AuthRedirectUrl"]);
+            Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["MobileAuthRedirectUrl"]);
         }
 
-        public async Task<UsosAuthDto> GetUsosAuthData()
+        public async Task<UsosAuthDto> GetUsosAuthData(bool web = false)
         {
+            if(web)
+                Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["WebAuthRedirectUrl"]);
+
             var baseUrl = new Uri("https://apps.usos.pw.edu.pl/services/");
             var request = new RestRequest("oauth/request_token");
             //request.AddParameter("scopes", "");

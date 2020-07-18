@@ -55,9 +55,9 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("UsosAuthData")]
-        public async Task<UsosAuthDto> GetUsosAuthData()
+        public async Task<UsosAuthDto> GetUsosAuthData(bool web = false)
         {
-            return await _usosApi.GetUsosAuthData();
+            return await _usosApi.GetUsosAuthData(web);
         }
 
         [AllowAnonymous]
