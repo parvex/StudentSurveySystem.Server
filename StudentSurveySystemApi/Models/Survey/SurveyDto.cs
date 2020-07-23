@@ -34,5 +34,7 @@ namespace Server.Models.Survey
         public DateTime EndDate { get; set; }
 
         public DateTime Today => DateTime.Today;
+
+        public bool? Ended { get; set; }
     }
 }

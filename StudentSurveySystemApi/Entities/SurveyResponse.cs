@@ -19,6 +19,9 @@ namespace Server.Entities
 
         public int SurveyId { get; set; }
 
+        //marks stamps that indicates that user has filled anonymous survey
+        public bool IsStamp { get; set; }
+
         [ForeignKey(nameof(SurveyId))]
         public Survey Survey { get; set; }
     }

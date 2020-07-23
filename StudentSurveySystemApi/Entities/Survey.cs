@@ -32,5 +32,8 @@ namespace Server.Entities
         public List<SurveyResponse> SurveyResponses { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        [NotMapped] 
+        public bool? Ended => Active && EndDate.HasValue && EndDate < DateTime.Now;
     }
 }

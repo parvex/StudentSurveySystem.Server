@@ -119,10 +119,21 @@ namespace Server.Controllers
             var surveyResponseEntity = surveyResponse.Adapt<SurveyResponse>();
             var survey = await _context.Surveys.FirstAsync(x => x.Id == surveyResponse.SurveyId);
 
-            if(!survey.Anonymous)
+            if (!survey.Anonymous)
+            {
                 surveyResponseEntity.RespondentId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            }
+            else
+            {
+                var surveyResponseStamp = surveyResponse.Adapt<SurveyResponse>();
+                surveyResponseStamp.Answers = null;
+                surveyResponseStamp.RespondentId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+                surveyResponseStamp.IsStamp = true;
+                await _context.SurveyResponses.AddAsync(surveyResponseStamp);
+            }
+
             surveyResponseEntity.Date = DateTime.Now;
-            _context.SurveyResponses.Add(surveyResponseEntity);
+            await _context.SurveyResponses.AddAsync(surveyResponseEntity);
             await _context.SaveChangesAsync();
 
             return Ok();
