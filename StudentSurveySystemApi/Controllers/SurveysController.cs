@@ -141,6 +141,14 @@ namespace Server.Controllers
         [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult> StartSurveyFromTemplate(SurveyDto surveyDto)
         {
+            if (surveyDto.Id == null)
+            {
+                await AddSurvey(surveyDto);
+            }
+            else
+            {
+                await PutSurvey(surveyDto.Id.Value, surveyDto);
+            }
             surveyDto.Id = null;
             surveyDto.Active = true;
             surveyDto.IsTemplate = false;
