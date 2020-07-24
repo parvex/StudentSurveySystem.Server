@@ -1,4 +1,5 @@
 ﻿using System;
+using Server.Entities;
 
 namespace Server.Models.Survey
 {
@@ -19,5 +20,7 @@ namespace Server.Models.Survey
         public string CreatorName { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public SurveyStatus Status { get; set; }
     }
 }

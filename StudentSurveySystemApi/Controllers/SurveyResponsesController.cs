@@ -33,12 +33,25 @@ namespace Server.Controllers
             _context = context;
         }
 
+        [HttpGet("MySurveyResults")]
+        [Authorize(Roles = "Admin,Lecturer")]
+        public async Task<ActionResult<List<SurveyListItemDto>>> GetSurveyResultList(string name = "", int page = 0, int count = 20)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId && x.SurveyResponses.Any())
+                .OrderByDescending(x => x.ModificationDate)
+                .Skip(count * page).Take(count)
+                .ProjectToType<SurveyListItemDto>()
+                .ToListAsync();
+        }
+
+
         [HttpGet]
         [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<IEnumerable<SurveyResponseListItemDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
-            var query = _context.SurveyResponses.Where(x => (surveyId == null || x.SurveyId == surveyId) && x.Survey.Name.Contains(name ?? ""));
+            var query = _context.SurveyResponses.Where(x => (surveyId == null || x.SurveyId == surveyId) && !x.IsStamp && x.Survey.Name.Contains(name ?? ""));
             switch (role)
             {
                 case "Lecturer":
@@ -202,7 +215,7 @@ namespace Server.Controllers
                     string timeFormat = "MM/dd/yyyy hh:mm:ss";
                     return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
                     {
-                        Name = DateTime.ParseExact(g.Key, timeFormat, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy"),
+                        Name = g.Key != null ? g.Key.Substring(0, 10): "-",
                         NumberOfAnswers = g.Count(),
                         Value = ((double)g.Count() / answersCount) * 100
                     });
@@ -212,7 +225,7 @@ namespace Server.Controllers
                 case QuestionType.Boolean:
                     return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
                     {
-                        Name = g.Key,
+                        Name = g.Key ?? "-",
                         NumberOfAnswers = g.Count(),
                         Value = ((double)g.Count() / answersCount)*100
                     });
@@ -222,7 +235,7 @@ namespace Server.Controllers
                     var distinctAnswers = answersLists.SelectMany(x => x).Distinct();
                     return answers.Select(x => new AnswerPercentage
                     {
-                        Name = x,
+                        Name = x ?? "-",
                         NumberOfAnswers = answers.Count(a => a == x),
                         Value = ((double) answers.Count(a => a == x) / answersCount) * 100
                     });

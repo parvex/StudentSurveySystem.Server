@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Server.Entities
 {
@@ -33,7 +34,17 @@ namespace Server.Entities
 
         public DateTime? EndDate { get; set; }
 
-        [NotMapped] 
-        public bool? Ended => Active && EndDate.HasValue && EndDate < DateTime.Now;
+        public SurveyStatus Status
+        {
+            get
+            {
+                if (!Active)
+                    return SurveyStatus.Draft;
+                if (Active && EndDate < DateTime.Now)
+                    return SurveyStatus.Ended;
+                else
+                    return SurveyStatus.Active;
+            }
+        }
     }
 }
