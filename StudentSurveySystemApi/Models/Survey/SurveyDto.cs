@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FoolProof.Core;
 using Server.Entities;
+using Server.Helpers;
 using Server.Migrations;
 
 namespace Server.Models.Survey
@@ -34,7 +35,7 @@ namespace Server.Models.Survey
         [GreaterThan(nameof(Today), ErrorMessage = "End date must be in future")]
         public DateTime EndDate { get; set; }
 
-        public DateTime Today => DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59).AddMilliseconds(999);
+        public DateTime Today => DateTime.UtcNow.ChangeTime(21, 59, 59, 999);
 
         public SurveyStatus Status { get; set; }
     }

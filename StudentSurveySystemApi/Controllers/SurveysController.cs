@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Server.Entities;
-using Server.Helpers;
 using Server.Models.Survey;
 
 namespace Server.Controllers

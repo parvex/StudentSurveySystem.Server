@@ -36,9 +36,11 @@ namespace Server
                 opt.UseSqlServer(Configuration.GetConnectionString("SurveyContext"))
                 //opt.UseInMemoryDatabase("StudentSurveySystemDb")
                 );
-            services.AddControllers().AddJsonOptions(options =>
+            services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(options =>
             {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
             });
             //Cross origin...
             services.AddCors(options =>
@@ -81,6 +83,8 @@ namespace Server
 
             // configure DI for application services
             ServicesConfig.Setup(services);
+
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
 
