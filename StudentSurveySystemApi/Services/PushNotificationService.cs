@@ -32,6 +32,7 @@ namespace Server.Services
             request.AddJsonBody(new
             {
                 to = "/topics/" + topic,
+                priority= "high",
                 data = new
                 {
                     title = title, 

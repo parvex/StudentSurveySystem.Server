@@ -30,6 +30,8 @@ namespace Server.Models.Survey
 
         public string CourseName { get; set; }
 
+        public string CourseSemesterName { get; set; }
+
         public string CreatorName { get; set; }
 
         [GreaterThan(nameof(Today), ErrorMessage = "End date must be in future")]

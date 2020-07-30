@@ -13,7 +13,8 @@ namespace Server.Helpers
         {
             TypeAdapterConfig<Survey, SurveyDto>.NewConfig()
                 .Map(dest => dest.CreatorName,
-                    src => $"{src.Creator.FirstName} {src.Creator.LastName}");
+                    src => $"{src.Creator.FirstName} {src.Creator.LastName}")
+                .Map(dest => dest.CourseSemesterName, src => src.Course.Semester.Name);
 
             TypeAdapterConfig<Question, QuestionDto>.NewConfig()
                 .Map(dest => dest.Values,

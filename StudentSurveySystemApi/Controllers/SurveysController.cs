@@ -85,6 +85,7 @@ namespace Server.Controllers
 
             var survey = await _context.Surveys.Where(x => x.Id == id).Include(x => x.Questions)
                 .Include(x => x.Creator).Include(x => x.Course).ThenInclude(x => x.CourseParticipants)
+                .Include(x => x.Course).ThenInclude(x => x.Semester)
                 .FirstOrDefaultAsync();
 
             if (survey == null)
@@ -117,7 +118,7 @@ namespace Server.Controllers
 
             if (activate)
             {
-                await _pushNotificationService.Send("New survey", $"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseName);
+                await _pushNotificationService.Send("New survey", $"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseSemesterName + addedSurvey.Value.CourseName);
             }
             return Ok();
         }
@@ -136,7 +137,7 @@ namespace Server.Controllers
             var addedSurvey = await GetSurvey(dbModel.Id.Value);
             if (activate)
             {
-                await _pushNotificationService.Send("New survey" ,$"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseName);
+                await _pushNotificationService.Send("New survey" ,$"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseSemesterName + addedSurvey.Value.CourseName);
             }
 
             return addedSurvey;
