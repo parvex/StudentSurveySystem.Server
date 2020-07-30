@@ -15,9 +15,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Newtonsoft.Json;
 using Server.Entities;
+using Server.Extensions;
 using Server.Helpers;
 using Server.Models.Survey;
 using Server.Models.SurveyResponse;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -27,10 +29,12 @@ namespace Server.Controllers
     public class SurveyResponsesController : ControllerBase
     {
         private readonly SurveyContext _context;
+        private readonly IPushNotificationService _pushNotificationService;
 
-        public SurveyResponsesController(SurveyContext context)
+        public SurveyResponsesController(SurveyContext context, IPushNotificationService pushNotificationService)
         {
             _context = context;
+            _pushNotificationService = pushNotificationService;
         }
 
         [HttpGet("MySurveyResults")]
@@ -148,7 +152,7 @@ namespace Server.Controllers
             surveyResponseEntity.Date = DateTime.Now;
             await _context.SurveyResponses.AddAsync(surveyResponseEntity);
             await _context.SaveChangesAsync();
-
+            await _pushNotificationService.Send("New survey response" ,$"New response added to {survey.Name}", survey.Name.RemoveDiactrics().RemoveWhiteSpaces());
             return Ok();
         }
 

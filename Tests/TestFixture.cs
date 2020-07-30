@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Moq;
 using Server.Entities;
@@ -14,6 +15,8 @@ namespace Tests
     public class TestFixture
     {
         public readonly DbContextOptions<SurveyContext> Options;
+        public readonly IPushNotificationService NotificationService;
+        public readonly IConfiguration Configuration;
         public readonly ControllerContext ControllerContext;
 
         public TestFixture()
@@ -25,14 +28,18 @@ namespace Tests
 
             //mocking settings
             AppSettings app = new AppSettings() { };
-            var mock = new Mock<IOptions<AppSettings>>();
-            mock.Setup(ap => ap.Value).Returns(app);
+            var appSettingsMock = new Mock<IOptions<AppSettings>>();
+            appSettingsMock.Setup(ap => ap.Value).Returns(app);
 
+            var configurationMock = new Mock<IConfiguration>();
+            configurationMock.Setup(c => c["FcmApiKey"]).Returns("key");
+
+            NotificationService = new PushNotificationService(configurationMock.Object);
 
             //db seeding
             using (var seedContext = new SurveyContext(Options))
             {
-                DbInitializer.Seed(seedContext, new UserService(seedContext, mock.Object), false);
+                DbInitializer.Seed(seedContext, new UserService(seedContext, appSettingsMock.Object), false);
             }
 
             //creating controller context - logged as seeded admin to add when required in controller

@@ -18,7 +18,7 @@ namespace Tests.UnitTests
         public SurveyResponsesTest(TestFixture fixture)
         {
             var context = new SurveyContext(fixture.Options);
-            _controller = new SurveyResponsesController(context);
+            _controller = new SurveyResponsesController(context, fixture.NotificationService);
             //setting user context
             _controller.ControllerContext = fixture.ControllerContext;
         }

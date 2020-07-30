@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Entities;
 using Server.Models.Survey;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -20,10 +21,12 @@ namespace Server.Controllers
     public class SurveysController : ControllerBase
     {
         private readonly SurveyContext _context;
+        private readonly IPushNotificationService _pushNotificationService;
 
-        public SurveysController(SurveyContext context)
+        public SurveysController(SurveyContext context, IPushNotificationService pushNotificationService)
         {
             _context = context;
+            _pushNotificationService = pushNotificationService;
         }
 
         [HttpGet("MySurveys")]
@@ -35,6 +38,17 @@ namespace Server.Controllers
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyListItemDto>()
+                .ToListAsync();
+        }
+
+        [HttpGet("MyActiveSurveyNames")]
+        [Authorize(Roles = "Admin,Lecturer")]
+        public async Task<ActionResult<List<string>>> GetMyActtiveSurveyNames()
+        {
+            var now = DateTime.UtcNow;
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Surveys.Where(x => !x.IsTemplate && x.CreatorId == userId && x.Active == true && x.EndDate > now)
+                .Select(x => x.Name)
                 .ToListAsync();
         }
 
@@ -99,7 +113,12 @@ namespace Server.Controllers
                     _context.Entry(question).State = EntityState.Added;
             }
             await _context.SaveChangesAsync();
+            var addedSurvey = await GetSurvey(model.Id.Value);
 
+            if (activate)
+            {
+                await _pushNotificationService.Send("New survey", $"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseName);
+            }
             return Ok();
         }
 
@@ -114,8 +133,13 @@ namespace Server.Controllers
             dbModel.ModificationDate = DateTime.Now;
             await _context.Surveys.AddAsync(dbModel);
             await _context.SaveChangesAsync();
+            var addedSurvey = await GetSurvey(dbModel.Id.Value);
+            if (activate)
+            {
+                await _pushNotificationService.Send("New survey" ,$"New survey {addedSurvey.Value.Name} linked to your course {addedSurvey.Value.CourseName} has been added!", addedSurvey.Value.CourseName);
+            }
 
-            return await GetSurvey(dbModel.Id.Value);
+            return addedSurvey;
         }
 
         [HttpDelete("{id}")]
@@ -167,6 +191,17 @@ namespace Server.Controllers
             {
                 Id = x.Id.Value, Name = x.Name,
                 Courses = x.Courses.Where(c => c.CourseLecturers.Any(cl => cl.LecturerId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
+            }).ToListAsync();
+        }
+
+        [HttpGet("GetSemsAndCoursesAsStudent")]
+        public async Task<List<SemesterDto>> GetSemsAndCoursesAsStudent()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
+            {
+                Id = x.Id.Value, Name = x.Name,
+                Courses = x.Courses.Where(c => c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
             }).ToListAsync();
         }
     }
