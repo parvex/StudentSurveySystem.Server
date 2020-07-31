@@ -186,25 +186,35 @@ namespace Server.Controllers
 
         private Statistics CalculateStatistics(Question question)
         {
-            var values = question.Answers.Select(x => x.Value.ToNullableDouble()).Where(x => x.HasValue).Select(x => x.Value).ToList();
+            if (question.QuestionType != QuestionType.ValuedSingleSelect &&
+                question.QuestionType != QuestionType.Numeric)
+                return null;
+
+            List<double> values = new List<double>();
+
+            switch (question.QuestionType)
+            {
+                case QuestionType.Numeric:
+                    values = question.Answers.Select(x => x.Value.ToNullableDouble()).Where(x => x.HasValue).Select(x => x.Value).ToList();
+                    break;
+                case QuestionType.ValuedSingleSelect:
+                    values = question.Answers.Select(x => JsonConvert.DeserializeObject<(string, double?)>(x.Value)).Select(x => x.Item2.Value).ToList();
+                    break;
+            }
+
             if (!values.Any())
                 return null;
 
-            if (question.QuestionType == QuestionType.Numeric)
+            return new Statistics()
             {
-                return new Statistics()
-                {
-                    Min = values.Min(),
-                    Max = values.Max(),
-                    Mean = values.Average(),
-                    Variance = MathNet.Numerics.Statistics.Statistics.Variance(values),
-                    Median = MathNet.Numerics.Statistics.Statistics.Median(values),
-                    StandardDeviation = MathNet.Numerics.Statistics.Statistics.StandardDeviation(values),
-                    Mode = values.GroupBy(x => x).OrderByDescending(g => g.Count()).First().Key
-                };
-            }
-
-            return null;
+                Min = values.Min(),
+                Max = values.Max(),
+                Mean = values.Average(),
+                Variance = MathNet.Numerics.Statistics.Statistics.Variance(values),
+                Median = MathNet.Numerics.Statistics.Statistics.Median(values),
+                StandardDeviation = MathNet.Numerics.Statistics.Statistics.StandardDeviation(values),
+                Mode = values.GroupBy(x => x).OrderByDescending(g => g.Count()).First().Key
+            };
         }
 
         private QuestionAnswerDto SelectQuestionAnswer(Survey survey, Question question, Answer answer)

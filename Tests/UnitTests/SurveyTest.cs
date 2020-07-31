@@ -46,12 +46,12 @@ namespace Tests.UnitTests
                     new QuestionDto
                     {
                         QuestionType = QuestionType.SingleSelect, QuestionText = "Colour",
-                        Values = new List<string>{"Red", "Blue", "Black"}
+                        Values = new List<(string, double?)>{("Red", null), ("Blue", null), ("Black", null)}
                     },
                     new QuestionDto
                     {
                         QuestionType = QuestionType.MultipleSelect, QuestionText = "Known languages",
-                        Values = new List<string>{"English", "Polish", "German", "Japanese", "French"}
+                        Values = new List<(string, double?)>{("English", null), ("Polish", null), ("German", null), ("Japanese", null), ("French", null)}
                     }
                 }
             };

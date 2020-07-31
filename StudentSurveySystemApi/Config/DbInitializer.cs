@@ -215,8 +215,8 @@ namespace Server.Helpers
                             Id = 6,
                             QuestionType = QuestionType.SingleSelect, QuestionText = "Technology",
                             SurveyId = seedSurveys[1].Id.Value, Index = 7,
-                            Values = JsonConvert.SerializeObject(new List<string>
-                                {"Xamarin", "Flutter", "React Native", "Ionic", "Adobe PhoneGap"}),
+                            Values = JsonConvert.SerializeObject(new List<(string, double?)>
+                                {("Xamarin", null), ("Flutter", null), ("React Native", null), ("Ionic", null), ("Adobe PhoneGap", null)}),
                             ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         },
                         new Question
@@ -224,8 +224,8 @@ namespace Server.Helpers
                             Id = 7,
                             QuestionType = QuestionType.MultipleSelect, QuestionText = "Project includes",
                             SurveyId = seedSurveys[1].Id.Value, Index = 8,
-                            Values = JsonConvert.SerializeObject(new List<string>
-                                {"Rest API", "Web Service", "Database", "Authentication", "Authentication"}),
+                            Values = JsonConvert.SerializeObject(new List<(string, double?)>
+                                {("Rest API", null), ("Web Service", null), ("Database", null), ("Authentication", null), ("Authentication", null)}),
                             ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
                         }
                     };

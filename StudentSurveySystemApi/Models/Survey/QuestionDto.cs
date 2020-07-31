@@ -19,6 +19,6 @@ namespace Server.Models.Survey
         /// <summary>
         /// Values to choose in case of single or multi select
         /// </summary>
-        public List<string> Values { get; set; }
+        public List<(string, double?)> Values { get; set; }
     }
 }

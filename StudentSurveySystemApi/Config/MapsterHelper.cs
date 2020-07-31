@@ -18,7 +18,7 @@ namespace Server.Helpers
 
             TypeAdapterConfig<Question, QuestionDto>.NewConfig()
                 .Map(dest => dest.Values,
-                    src => src.Values != null ? JsonConvert.DeserializeObject<List<string>>(src.Values) : null)
+                    src => src.Values != null ? JsonConvert.DeserializeObject<List<(string, double?)>>(src.Values) : null)
                 .Map(dest => dest.ValidationConfig,
                 src => src.ValidationConfig != null ? JsonConvert.DeserializeObject<ValidationConfig>(src.ValidationConfig) : null);
             TypeAdapterConfig<QuestionDto, Question>.NewConfig()

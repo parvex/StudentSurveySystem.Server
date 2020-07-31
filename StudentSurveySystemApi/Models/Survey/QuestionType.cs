@@ -7,6 +7,7 @@
         MultipleSelect,
         Numeric,
         Date,
-        Boolean
+        Boolean,
+        ValuedSingleSelect
     }
 }
