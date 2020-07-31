@@ -176,11 +176,35 @@ namespace Server.Controllers
                     QuestionType = q.QuestionType,
                     QuestionText = q.QuestionText,
                     QuestionAnswers = q.Answers.Select(a => SelectQuestionAnswer(survey, q, a)).ToList(),
-                    AnswerPercentages = CalculateAnswerPercentages(q).OrderByDescending(z => z.Value).ToList()
+                    AnswerPercentages = CalculateAnswerPercentages(q).OrderByDescending(z => z.Value).ToList(),
+                    Statistics = CalculateStatistics(q)
                 }).ToList()
             };
 
             return result;
+        }
+
+        private Statistics CalculateStatistics(Question question)
+        {
+            var values = question.Answers.Select(x => x.Value.ToNullableDouble()).Where(x => x.HasValue).Select(x => x.Value).ToList();
+            if (!values.Any())
+                return null;
+
+            if (question.QuestionType == QuestionType.Numeric)
+            {
+                return new Statistics()
+                {
+                    Min = values.Min(),
+                    Max = values.Max(),
+                    Mean = values.Average(),
+                    Variance = MathNet.Numerics.Statistics.Statistics.Variance(values),
+                    Median = MathNet.Numerics.Statistics.Statistics.Median(values),
+                    StandardDeviation = MathNet.Numerics.Statistics.Statistics.StandardDeviation(values),
+                    Mode = values.GroupBy(x => x).OrderByDescending(g => g.Count()).First().Key
+                };
+            }
+
+            return null;
         }
 
         private QuestionAnswerDto SelectQuestionAnswer(Survey survey, Question question, Answer answer)

@@ -29,8 +29,7 @@ namespace Server.Models.SurveyResponse
 
         public List<AnswerPercentage> AnswerPercentages { get; set; }
 
-        public double Mean { get; set; }
-
+        public Statistics Statistics { get; set; }
     }
 
     public class QuestionAnswerDto
@@ -52,5 +51,22 @@ namespace Server.Models.SurveyResponse
 
         //number of same answers
         public int NumberOfAnswers { get; set; }
+    }
+
+    public class Statistics
+    {
+        public double? Mean { get; set; }
+
+        public double? Min { get; set; }
+
+        public double? Max { get; set; }
+
+        public double? Median { get; set; }
+
+        public double? Variance { get; set; }
+
+        public double? StandardDeviation { get; set; }
+
+        public double? Mode { get; set; }
     }
 }

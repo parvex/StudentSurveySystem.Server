@@ -61,5 +61,11 @@ namespace Server.Extensions
             }
             return c;
         }
+
+        public static double? ToNullableDouble(this string s)
+        {
+            if (double.TryParse(s, out var i)) return i;
+            return null;
+        }
     }
 }
