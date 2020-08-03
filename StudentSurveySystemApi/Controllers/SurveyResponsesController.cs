@@ -91,7 +91,37 @@ namespace Server.Controllers
                 query = query.Where(x => x.RespondentId == userId);
             }
 
-            return await query.ProjectToType<SurveyResponseDetailsDto>().FirstOrDefaultAsync();
+            var response = await query.ProjectToType<SurveyResponseDetailsDto>().FirstOrDefaultAsync();
+
+            foreach (var answer in response.Answers)
+            {
+                switch (answer.QuestionType)
+                {
+                    case QuestionType.SingleSelect:
+                    {
+                        if(answer.Value != null)
+                            answer.Value = JsonConvert.DeserializeObject<(string, double?)>(answer.Value).Item1;
+                        break;
+                    }
+                    case QuestionType.MultipleSelect:
+                    {
+                        if (answer.Value != null)
+                            answer.Value = string.Join(", " , JsonConvert.DeserializeObject<List<(string, double?)>>(answer.Value).Select(x => x.Item1).ToList());
+                        break;
+                    }
+                    case QuestionType.ValuedSingleSelect:
+                    {
+                        if (answer.Value != null)
+                        {
+                            var tuple = JsonConvert.DeserializeObject<(string, double?)>(answer.Value);
+                            answer.Value = tuple.Item1 + " : " + tuple.Item2;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return response;
         }
 
         [HttpGet("{id}")]
@@ -348,14 +378,15 @@ namespace Server.Controllers
                     case QuestionType.Date:
                         var minDate = question.ValidationConfig.MinDateValue;
                         var maxDate = question.ValidationConfig.MaxDateValue;
-                        if (answer.Value != null && !DateTime.TryParse(answer.Value, out var n2))
+                        string format = "MM/dd/yyyy HH:mm:ss";
+                        if (answer.Value != null && !DateTime.TryParseExact(answer.Value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var n2))
                         {
                             errors[question.Index.ToString()] = new List<string> { $"{question.Index}. Value is not valid date" };
                             break;
                         }
                         if (!minDate.HasValue && !maxDate.HasValue)
                             break;
-                        var date = DateTime.TryParse(answer.Value, out var tempVal2) ? tempVal2 : (DateTime?)null;
+                        var date = DateTime.TryParseExact(answer.Value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out n2) ? n2 : (DateTime?) null;
                         if (!date.HasValue || (minDate.HasValue && date < minDate) || (maxDate.HasValue && date > maxDate))
                         {
                             errors[question.Index.ToString()] = new List<string> { $"{question.Index}. Date should be " + (minDate.HasValue ? "from " + minDate : null) + (maxDate.HasValue ? " to " + maxDate : null) };
