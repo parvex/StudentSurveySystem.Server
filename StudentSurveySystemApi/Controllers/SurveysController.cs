@@ -100,6 +100,10 @@ namespace Server.Controllers
         [Authorize(Roles = "Admin,Lecturer")]
         public async Task<IActionResult> PutSurvey(int id, SurveyDto survey, bool activate = false)
         {
+            var errorDictionary = ValidateSurveyForm(survey);
+            if (errorDictionary.Count > 0)
+                return BadRequest(new { errors = errorDictionary, code = 400 });
+
             var model = survey.Adapt<Survey>();
             model.Id = id;
             model.ModificationDate = DateTime.Now;
@@ -128,6 +132,10 @@ namespace Server.Controllers
         [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<SurveyDto>> AddSurvey(SurveyDto survey, bool activate = false)
         {
+            var errorDictionary = ValidateSurveyForm(survey);
+            if (errorDictionary.Count > 0)
+                return BadRequest(new { errors = errorDictionary, code = 400 });
+
             var dbModel = survey.Adapt<Survey>();
             dbModel.Active = activate;
             dbModel.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -164,24 +172,27 @@ namespace Server.Controllers
 
         [HttpPost("StartSurveyFromTemplate")]
         [Authorize(Roles = "Admin,Lecturer")]
-        public async Task<ActionResult> StartSurveyFromTemplate(SurveyDto surveyDto)
+        public async Task<ActionResult<SurveyDto>> StartSurveyFromTemplate(SurveyDto surveyDto)
         {
             if (surveyDto.Id == null)
             {
-                await AddSurvey(surveyDto);
+                var result = await AddSurvey(surveyDto);
+                if (result.Result is BadRequestObjectResult)
+                    return result;
             }
             else
             {
-                await PutSurvey(surveyDto.Id.Value, surveyDto);
+                var result = await PutSurvey(surveyDto.Id.Value, surveyDto);
+                if (result is BadRequestObjectResult)
+                    return (BadRequestObjectResult) result;
             }
             surveyDto.Id = null;
             surveyDto.Active = true;
             surveyDto.IsTemplate = false;
             surveyDto.Questions.ForEach(x => x.Id = null);
 
-            await AddSurvey(surveyDto);
-
-            return Ok();
+            var seurveyResult = await AddSurvey(surveyDto);
+            return seurveyResult.Result is BadRequestObjectResult ? seurveyResult : Ok();
         }
 
         [HttpGet("GetSemestersAndMyCourses")]
@@ -204,6 +215,15 @@ namespace Server.Controllers
                 Id = x.Id.Value, Name = x.Name,
                 Courses = x.Courses.Where(c => c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
             }).ToListAsync();
+        }
+
+        private Dictionary<string, List<string>> ValidateSurveyForm(SurveyDto survey)
+        {
+            var errors = new Dictionary<string, List<string>>();
+            if (_context.Surveys.Any(x => x.Name == survey.Name && x.IsTemplate == survey.IsTemplate && survey.Id != x.Id))
+                errors["Title"] = new List<string> {"Survey form with that title already exists" };
+
+            return errors;
         }
     }
 }
