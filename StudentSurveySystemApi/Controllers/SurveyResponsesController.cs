@@ -233,7 +233,18 @@ namespace Server.Controllers
             }
             if (question.QuestionType == QuestionType.MultipleSelect)
             {
-                questionAnswer.Value = JsonConvert.DeserializeObject<List<string>>(answer.Value);
+                var list = JsonConvert.DeserializeObject<List<(string, double?)>>(answer.Value).Select(x => x.Item1).ToList();
+                questionAnswer.Value = string.Join(',', list);
+            }
+            else if (question.QuestionType == QuestionType.ValuedSingleSelect)
+            {
+                var tuple = JsonConvert.DeserializeObject<(string, double?)>(answer.Value);
+                questionAnswer.Value = tuple.Item1 + " : " + tuple.Item2;
+            }
+            else if (question.QuestionType == QuestionType.SingleSelect)
+            {
+                var tuple = JsonConvert.DeserializeObject<(string, double?)>(answer.Value);
+                questionAnswer.Value = tuple.Item1;
             }
             else
             {
@@ -258,22 +269,35 @@ namespace Server.Controllers
                         Value = ((double)g.Count() / answersCount) * 100
                     });
                 case QuestionType.Text:
-                case QuestionType.SingleSelect:
                 case QuestionType.Numeric:
                 case QuestionType.Boolean:
                     return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
                     {
                         Name = g.Key ?? "-",
                         NumberOfAnswers = g.Count(),
+                        Value = ((double)g.Count() / answersCount) * 100
+                    });
+                case QuestionType.SingleSelect:
+                    return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
+                    {
+                        Name = g.Key != null ? JsonConvert.DeserializeObject<(string, double?)>(g.Key).Item1 : "-",
+                        NumberOfAnswers = g.Count(),
+                        Value = ((double)g.Count() / answersCount) * 100
+                    });
+                case QuestionType.ValuedSingleSelect:
+                    return question.Answers.GroupBy(x => x.Value).Select(g => new AnswerPercentage
+                    {
+                        Name = g.Key != null ? JsonConvert.DeserializeObject<(string, double?)>(g.Key).Item1 + " : " + JsonConvert.DeserializeObject<(string, double?)>(g.Key).Item2 : "-",
+                        NumberOfAnswers = g.Count(),
                         Value = ((double)g.Count() / answersCount)*100
                     });
                 case QuestionType.MultipleSelect:
-                    var answersLists = question.Answers.Select(x => JsonConvert.DeserializeObject<List<string>>(x.Value)).ToList();
+                    var answersLists = question.Answers.Select(x => JsonConvert.DeserializeObject<List<(string, double?)>>(x.Value)).ToList();
                     var answers = answersLists.SelectMany(x => x);
                     var distinctAnswers = answersLists.SelectMany(x => x).Distinct();
                     return answers.Select(x => new AnswerPercentage
                     {
-                        Name = x ?? "-",
+                        Name = x.Item1 ?? "-",
                         NumberOfAnswers = answers.Count(a => a == x),
                         Value = ((double) answers.Count(a => a == x) / answersCount) * 100
                     });
