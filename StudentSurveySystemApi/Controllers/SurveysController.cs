@@ -110,14 +110,20 @@ namespace Server.Controllers
             _context.Entry(model).State = EntityState.Modified;
             model.CreatorId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             model.Active = activate;
+
+            var oldQuestions = await _context.Questions.Where(x => x.SurveyId == id).ToListAsync();
+            _context.Questions.RemoveRange(oldQuestions);
+            await _context.SaveChangesAsync();
+
             foreach (var question in model.Questions)
             {
-                if (question.Id != null)
-                    _context.Entry(question).State = EntityState.Modified;
-                else
-                    _context.Entry(question).State = EntityState.Added;
+                question.Id = null;
             }
+
+            await _context.Questions.AddRangeAsync(model.Questions);
+
             await _context.SaveChangesAsync();
+
             var addedSurvey = await GetSurvey(model.Id.Value);
 
             if (activate)
