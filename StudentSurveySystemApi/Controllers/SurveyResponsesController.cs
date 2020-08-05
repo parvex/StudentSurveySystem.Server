@@ -342,6 +342,11 @@ namespace Server.Controllers
             foreach (var answer in response.Answers)
             {
                 var question = _context.Questions.First(x => x.Id == answer.QuestionId).Adapt<QuestionDto>();
+                if (question.Required && answer.Value == null)
+                {
+                    errors[question.Index.ToString()] = new List<string> { $"{question.Index}. Field is required" };
+                    break;
+                }
                 switch (answer.QuestionType)
                 {
                     case QuestionType.Text:

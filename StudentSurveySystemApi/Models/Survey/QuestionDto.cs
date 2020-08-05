@@ -14,6 +14,8 @@ namespace Server.Models.Survey
         [Required]
         public QuestionType QuestionType { get; set; }
 
+        public bool Required { get; set; } = false;
+
         public ValidationConfig ValidationConfig { get; set; } = new ValidationConfig();
 
         /// <summary>

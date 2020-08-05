@@ -11,6 +11,8 @@ namespace Server.Entities
 
         public string QuestionText { get; set; }
 
+        public bool Required { get; set; } = false;
+
         public QuestionType QuestionType { get; set; }
 
         /// <summary>
