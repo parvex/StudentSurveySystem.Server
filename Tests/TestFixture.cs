@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,19 +28,18 @@ namespace Tests
                 .Options;
 
             //mocking settings
-            AppSettings app = new AppSettings() { };
-            var appSettingsMock = new Mock<IOptions<AppSettings>>();
-            appSettingsMock.Setup(ap => ap.Value).Returns(app);
 
-            var configurationMock = new Mock<IConfiguration>();
-            configurationMock.Setup(c => c["FcmApiKey"]).Returns("key");
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", false, true)
+                .Build();
 
-            NotificationService = new PushNotificationService(configurationMock.Object);
+            NotificationService = new PushNotificationService(Configuration);
 
             //db seeding
             using (var seedContext = new SurveyContext(Options))
             {
-                DbInitializer.Seed(seedContext, new UserService(seedContext, appSettingsMock.Object), false);
+                DbInitializer.Seed(seedContext, new UserService(seedContext, Configuration), false);
             }
 
             //creating controller context - logged as seeded admin to add when required in controller

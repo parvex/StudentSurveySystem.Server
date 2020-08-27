@@ -64,8 +64,8 @@ namespace Server.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("MyNotFilledForm")]
-        public async Task<ActionResult<List<SurveyListItemDto>>> GetMyNotFilledForm(string name = "", int page = 0, int count = 20)
+        [HttpGet("MyNotFilledForms")]
+        public async Task<ActionResult<List<SurveyListItemDto>>> GetMyNotFilledForms(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             return await _context.Surveys.Where(x => !x.IsTemplate && x.Active && x.Course.CourseParticipants.Any(cp => cp.ParticipantId == userId)
@@ -186,12 +186,6 @@ namespace Server.Controllers
                 if (result.Result is BadRequestObjectResult)
                     return result;
             }
-            //else
-            //{
-            //    var result = await PutSurvey(surveyDto.Id.Value, surveyDto);
-            //    if (result is BadRequestObjectResult)
-            //        return (BadRequestObjectResult) result;
-            //}
             surveyDto.Id = null;
             surveyDto.IsTemplate = false;
             surveyDto.Questions.ForEach(x => x.Id = null);

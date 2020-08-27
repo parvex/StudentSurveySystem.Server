@@ -10,6 +10,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Entities;
@@ -26,18 +27,18 @@ namespace Server.Controllers
     public class UsersController : ControllerBase
     {
         private readonly SurveyContext _context;
-        private readonly AppSettings _appSettings;
+        private readonly IConfiguration _appSettings;
         private readonly IUserService _userService;
         private readonly IUsosApi _usosApi;
 
         public UsersController(
             SurveyContext context,
-           IOptions<AppSettings> appSettings,
+            IConfiguration appSettings,
             IUserService userService,
             IUsosApi usosApi)
         {
             _context = context;
-            _appSettings = appSettings.Value;
+            _appSettings = appSettings;
             _userService = userService;
             _usosApi = usosApi;
         }
@@ -118,7 +119,7 @@ namespace Server.Controllers
         {
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings["Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

@@ -8,7 +8,7 @@ using Server.Entities;
 using Server.Models.SurveyResponse;
 using Xunit;
 
-namespace Tests.UnitTests
+namespace Tests.Tests
 {
     [Collection("MainFixtureCollection")]
     public class SurveyResponsesTest
@@ -70,10 +70,26 @@ namespace Tests.UnitTests
         }
 
         [Fact]
-        public async Task CanGetSurveyResults()
+        public async Task GetSurveyResults()
         {
             await AddSurveyResponse();
             var result = await _controller.GetSurveyResult(0);
+            Assert.NotNull(result.Value);
+        }
+
+        [Fact]
+        public async Task GetSurveyResultList()
+        {
+            await AddSurveyResponse();
+            var result = await _controller.GetSurveyResultList();
+            Assert.NotEmpty(result.Value);
+        }
+
+        [Fact]
+        public async Task GetSurveyResponseDetails()
+        {
+            await AddSurveyResponse();
+            var result = await _controller.GetSurveyResponseDetails(0);
             Assert.NotNull(result.Value);
         }
     }

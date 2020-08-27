@@ -51,7 +51,6 @@ namespace Server.Controllers
                 .ToListAsync();
         }
 
-
         [HttpGet]
         [Authorize(Roles = "Admin,Lecturer")]
         public async Task<ActionResult<IEnumerable<SurveyResponseListItemDto>>> GetSurveyResponses(string name = "", int? surveyId = null, int page = 0, int count = 20)

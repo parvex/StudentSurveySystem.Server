@@ -133,6 +133,16 @@ namespace Server.Helpers
                         {
                             CourseId = 0,
                             ParticipantId = seedUsers[0].Id.Value
+                        },
+                        new CourseParticipant()
+                        {
+                            CourseId = 1,
+                            ParticipantId = seedUsers[1].Id.Value
+                        },
+                        new CourseParticipant
+                        {
+                            CourseId = 0,
+                            ParticipantId = seedUsers[1].Id.Value
                         }
                     };
 
@@ -150,17 +160,26 @@ namespace Server.Helpers
                         new Survey
                         {
                             Id = 0, Name = "SDI survey", CourseId = seedCourses[0].Id.Value,
-                            CreatorId = seedUsers[1].Id.Value, IsTemplate = false
+                            CreatorId = seedUsers[1].Id.Value, IsTemplate = false,
+                            Active = true,
+                            EndDate = DateTime.Now.AddDays(7)
                         },
                         new Survey
                         {
                             Id = 1, Name = "WPAM survey", CourseId = seedCourses[1].Id.Value,
-                            CreatorId = seedUsers[2].Id.Value, IsTemplate = false
+                            CreatorId = seedUsers[2].Id.Value, IsTemplate = false,
+                        },
+                        new Survey
+                        {
+                            Id = 2, Name = "WPAM project survey", CourseId = seedCourses[1].Id.Value,
+                            CreatorId = seedUsers[1].Id.Value, IsTemplate = false,
+                            Active = true,
+                            EndDate = DateTime.Now.AddDays(7)
                         },
 
                     };
 
-                    for (int i = 2; i < 100; ++i)
+                    for (int i = 3; i < 100; ++i)
                     {
                         seedSurveys.Add(new Survey()
                         {
@@ -274,13 +293,13 @@ namespace Server.Helpers
                     {
                         new SurveyResponse
                         {
-                            Id = 0, Date = DateTime.Now, RespondentId = seedUsers[1].Id.Value,
+                            Id = 0, Date = DateTime.Now, RespondentId = seedUsers[0].Id.Value,
                             SurveyId = seedSurveys[0].Id.Value,
                             Answers = new List<Answer> {seedAnswers[0], seedAnswers[1]}
                         },
                         new SurveyResponse
                         {
-                            Id = 1, Date = DateTime.Now.AddDays(-2), RespondentId = seedUsers[1].Id.Value,
+                            Id = 1, Date = DateTime.Now.AddDays(-2), RespondentId = seedUsers[0].Id.Value,
                             SurveyId = seedSurveys[1].Id.Value,
                             Answers = new List<Answer> {seedAnswers[2], seedAnswers[3], seedAnswers[4]}
                         }

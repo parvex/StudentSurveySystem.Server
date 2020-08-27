@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Entities;
@@ -25,12 +26,12 @@ namespace Server.Services
 
     public class UserService : IUserService
     {
-        private readonly AppSettings _appSettings;
+        private readonly IConfiguration _appSettings;
         private readonly SurveyContext _surveyContext;
 
-        public UserService(SurveyContext surveyContext, IOptions<AppSettings> appSettings)
+        public UserService(SurveyContext surveyContext, IConfiguration appSettings)
         {
-            _appSettings = appSettings.Value;
+            _appSettings = appSettings;
             _surveyContext = surveyContext;
         }
 
@@ -57,7 +58,7 @@ namespace Server.Services
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings["Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

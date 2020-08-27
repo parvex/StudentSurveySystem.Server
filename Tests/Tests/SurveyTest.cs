@@ -8,7 +8,7 @@ using Server.Entities;
 using Server.Models.Survey;
 using Xunit;
 
-namespace Tests.UnitTests
+namespace Tests.Tests
 {
     [Collection("MainFixtureCollection")]
     public class SurveyTest
@@ -32,9 +32,10 @@ namespace Tests.UnitTests
         }
 
         [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public async Task<int> AddSurvey(bool isTemplate)
+        [InlineData(false, false)]
+        [InlineData(false, true)]
+        [InlineData(true, false)]
+        public async Task<int> AddSurvey(bool isTemplate, bool activate = false)
         {
             var survey = new SurveyDto()
             {
@@ -62,11 +63,11 @@ namespace Tests.UnitTests
                 IsTemplate = isTemplate
             };
 
-            var response = await Controller.AddSurvey(survey);
+            var response = await Controller.AddSurvey(survey, activate);
             Assert.NotNull(response.Value);
             Assert.Equal(6, response.Value.Questions.Count);
             Assert.Equal(survey.Name, response.Value.Name);
-            Assert.False(response.Value.Active);
+            Assert.True(response.Value.Active == activate);
             return response.Value.Id.Value;
         }
 
@@ -94,7 +95,6 @@ namespace Tests.UnitTests
             Assert.IsType<OkResult>(response);
             Assert.Equal(survey.Name, modifiedResponse.Value.Name);
             Assert.Equal(QuestionType.Date, modifiedResponse.Value.Questions.First(x => x.Index == 1).QuestionType);
-
         }
 
         [Fact]
@@ -109,13 +109,43 @@ namespace Tests.UnitTests
         }
 
         [Fact]
-        public async Task StartActiveSurveyFromTemplate()
+        public async Task StartSurveyFromTemplate()
         {
             var id = await AddSurvey(true);
             var surveyResponse = await Controller.GetSurvey(id);
             var response = await Controller.StartSurveyFromTemplate(surveyResponse.Value);
 
             Assert.IsType<OkResult>(response.Result);
+        }
+
+        [Fact]
+        public async Task GetMySurveys()
+        {
+            var response = await Controller.GetMySurveys();
+            Assert.NotEmpty(response.Value);
+        }
+
+        [Fact]
+        public async Task GetMyActiveSurveyNames()
+        {
+            await AddSurvey(false, true);
+            var response = await Controller.GetMyActtiveSurveyNames();
+            Assert.NotEmpty(response.Value);
+        }
+
+        [Fact]
+        public async Task GetMySurveyTemplates()
+        {
+            await AddSurvey(true, false);
+            var response = await Controller.GetMySurveyTemplates();
+            Assert.NotEmpty(response.Value);
+        }
+
+        [Fact]
+        public async Task GetMyNotFilledForms()
+        {
+            var response = await Controller.GetMyNotFilledForms();
+            Assert.NotEmpty(response.Value);
         }
     }
 }
