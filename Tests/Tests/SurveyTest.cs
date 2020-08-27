@@ -144,6 +144,12 @@ namespace Tests.Tests
         [Fact]
         public async Task GetMyNotFilledForms()
         {
+            //adding this user to parcitipants so he can see forms for course
+            var context = new SurveyContext(_fixture.Options);
+            await context.CourseParticipants.AddAsync(new CourseParticipant()
+                {CourseId = 0, ParticipantId = 1});
+            await context.SaveChangesAsync();
+
             var response = await Controller.GetMyNotFilledForms();
             Assert.NotEmpty(response.Value);
         }

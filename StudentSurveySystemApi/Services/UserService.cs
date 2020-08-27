@@ -37,20 +37,14 @@ namespace Server.Services
 
         public async Task<CurrentUserDto> Authenticate(string username, string password)
         {
-            ////uncomment to seed db
-            //await DbInitializer.Seed(_surveyContext, this);
-            //return new UserDto();
-
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
             var user = await _surveyContext.Users.SingleOrDefaultAsync(x => x.Username == username);
 
-            // return null if user not found
             if (user == null)
                 return null;
 
-            // check if password is correct
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
@@ -78,7 +72,6 @@ namespace Server.Services
 
         public async Task<User> CreateAsync(User user, string password)
         {
-            // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 
@@ -99,7 +92,6 @@ namespace Server.Services
 
         public User Create(User user, string password)
         {
-            // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 

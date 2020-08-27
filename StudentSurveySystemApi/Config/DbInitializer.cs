@@ -95,9 +95,6 @@ namespace Server.Helpers
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Courses] OFF");
 
-                    //if (relational)
-                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseLecturers] ON");
-
 
                     List<CourseLecturer> seedCourseLecturers = new List<CourseLecturer>
                     {
@@ -115,11 +112,6 @@ namespace Server.Helpers
 
                     context.AddRange(seedCourseLecturers);
                     context.SaveChanges();
-                    //if (relational)
-                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseLecturers] OFF");
-
-                    //if (relational)
-                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseParticipants] ON");
 
 
                     List<CourseParticipant> seedCourseParticipants = new List<CourseParticipant>
@@ -148,8 +140,6 @@ namespace Server.Helpers
 
                     context.AddRange(seedCourseParticipants);
                     context.SaveChanges();
-                    //if (relational)
-                    //    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[CourseParticipants] OFF");
 
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Surveys] ON");
@@ -172,23 +162,29 @@ namespace Server.Helpers
                         new Survey
                         {
                             Id = 2, Name = "WPAM project survey", CourseId = seedCourses[1].Id.Value,
-                            CreatorId = seedUsers[1].Id.Value, IsTemplate = false,
+                            CreatorId = seedUsers[2].Id.Value, IsTemplate = false,
                             Active = true,
                             EndDate = DateTime.Now.AddDays(7)
+                        },
+                        new Survey
+                        {
+                            Id = 3, Name = "SPO end project survey", CourseId = seedCourses[0].Id.Value,
+                            CreatorId = seedUsers[2].Id.Value, IsTemplate = false,
+                            Active = true
                         },
 
                     };
 
-                    for (int i = 3; i < 100; ++i)
-                    {
-                        seedSurveys.Add(new Survey()
-                        {
-                            Id = i,
-                            Name = $"Seed(empty) {i}",
-                            CreatorId = i % 2 == 0 ? 1 : 2,
-                            IsTemplate = false
-                        });
-                    }
+                    //for (int i = 4; i < 100; ++i)
+                    //{
+                    //    seedSurveys.Add(new Survey()
+                    //    {
+                    //        Id = i,
+                    //        Name = $"Seed(empty) {i}",
+                    //        CreatorId = i % 2 == 0 ? 1 : 2,
+                    //        IsTemplate = false
+                    //    });
+                    //}
                     context.AddRange(seedSurveys);
                     context.SaveChanges();
                     if (relational)

@@ -33,7 +33,7 @@ namespace Tests.Tests
         }
 
         [Fact]
-        public async Task BasicAuthentication()
+        public async Task vBasicAuthentication()
         {
             var result = await Controller.Authenticate(new AuthenticateDto() {Username = "student", Password = "password"});
             Assert.NotNull(result.Result);

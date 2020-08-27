@@ -25,8 +25,8 @@ namespace Server.Services
 
     public class UsosApi : IUsosApi
     {
+        public IRestClient Client;
         private readonly IConfiguration _configuration;
-        private readonly IRestClient Client;
         private readonly string ConsumerKey = "B9anvbLDgvW8D6p4YByX";
         private readonly string ConsumerSecret = "vdr3Ew8zurEUA7VcJejGXvSbrfRhbnAHzkStUfMF";
         public UsosApi(IConfiguration configuration)
@@ -42,9 +42,7 @@ namespace Server.Services
             if(web)
                 Client.Authenticator = OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret, _configuration["WebAuthRedirectUrl"]);
 
-            var baseUrl = new Uri("https://apps.usos.pw.edu.pl/services/");
             var request = new RestRequest("oauth/request_token");
-            //request.AddParameter("scopes", "");
             var response = await Client.ExecuteAsync(request, Method.GET);
             var requestTokenResponseParameters = HttpUtility.ParseQueryString(response.Content);
 
@@ -111,7 +109,5 @@ namespace Server.Services
             }
             return semesters;
         }
-
-       
     }
 }

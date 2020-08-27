@@ -30,17 +30,20 @@ namespace Server.Controllers
         private readonly IConfiguration _appSettings;
         private readonly IUserService _userService;
         private readonly IUsosApi _usosApi;
+        private readonly bool _relational;
 
         public UsersController(
             SurveyContext context,
             IConfiguration appSettings,
             IUserService userService,
-            IUsosApi usosApi)
+            IUsosApi usosApi,
+            bool relational = true)
         {
             _context = context;
             _appSettings = appSettings;
             _userService = userService;
             _usosApi = usosApi;
+            _relational = relational;
         }
 
         [AllowAnonymous]
@@ -84,18 +87,18 @@ namespace Server.Controllers
             {
                  var newUser = currentUser.Adapt<User>();
 
-                 //only for debug
                  newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
                      usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
-                await using (var transaction = await _context.Database.BeginTransactionAsync())
-                 {
-                     await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] ON");
-                     await _context.Users.AddAsync(newUser);
-                     await _context.SaveChangesAsync();
-                     await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] OFF");
-                     await transaction.CommitAsync();
-                 }
-                 currentUser.Id = newUser.Id;
+
+                if(_relational) 
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Users] ON");
+                await _context.Users.AddAsync(newUser);
+                await _context.SaveChangesAsync();
+                if(_relational)
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Users] OFF");
+                await _context.SaveChangesAsync();
+
+                currentUser.Id = newUser.Id;
                  var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, newUser);
                  await UpdateSemAndCourseData(usosSemesters, newUser);
             }
