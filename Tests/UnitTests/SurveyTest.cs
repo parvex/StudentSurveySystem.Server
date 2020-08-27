@@ -91,7 +91,7 @@ namespace Tests.UnitTests
             var response = await Controller.PutSurvey(id, survey);
             var modifiedResponse = await Controller.GetSurvey(id);
 
-            Assert.IsType<OkResult>(response);
+            Assert.IsType<EmptyResult>(response);
             Assert.Equal(survey.Name, modifiedResponse.Value.Name);
             Assert.Equal(QuestionType.Date, modifiedResponse.Value.Questions.First(x => x.Index == 1).QuestionType);
 
