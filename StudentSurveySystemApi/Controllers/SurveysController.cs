@@ -186,41 +186,18 @@ namespace Server.Controllers
                 if (result.Result is BadRequestObjectResult)
                     return result;
             }
-            else
-            {
-                var result = await PutSurvey(surveyDto.Id.Value, surveyDto);
-                if (result is BadRequestObjectResult)
-                    return (BadRequestObjectResult) result;
-            }
+            //else
+            //{
+            //    var result = await PutSurvey(surveyDto.Id.Value, surveyDto);
+            //    if (result is BadRequestObjectResult)
+            //        return (BadRequestObjectResult) result;
+            //}
             surveyDto.Id = null;
-            surveyDto.Active = true;
             surveyDto.IsTemplate = false;
             surveyDto.Questions.ForEach(x => x.Id = null);
 
             var seurveyResult = await AddSurvey(surveyDto);
             return seurveyResult.Result is BadRequestObjectResult ? seurveyResult : Ok();
-        }
-
-        [HttpGet("GetSemestersAndMyCourses")]
-        public async Task<List<SemesterDto>> GetSemestersAndMyCourses()
-        {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
-            {
-                Id = x.Id.Value, Name = x.Name,
-                Courses = x.Courses.Where(c => c.CourseLecturers.Any(cl => cl.LecturerId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
-            }).ToListAsync();
-        }
-
-        [HttpGet("GetSemsAndCoursesAsStudent")]
-        public async Task<List<SemesterDto>> GetSemsAndCoursesAsStudent()
-        {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
-            {
-                Id = x.Id.Value, Name = x.Name,
-                Courses = x.Courses.Where(c => c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
-            }).ToListAsync();
         }
 
         private Dictionary<string, List<string>> ValidateSurveyForm(SurveyDto survey)

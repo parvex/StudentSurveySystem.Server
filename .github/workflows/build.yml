@@ -27,7 +27,12 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
       
+
+
       # Run dotnet build
-      - name: Dotnet build and publish
+      - name: Dotnet build
         run: |
           dotnet build --configuration Release
+
+      - name: Run tests
+        run: dotnet test

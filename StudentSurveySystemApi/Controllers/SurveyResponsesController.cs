@@ -31,7 +31,8 @@ namespace Server.Controllers
         private readonly SurveyContext _context;
         private readonly IPushNotificationService _pushNotificationService;
 
-        public SurveyResponsesController(SurveyContext context, IPushNotificationService pushNotificationService)
+        public SurveyResponsesController(SurveyContext context, 
+            IPushNotificationService pushNotificationService)
         {
             _context = context;
             _pushNotificationService = pushNotificationService;
@@ -42,7 +43,8 @@ namespace Server.Controllers
         public async Task<ActionResult<List<SurveyListItemDto>>> GetSurveyResultList(string name = "", int page = 0, int count = 20)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _context.Surveys.Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId && x.SurveyResponses.Any())
+            return await _context.Surveys
+                .Where(x => !x.IsTemplate && x.Name.Contains(name ?? "") && x.CreatorId == userId && x.SurveyResponses.Any())
                 .OrderByDescending(x => x.ModificationDate)
                 .Skip(count * page).Take(count)
                 .ProjectToType<SurveyListItemDto>()
@@ -188,7 +190,7 @@ namespace Server.Controllers
 
         [Authorize(Roles = "Admin,Lecturer")]
         [HttpGet("SurveyResults/{id}")]
-        public async Task<ActionResult<SurveyResultsDto>> GetSurveyResults(int id)
+        public async Task<ActionResult<SurveyResultsDto>> GetSurveyResult(int id)
         {
             var survey = await _context.Surveys.Include(x => x.Questions)
                 .ThenInclude(x => x.Answers).ThenInclude(x => x.SurveyResponse).ThenInclude(x => x.Respondent)

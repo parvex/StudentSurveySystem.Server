@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Entities;
 using Server.Helpers;
 using Server.Models.Auth;
+using Server.Models.Survey;
 using Server.Services;
 
 namespace Server.Controllers
@@ -146,6 +147,31 @@ namespace Server.Controllers
             }
 
             return user;
+        }
+
+
+        [HttpGet("GetSemestersAndMyCourses")]
+        public async Task<List<SemesterDto>> GetSemestersAndMyCourses()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
+            {
+                Id = x.Id.Value,
+                Name = x.Name,
+                Courses = x.Courses.Where(c => c.CourseLecturers.Any(cl => cl.LecturerId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
+            }).ToListAsync();
+        }
+
+        [HttpGet("GetSemsAndCoursesAsStudent")]
+        public async Task<List<SemesterDto>> GetSemsAndCoursesAsStudent()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return await _context.Semesters.OrderBy(x => x.Name).Select(x => new SemesterDto()
+            {
+                Id = x.Id.Value,
+                Name = x.Name,
+                Courses = x.Courses.Where(c => c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
+            }).ToListAsync();
         }
 
         private async Task UpdateSemAndCourseData(List<Semester> usosSemesters, User user)

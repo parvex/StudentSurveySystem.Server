@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Server.Controllers;
@@ -30,30 +31,35 @@ namespace Tests.UnitTests
             _fixture = fixture;
         }
 
-        [Fact]
-        public async Task<int> AddSurvey()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async Task<int> AddSurvey(bool isTemplate)
         {
             var survey = new SurveyDto()
             {
-                Name = $"Test survey {Guid.NewGuid().ToString()}",
+                Name = $"Test survey {Guid.NewGuid()}",
                 CreatorId = 1,
                 Questions = new List<QuestionDto>
                 {
-                    new QuestionDto { QuestionType = QuestionType.Text, QuestionText = "Name"},
-                    new QuestionDto { QuestionType = QuestionType.Date, QuestionText = "Birth date"},
-                    new QuestionDto { QuestionType = QuestionType.Numeric, QuestionText = "Height"},
-                    new QuestionDto { QuestionType = QuestionType.Boolean, QuestionText = "Driving license"},
+                    new QuestionDto { QuestionType = QuestionType.Text, QuestionText = "Name", Index = 1},
+                    new QuestionDto { QuestionType = QuestionType.Date, QuestionText = "Birth date", Index = 2},
+                    new QuestionDto { QuestionType = QuestionType.Numeric, QuestionText = "Height", Index = 3},
+                    new QuestionDto { QuestionType = QuestionType.Boolean, QuestionText = "Driving license", Index = 4},
                     new QuestionDto
                     {
                         QuestionType = QuestionType.SingleSelect, QuestionText = "Colour",
-                        Values = new List<(string, double?)>{("Red", null), ("Blue", null), ("Black", null)}
+                        Values = new List<(string, double?)>{("Red", null), ("Blue", null), ("Black", null)},
+                        Index = 5
                     },
                     new QuestionDto
                     {
                         QuestionType = QuestionType.MultipleSelect, QuestionText = "Known languages",
-                        Values = new List<(string, double?)>{("English", null), ("Polish", null), ("German", null), ("Japanese", null), ("French", null)}
+                        Values = new List<(string, double?)>{("English", null), ("Polish", null), ("German", null), ("Japanese", null), ("French", null)},
+                        Index = 6
                     }
-                }
+                },
+                IsTemplate = isTemplate
             };
 
             var response = await Controller.AddSurvey(survey);
@@ -78,23 +84,23 @@ namespace Tests.UnitTests
         [Fact]
         public async Task UpdateSurvey()
         {
-            var id = await AddSurvey();
+            var id = await AddSurvey(false);
             var survey = (await Controller.GetSurvey(id)).Value;
             survey.Name = "New test name" + Guid.NewGuid();
-            survey.Questions[0].QuestionType = QuestionType.Date;
+            survey.Questions.First(x => x.Index == 1).QuestionType = QuestionType.Date;
             var response = await Controller.PutSurvey(id, survey);
             var modifiedResponse = await Controller.GetSurvey(id);
 
             Assert.IsType<OkResult>(response);
             Assert.Equal(survey.Name, modifiedResponse.Value.Name);
-            Assert.Equal(QuestionType.Date, modifiedResponse.Value.Questions[0].QuestionType);
+            Assert.Equal(QuestionType.Date, modifiedResponse.Value.Questions.First(x => x.Index == 1).QuestionType);
 
         }
 
         [Fact]
         public async Task DeleteSurvey()
         {
-            var id = await AddSurvey();
+            var id = await AddSurvey(false);
             var response = await Controller.DeleteSurvey(id);
             var detailsResponse = await Controller.GetSurvey(id);
 
@@ -105,11 +111,11 @@ namespace Tests.UnitTests
         [Fact]
         public async Task StartActiveSurveyFromTemplate()
         {
-            var id = await AddSurvey();
+            var id = await AddSurvey(true);
             var surveyResponse = await Controller.GetSurvey(id);
             var response = await Controller.StartSurveyFromTemplate(surveyResponse.Value);
 
-            Assert.IsType<OkResult>(response);
+            Assert.IsType<OkResult>(response.Result);
         }
     }
 }

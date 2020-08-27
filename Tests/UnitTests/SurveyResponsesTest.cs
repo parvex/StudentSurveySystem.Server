@@ -73,7 +73,7 @@ namespace Tests.UnitTests
         public async Task CanGetSurveyResults()
         {
             await AddSurveyResponse();
-            var result = await _controller.GetSurveyResults(0);
+            var result = await _controller.GetSurveyResult(0);
             Assert.NotNull(result.Value);
         }
     }
