@@ -69,8 +69,6 @@ namespace Server.Controllers
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
 
-            var x = _context.Surveys.Include(x => x.Course).Include(x => x.Course.CourseParticipants).Include(x => x.SurveyResponses).ToList();
-            var c = _context.Courses.Include(x => x.CourseParticipants).ToList();
             return await _context.Surveys.Where(x => !x.IsTemplate && x.Active && x.Course.CourseParticipants.Any(cp => cp.ParticipantId == userId)
                                                      && x.Name.Contains(name ?? "") && (x.EndDate == null || x.EndDate > DateTime.Now) 
                                                      && x.SurveyResponses.All(r => r.RespondentId != userId))

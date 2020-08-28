@@ -44,6 +44,19 @@ namespace Server.Helpers
                         }
                     };
 
+                    //for stress testing
+                    //for (int i = 3; i < 10009; ++i)
+                    //{
+                    //     seedUsers.Add(new User
+                    //    {
+                    //        Id = i,
+                    //        FirstName = "Student" + (i-2),
+                    //        LastName = "Studiujacy",
+                    //        Username = "student" + (i-2),
+                    //        UserRole = UserRole.Student
+                    //    });
+                    //}
+
                     foreach (var user in seedUsers)
                     {
                         userService.Create(user, "password");
@@ -87,6 +100,10 @@ namespace Server.Helpers
                         new Course
                         {
                             Id = 1, Name = "WPAM", SemesterId = 1
+                        },
+                        new Course
+                        {
+                            Id = 2, Name = "STRESS", SemesterId = 1
                         }
                     };
 
@@ -138,6 +155,17 @@ namespace Server.Helpers
                         }
                     };
 
+
+                    ////for stress testing
+                    //foreach (var seedUser in seedUsers)
+                    //{
+                    //    seedCourseParticipants.Add(new CourseParticipant
+                    //    {
+                    //        CourseId = 2,
+                    //        ParticipantId = seedUser.Id.Value
+                    //    });
+                    //}
+
                     context.AddRange(seedCourseParticipants);
                     context.SaveChanges();
 
@@ -168,7 +196,7 @@ namespace Server.Helpers
                         },
                         new Survey
                         {
-                            Id = 3, Name = "SPO end project survey", CourseId = seedCourses[0].Id.Value,
+                            Id = 3, Name = "Stress test survey", CourseId = seedCourses[2].Id.Value,
                             CreatorId = seedUsers[2].Id.Value, IsTemplate = false,
                             Active = true
                         },

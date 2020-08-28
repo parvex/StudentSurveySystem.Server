@@ -90,13 +90,23 @@ namespace Server.Controllers
                  newUser.UserRole = usosUser.StaffStatus == StaffStatus.Lecturer ? UserRole.Lecturer :
                      usosUser.StudentStatus == StudentStatus.ActiveStudent ? UserRole.Student : throw new ArgumentOutOfRangeException("Incorrent user status");
 
-                if(_relational) 
-                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Users] ON");
-                await _context.Users.AddAsync(newUser);
-                await _context.SaveChangesAsync();
-                if(_relational)
-                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Users] OFF");
-                await _context.SaveChangesAsync();
+                if (_relational)
+                {
+                    await using (var transaction = await _context.Database.BeginTransactionAsync())
+                    {
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] ON");
+                        await _context.Users.AddAsync(newUser);
+                        await _context.SaveChangesAsync();
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Users] OFF");
+                        await transaction.CommitAsync();
+                    }
+                }
+                else
+                {
+                    await _context.Users.AddAsync(newUser);
+                    await _context.SaveChangesAsync();
+                }
+
 
                 currentUser.Id = newUser.Id;
                  var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, newUser);
