@@ -33,7 +33,7 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SurveyContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("SurveyContext"))
+                opt.UseSqlServer(Configuration.GetConnectionString("SurveyContext"), ssopt => ssopt.CommandTimeout(300))
                 //opt.UseInMemoryDatabase("StudentSurveySystemDb")
                 );
             services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(options =>

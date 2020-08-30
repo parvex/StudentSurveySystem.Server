@@ -45,17 +45,17 @@ namespace Server.Helpers
                     };
 
                     //for stress testing
-                    //for (int i = 3; i < 10009; ++i)
-                    //{
-                    //     seedUsers.Add(new User
-                    //    {
-                    //        Id = i,
-                    //        FirstName = "Student" + (i-2),
-                    //        LastName = "Studiujacy",
-                    //        Username = "student" + (i-2),
-                    //        UserRole = UserRole.Student
-                    //    });
-                    //}
+                    for (int i = 3; i < 10009; ++i)
+                    {
+                        seedUsers.Add(new User
+                        {
+                            Id = i,
+                            FirstName = "Student" + (i - 2),
+                            LastName = "Studiujacy",
+                            Username = "student" + (i - 2),
+                            UserRole = UserRole.Student
+                        });
+                    }
 
                     foreach (var user in seedUsers)
                     {
@@ -156,17 +156,17 @@ namespace Server.Helpers
                     };
 
 
-                    ////for stress testing
-                    //foreach (var seedUser in seedUsers)
-                    //{
-                    //    seedCourseParticipants.Add(new CourseParticipant
-                    //    {
-                    //        CourseId = 2,
-                    //        ParticipantId = seedUser.Id.Value
-                    //    });
-                    //}
+                //for stress testing
+                foreach (var seedUser in seedUsers)
+                {
+                    seedCourseParticipants.Add(new CourseParticipant
+                    {
+                        CourseId = 2,
+                        ParticipantId = seedUser.Id.Value
+                    });
+                }
 
-                    context.AddRange(seedCourseParticipants);
+                context.AddRange(seedCourseParticipants);
                     context.SaveChanges();
 
                     if (relational)
@@ -198,22 +198,25 @@ namespace Server.Helpers
                         {
                             Id = 3, Name = "Stress test survey", CourseId = seedCourses[2].Id.Value,
                             CreatorId = seedUsers[2].Id.Value, IsTemplate = false,
-                            Active = true
+                            Active = true,
+                            ModificationDate = DateTime.Now
                         },
 
                     };
 
-                    //for (int i = 4; i < 100; ++i)
-                    //{
-                    //    seedSurveys.Add(new Survey()
-                    //    {
-                    //        Id = i,
-                    //        Name = $"Seed(empty) {i}",
-                    //        CreatorId = i % 2 == 0 ? 1 : 2,
-                    //        IsTemplate = false
-                    //    });
-                    //}
-                    context.AddRange(seedSurveys);
+                for (int i = 4; i < 100; ++i)
+                {
+                    seedSurveys.Add(new Survey()
+                    {
+                        Id = i,
+                        Name = $"Seed(empty) {i}",
+                        CreatorId = i % 2 == 0 ? 1 : 2,
+                        IsTemplate = false,
+                        CourseId = seedCourses[2].Id.Value,
+                        Active = true
+                    });
+                }
+                context.AddRange(seedSurveys);
                     context.SaveChanges();
                     if (relational)
                         context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Surveys] OFF");
@@ -270,7 +273,17 @@ namespace Server.Helpers
                             Values = JsonConvert.SerializeObject(new List<(string, double?)>
                                 {("Rest API", null), ("Web Service", null), ("Database", null), ("Authentication", null), ("Authentication", null)}),
                             ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
-                        }
+                        },
+                        new Question
+                        {
+                            Id = 8, QuestionType = QuestionType.Numeric, QuestionText = "Overall experience",
+                            SurveyId = seedSurveys[2].Id.Value, Index = 1, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig(){MaxNumericValue = 10, MinNumericValue = 1})
+                        },
+                        new Question
+                        {
+                            Id = 9, QuestionType = QuestionType.Date, QuestionText = "Project submit date",
+                            SurveyId = seedSurveys[2].Id.Value, Index = 2, ValidationConfig = JsonConvert.SerializeObject(new ValidationConfig())
+                        },
                     };
 
                     context.AddRange(seedQuestions);

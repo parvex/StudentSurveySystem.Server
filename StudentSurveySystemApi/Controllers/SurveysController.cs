@@ -84,16 +84,22 @@ namespace Server.Controllers
             var role = User.FindFirstValue(ClaimTypes.Role);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
 
-            var survey = await _context.Surveys.Where(x => x.Id == id).Include(x => x.Questions)
-                .Include(x => x.Creator).Include(x => x.Course).ThenInclude(x => x.CourseParticipants)
+            var surveyquery = _context.Surveys.Where(x => x.Id == id);
+
+            if (role == "Lecturer")
+                surveyquery = surveyquery.Where(x => x.CreatorId == userId);
+            if (role == "Student")
+                surveyquery = surveyquery.Where(x => x.Course.CourseParticipants.Any(x => x.ParticipantId == userId));
+
+            var survey = surveyquery.Include(x => x.Questions)
+                .Include(x => x.Creator).Include(x => x.Course)
                 .Include(x => x.Course).ThenInclude(x => x.Semester)
                 .FirstOrDefaultAsync();
+
 
             if (survey == null)
                 return NotFound();
 
-            if(role == "Student" && survey.Course.CourseParticipants.All(x => x.ParticipantId != userId))
-                return Unauthorized("You can get only surveys in which you participate");
             return survey.Adapt<SurveyDto>();
         }
 
