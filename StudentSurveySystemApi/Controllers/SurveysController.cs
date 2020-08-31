@@ -91,11 +91,10 @@ namespace Server.Controllers
             if (role == "Student")
                 surveyquery = surveyquery.Where(x => x.Course.CourseParticipants.Any(x => x.ParticipantId == userId));
 
-            var survey = surveyquery.Include(x => x.Questions)
+            var survey = await surveyquery.Include(x => x.Questions)
                 .Include(x => x.Creator).Include(x => x.Course)
                 .Include(x => x.Course).ThenInclude(x => x.Semester)
                 .FirstOrDefaultAsync();
-
 
             if (survey == null)
                 return NotFound();

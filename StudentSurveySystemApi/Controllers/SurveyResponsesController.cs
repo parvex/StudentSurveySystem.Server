@@ -183,7 +183,7 @@ namespace Server.Controllers
             surveyResponseEntity.Date = DateTime.Now;
             await _context.SurveyResponses.AddAsync(surveyResponseEntity);
             await _context.SaveChangesAsync();
-            await _pushNotificationService.Send("New survey response" ,$"New response added to {survey.Name}", survey.Name.RemoveDiactrics().RemoveWhiteSpaces());
+            //await _pushNotificationService.Send("New survey response" ,$"New response added to {survey.Name}", survey.Name.RemoveDiactrics().RemoveWhiteSpaces());
             return Ok();
         }
 

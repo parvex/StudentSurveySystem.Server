@@ -14,15 +14,15 @@ class SwarmUser(HttpUser):
 
     @task(2)
     def survey_form_list0(self):
-        self.client.get("http://studentsurveysystemserver.azurewebsites.net/Surveys/MyNotFilledForms?page=0")
+        self.client.get("/Surveys/MyNotFilledForms?page=0")
 
     @task(1)
     def survey_form_list1(self):
-        self.client.get("http://studentsurveysystemserver.azurewebsites.net/Surveys/MyNotFilledForms?page=1")
+        self.client.get("/Surveys/MyNotFilledForms?page=1")
 
     @task(1)
     def survey_form_list2(self):
-        self.client.get("http://studentsurveysystemserver.azurewebsites.net/Surveys/MyNotFilledForms?page=2")
+        self.client.get("/Surveys/MyNotFilledForms?page=2")
 
     @task(2)
     def survey_form(self):
