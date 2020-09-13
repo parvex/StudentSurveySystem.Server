@@ -44,18 +44,18 @@ namespace Server.Helpers
                         }
                     };
 
-                    //for stress testing
-                    for (int i = 3; i < 10009; ++i)
-                    {
-                        seedUsers.Add(new User
-                        {
-                            Id = i,
-                            FirstName = "Student" + (i - 2),
-                            LastName = "Studiujacy",
-                            Username = "student" + (i - 2),
-                            UserRole = UserRole.Student
-                        });
-                    }
+                    ////for stress testing
+                    //for (int i = 3; i < 10009; ++i)
+                    //{
+                    //    seedUsers.Add(new User
+                    //    {
+                    //        Id = i,
+                    //        FirstName = "Student" + (i - 2),
+                    //        LastName = "Studiujacy",
+                    //        Username = "student" + (i - 2),
+                    //        UserRole = UserRole.Student
+                    //    });
+                    //}
 
                     foreach (var user in seedUsers)
                     {
@@ -156,15 +156,15 @@ namespace Server.Helpers
                     };
 
 
-                //for stress testing
-                foreach (var seedUser in seedUsers)
-                {
-                    seedCourseParticipants.Add(new CourseParticipant
-                    {
-                        CourseId = 2,
-                        ParticipantId = seedUser.Id.Value
-                    });
-                }
+                ////for stress testing
+                //foreach (var seedUser in seedUsers)
+                //{
+                //    seedCourseParticipants.Add(new CourseParticipant
+                //    {
+                //        CourseId = 2,
+                //        ParticipantId = seedUser.Id.Value
+                //    });
+                //}
 
                 context.AddRange(seedCourseParticipants);
                     context.SaveChanges();
