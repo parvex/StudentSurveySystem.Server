@@ -95,15 +95,15 @@ namespace Server.Helpers
                     {
                         new Course
                         {
-                            Id = 0, Name = "SDI", SemesterId = 0
+                            Id = 0, Name = "103B-xxxxx-ISP-SDI", SemesterId = 0
                         },
                         new Course
                         {
-                            Id = 1, Name = "WPAM", SemesterId = 1
+                            Id = 1, Name = "103A-INxxx-MSP-WPAM", SemesterId = 1
                         },
                         new Course
                         {
-                            Id = 2, Name = "STRESS", SemesterId = 1
+                            Id = 2, Name = "103C-INxxx-ISP-STRESS", SemesterId = 1
                         }
                     };
 
