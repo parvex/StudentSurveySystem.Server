@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using GenFu;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
@@ -45,17 +46,12 @@ namespace Server.Helpers
                     };
 
                     ////for stress testing
-                    //for (int i = 3; i < 10009; ++i)
-                    //{
-                    //    seedUsers.Add(new User
-                    //    {
-                    //        Id = i,
-                    //        FirstName = "Student" + (i - 2),
-                    //        LastName = "Studiujacy",
-                    //        Username = "student" + (i - 2),
-                    //        UserRole = UserRole.Student
-                    //    });
-                    //}
+                    for (int i = 3; i < 30; ++i)
+                    {
+                        var user = A.New<User>();
+                        user.UserRole = UserRole.Student;
+                        user.Id = i;
+                    }
 
                     foreach (var user in seedUsers)
                     {
@@ -130,41 +126,27 @@ namespace Server.Helpers
                     context.AddRange(seedCourseLecturers);
                     context.SaveChanges();
 
+                var seedCourseParticipants = new List<CourseParticipant>();
 
-                    List<CourseParticipant> seedCourseParticipants = new List<CourseParticipant>
+                    //for stress testing
+                foreach (var seedUser in seedUsers)
+                {
+                    seedCourseParticipants.Add(new CourseParticipant
                     {
-                        new CourseParticipant()
-                        {
-                            CourseId = 1,
-                            ParticipantId = seedUsers[0].Id.Value
-                        },
-                        new CourseParticipant
-                        {
-                            CourseId = 0,
-                            ParticipantId = seedUsers[0].Id.Value
-                        },
-                        new CourseParticipant()
-                        {
-                            CourseId = 1,
-                            ParticipantId = seedUsers[1].Id.Value
-                        },
-                        new CourseParticipant
-                        {
-                            CourseId = 0,
-                            ParticipantId = seedUsers[1].Id.Value
-                        }
-                    };
-
-
-                ////for stress testing
-                //foreach (var seedUser in seedUsers)
-                //{
-                //    seedCourseParticipants.Add(new CourseParticipant
-                //    {
-                //        CourseId = 2,
-                //        ParticipantId = seedUser.Id.Value
-                //    });
-                //}
+                        CourseId = 2,
+                        ParticipantId = seedUser.Id.Value
+                    });                    
+                    seedCourseParticipants.Add(new CourseParticipant
+                    {
+                        CourseId = 1,
+                        ParticipantId = seedUser.Id.Value
+                    });                    
+                    seedCourseParticipants.Add(new CourseParticipant
+                    {
+                        CourseId = 0,
+                        ParticipantId = seedUser.Id.Value
+                    });
+                }
 
                 context.AddRange(seedCourseParticipants);
                     context.SaveChanges();

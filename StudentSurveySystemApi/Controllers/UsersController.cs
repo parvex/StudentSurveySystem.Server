@@ -184,7 +184,7 @@ namespace Server.Controllers
             {
                 Id = x.Id.Value,
                 Name = x.Name,
-                Courses = x.Courses.Where(c => c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
+                Courses = x.Courses.Where(c => c.SemesterId == x.Id && c.CourseParticipants.Any(cl => cl.ParticipantId == userId)).Select(c => c.Adapt<CourseDto>()).ToList()
             }).ToListAsync();
         }
 
