@@ -23,7 +23,7 @@ namespace Server.Services
             _configuration = configuration;
             Client = new RestClient("https://fcm.googleapis.com/fcm/");
             Client.UseNewtonsoftJson();
-            Client.AddDefaultHeader("Authorization", "key=" + _configuration["ApiKey"]);
+            Client.AddDefaultHeader("Authorization", "key=" + _configuration["FcmApiKey"]);
         }
 
         public async Task Send(string title, string message, string topic = "global")
@@ -41,7 +41,6 @@ namespace Server.Services
                 }
             });
             var response = await Client.ExecuteAsync(request, Method.POST);
-            return;
         }
     }
 }
