@@ -49,8 +49,10 @@ namespace Server.Helpers
                     for (int i = 3; i < 30; ++i)
                     {
                         var user = A.New<User>();
+                        user.Username = "student" + i;
                         user.UserRole = UserRole.Student;
                         user.Id = i;
+                        seedUsers.Add(user);
                     }
 
                     foreach (var user in seedUsers)
