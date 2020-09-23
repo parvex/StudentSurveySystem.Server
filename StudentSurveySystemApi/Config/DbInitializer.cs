@@ -188,18 +188,18 @@ namespace Server.Helpers
 
                     };
 
-                for (int i = 4; i < 100; ++i)
-                {
-                    seedSurveys.Add(new Survey()
-                    {
-                        Id = i,
-                        Name = $"Seed(empty) {i}",
-                        CreatorId = i % 2 == 0 ? 1 : 2,
-                        IsTemplate = false,
-                        CourseId = seedCourses[2].Id.Value,
-                        Active = true
-                    });
-                }
+                //for (int i = 4; i < 100; ++i)
+                //{
+                //    seedSurveys.Add(new Survey()
+                //    {
+                //        Id = i,
+                //        Name = $"Seed(empty) {i}",
+                //        CreatorId = i % 2 == 0 ? 1 : 2,
+                //        IsTemplate = false,
+                //        CourseId = seedCourses[2].Id.Value,
+                //        Active = true
+                //    });
+                //}
                 context.AddRange(seedSurveys);
                     context.SaveChanges();
                     if (relational)

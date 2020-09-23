@@ -87,7 +87,7 @@ namespace Server.Controllers
             var surveyquery = _context.Surveys.Where(x => x.Id == id);
 
             if (role == "Lecturer")
-                surveyquery = surveyquery.Where(x => x.CreatorId == userId);
+                surveyquery = surveyquery.Where(x => x.CreatorId == userId || x.Course.CourseParticipants.Any(x => x.ParticipantId == userId));
             if (role == "Student")
                 surveyquery = surveyquery.Where(x => x.Course.CourseParticipants.Any(x => x.ParticipantId == userId));
 
