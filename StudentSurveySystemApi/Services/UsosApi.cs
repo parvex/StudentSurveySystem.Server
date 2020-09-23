@@ -100,14 +100,81 @@ namespace Server.Services
                 {
                     var course = new Course() {Name = courseJson.Value<string>("course_id")};
                     semester.Courses.Add(course);
-                    if (courseJson["user_groups"].Any(x => x["lecturers"].Any(y => y.Value<string>("id") == user.Id.ToString())))
-                    {
-                        course.CourseLecturers = new List<CourseLecturer>() {new CourseLecturer() {LecturerId = user.Id.Value}};
-                    }
+                }
+                semesters.Add(semester);
+            }
+
+            if (user.UserRole != UserRole.Lecturer) 
+                return semesters;
+
+            var lecturerSemesters = GetUserCoursesAsLecturer(accessToken, tokenSecret, user);
+            semesters = MergeSemesterData(semesters, lecturerSemesters, user.Id.Value);
+
+            return semesters;
+        }
+
+        public List<Semester> GetUserCoursesAsLecturer(string accessToken, string tokenSecret, User user)
+        {
+            Client.Authenticator = OAuth1Authenticator
+                .ForProtectedResource(ConsumerKey, ConsumerSecret, accessToken, tokenSecret);
+
+            var groupsRequest = new RestRequest("groups/lecturer", Method.GET);
+            groupsRequest.AddParameter("fields", "course_id|course_name|lecturers");
+
+            var groupsResponse = Client.Execute(groupsRequest);
+            JObject json = JObject.Parse(groupsResponse.Content);
+            var semesters = new List<Semester>();
+
+            foreach (var semJson in json["groups"].Children())
+            {
+                var semester = new Semester() { Name = semJson.ToObject<JProperty>().Name };
+                semester.Courses = new List<Course>();
+                foreach (var courseJson in semJson.First.Children())
+                {
+                    var course = new Course() { Name = courseJson.Value<string>("course_id") };
+                    course.CourseLecturers = new List<CourseLecturer>() { new CourseLecturer() { LecturerId = user.Id.Value } };
+
+                    semester.Courses.Add(course);
                 }
                 semesters.Add(semester);
             }
             return semesters;
+        }
+
+        private List<Semester> MergeSemesterData(List<Semester> semestersAsStudent, List<Semester> semestersAsLecturer, int userId)
+        {
+            var mergedSemesters = new List<Semester>();
+            mergedSemesters.AddRange(semestersAsStudent);
+            mergedSemesters.AddRange(semestersAsLecturer);
+
+            mergedSemesters = mergedSemesters.GroupBy(x => x.Name).Select(x => new Semester() { Name = x.Key }).ToList();
+
+            foreach (var semester in mergedSemesters)
+            {
+                semester.Courses = new List<Course>();
+                if (semestersAsStudent.Any(x => x.Name == semester.Name))
+                {
+                    semester.Courses.AddRange(semestersAsStudent.First(x => x.Name == semester.Name).Courses);
+                }
+                if (semestersAsLecturer.Any(x => x.Name == semester.Name))
+                {
+                    semester.Courses.AddRange(semestersAsLecturer.First(x => x.Name == semester.Name).Courses);
+                }
+
+                semester.Courses = semester.Courses.GroupBy(x => x.Name).Select(x => new Course() { Name = x.Key }).ToList();
+            }
+
+            foreach (var semester in semestersAsLecturer)
+            {
+                foreach (var course in semester.Courses)
+                {
+                    mergedSemesters.First(x => x.Name == semester.Name)
+                        .Courses.First(x => x.Name == course.Name)
+                        .CourseLecturers = new List<CourseLecturer>() { new CourseLecturer() { LecturerId = userId } };
+                }
+            }
+
+            return mergedSemesters;
         }
     }
 }

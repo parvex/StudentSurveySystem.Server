@@ -109,8 +109,8 @@ namespace Server.Controllers
 
 
                 currentUser.Id = newUser.Id;
-                 var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, newUser);
-                 await UpdateSemAndCourseData(usosSemesters, newUser);
+                var usosSemesters = _usosApi.GetUserCourses(accessToken.Item1, accessToken.Item2, newUser);
+                await UpdateSemAndCourseData(usosSemesters, newUser);
             }
             SetupToken(currentUser, accessToken.Item1, accessToken.Item2);
             return Ok(currentUser);
